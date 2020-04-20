@@ -15,7 +15,7 @@ facebook:
 github:
   name: "GitHub"
   urlTemplate: "https://github.com/{value}"
-  icon: "fab fa-github"
+  icon: "fab fa-github-alt"
 
 twitter:
   name: "Twitter"
@@ -90,3 +90,8 @@ yelp:
   name: "Yelp"
   urlTemplate: "https://{value}.yelp.com"
   icon: "fab fa-yelp"
+
+itch-io:
+  name: "Itch.io"
+  urlTemplate: "https://{value}.itch.io"
+  icon: "fab fa-itch-io"

@@ -9,7 +9,7 @@ layout: null
 body {
   font-family: 'Lora', 'Times New Roman', serif;
   font-size: 18px;
-  color: #404040;
+  color: {{ site.text-col }};
   position: relative;
   background-color: {{ site.page-col }};
   {% if site.page-img %}
@@ -331,7 +331,7 @@ footer .theme-by {
 
 .post-preview a {
   text-decoration: none;
-  color: #404040;
+  color: {{ site.preview-col }};
 }
 
 .post-preview a:focus,
@@ -351,7 +351,7 @@ footer .theme-by {
 }
 .post-preview .post-meta,
 .post-heading .post-meta {
-  color: #808080;
+  color: {{ site.heading-col }};
   font-size: 18px;
   font-style: italic;
   margin: 0 0 10px;
@@ -674,6 +674,11 @@ pre {
   font-size: 16px;
   line-height: 1.5em;
 }
+
+.highlight {
+  color: {{ site.code-col }}
+}
+
 .highlight pre {
   border: none;
   background: none;
@@ -685,7 +690,7 @@ pre {
   background-size: auto 3em;
   background-position-y: 10px;
   border: 1px solid rgba(0,0,0,0.1);
-  border-left: 7px solid #444;
+  border-left: 7px solid {{ site.code-high-col }};
 }
 .highlight > pre:not([class~="highlight"]) { /* code block with line number */
   padding: 0;
@@ -696,8 +701,8 @@ pre {
   padding: 0;
   margin: 0;
 }
+
 .highlight pre.lineno {
-  color: rgba(0,0,0,0.3);
   border-radius: 0;
   border-right: 2px solid #444;
 }
@@ -726,6 +731,7 @@ pre {
   border: 1px solid #eee;
   border-left-width: 5px;
   border-radius: 5px 3px 3px 5px;
+  color: {{ site.box-col }}
 }
 
 .box-note {
