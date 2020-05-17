@@ -1,7 +1,7 @@
 # --- General options --- #
 
 # Name of website
-title: Bearded Game
+title: Mezookan
 
 # Short description of your site
 description: Things I've learned about making games, and things I know I don't know yet (about making games).
@@ -20,11 +20,11 @@ description: Things I've learned about making games, and things I know I don't k
 
 # List of links in the navigation bar
 navbar-links:
-  About Me: "aboutme"
+  About: "about"
+  Contact: "contact"
+  Tags: "tags"
   Resources:
-    - Beautiful Jekyll: "http://deanattali.com/beautiful-jekyll/"
     - Learn markdown: "http://www.markdowntutorial.com/"
-  Author's home: "http://deanattali.com"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
@@ -119,7 +119,7 @@ url-pretty: "abbabon.itch.io"
 #gtag: ""
 
 # Fill in your Google Analytics ID to track your website using GA
-#google_analytics: ""
+google_analytics: "UA-89340869-1"
 
 # Google Tag Manager ID
 #gtm: ""
