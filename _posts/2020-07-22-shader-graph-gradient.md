@@ -25,7 +25,7 @@ So, we will sample the colours and use the [Lerp Node](https://docs.unity3d.com/
 ![Sampling](/img/posts/Gradient-2.png)
 
 Pay <3 to 2 things:
-1. UVs are from 0 to 1, and go 'bottom-to-top' on a mesh. So our direction is messed up. Nothing a [1-minus node](https://docs.unity3d.com/Packages/com.unity.shadergraph@6.9/manual/One-Minus-Node.html) can't fix!
+1. UVs are from 0 to 1, and go 'bottom-to-top' on a mesh. So our direction is messed up. Nothing a [one-minus node](https://docs.unity3d.com/Packages/com.unity.shadergraph@6.9/manual/One-Minus-Node.html) can't fix!
 2. We are still missing the 'height' control we want. While there are many ways of achieving this, I would just multiply the UV value with the height value, which gives me good results. A value of 1 will give me mid-point blend, value of 2 - a 0.75 blend, etc, etc... You could achieve the same with range-mapping, but for my needs this is quite enough (I work with an artist who want to play with a slider)
 
 These are the final result:
@@ -51,7 +51,8 @@ You can also enhance the shader to make some 'animations' very easily but scroll
 
 
 ## Cons for using this shader
-The only major downside for using this shader is increasing the draw calls number if you're using
+The only major downside for using this shader is increasing the draw calls number if you're using this shader in just one material of one game object. This will break batching :(
+The solution? Integrate this into your 'standard' shader! We'll talk more about it in the Material Property Block post series.
 
 ## In conclusion
 Shaders are fun! And performant! And hard, sometimes... :(
