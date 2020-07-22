@@ -17,24 +17,24 @@ So in this post (in which I am also learning how to tutorialize), I'll show you 
 
 Let's create a new shader. These are the properties I would expose - two colours to blend, and a 'height' parameter slider. This parameter will give us control over the colours 'blend point'. More on that later. Exposing the values means we can animate it, change it through the material according to some other variables, environment, player settings, and everything you want.
 
-![[/img/posts/Gradient-1.png]]
+![Variables](/img/posts/Gradient-1.png)
 
 Now let's think about how to colour each pixel. Each pixel should get his colour based on his location across an axis (in this example - the Y axis, but you could use any axis). The property we'll use for this is of course its UV values. [You can check here the great explenation and visualization by CodeMonkey](https://www.youtube.com/watch?v=FGL6SffDeVU).
 So, we will sample the colours and use the [Lerp Node](https://docs.unity3d.com/Packages/com.unity.shadergraph@6.9/manual/Lerp-Node.html) according to the UV value of our pixel. Again, in this example I want a sky gradient from black to purple. We will then also use the Alpha values of these colour. And here is the result!
 
-![[/img/posts/Gradient-2.png]]
+![Sampling](/img/posts/Gradient-2.png)
 
 Pay <3 to 2 things:
 1. UVs are from 0 to 1, and go 'bottom-to-top' on a mesh. So our direction is messed up. Nothing a [1-minus node](https://docs.unity3d.com/Packages/com.unity.shadergraph@6.9/manual/One-Minus-Node.html) can't fix!
 2. We are still missing the 'height' control we want. While there are many ways of achieving this, I would just multiply the UV value with the height value, which gives me good results. A value of 1 will give me mid-point blend, value of 2 - a 0.75 blend, etc, etc... You could achieve the same with range-mapping, but for my needs this is quite enough (I work with an artist who want to play with a slider)
 
-This is the final result:
+These are the final result:
 
-![[/img/posts/radient-3.png]]
+![With UVs](/img/posts/Gradient-3.png)
 
 You can also enhance the shader to make some 'animations' very easily but scrolling the uv values a bit with Time nodes or something like that. Use all axis! Get Creative!
 
-![[/img/posts/Gradient-4.gif]]
+![dafuq is this](/img/posts/Gradient-4.gif)
 
 ## Alternatives to using this Shader:
 1. Adding a pre-blended texture as a texture.
@@ -47,7 +47,7 @@ You can also enhance the shader to make some 'animations' very easily but scroll
 
 	A gradient-based graph would look like this:
 
-	![[/img/posts/Gradient-5.png]]
+  ![using Gradient node](/img/posts/Gradient-5.png)
 
 
 ## Cons for using this shader
