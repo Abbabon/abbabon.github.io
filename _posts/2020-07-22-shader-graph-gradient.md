@@ -6,8 +6,6 @@ tags: [Unity, shader-graph, tech-art, tutorials]
 comments: true
 ---
 
-# How to create a gradient with shader graph?
-
 Gradients. They are everywhere. From menus, to backgrounds, particle systems and even our skies - gradients are important for our games. The blending from one colour to the other goes a long way in conveying a texture, cheaply. But sadly, many beginner Unity developers sacrifice other aspects of their app when creating gradients on meshes, with no justification, by using textures instead of writing a simple shader.
 
 So in this post (in which I am also learning how to tutorialize), I'll show you a quick way of blending two colour together. Why is it so hard, Unity?
@@ -52,6 +50,7 @@ You can also enhance the shader to make some 'animations' very easily but scroll
 
 ## Cons for using this shader
 The only major downside for using this shader is increasing the draw calls number if you're using this shader in just one material of one game object. This will break batching :(
+
 The solution? Integrate this into your 'standard' shader! We'll talk more about it in the Material Property Block post series.
 
 ## In conclusion
