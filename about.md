@@ -9,7 +9,7 @@ Assuming you've clicked on About you have some questions! So, here are some answ
 
 * Hi! I'm Amit, a professional game developer and software engineer from Israel.
 
-* Tehnology-wise, I am interested in challenges like creating tools for level design, shader programming, procedural generation, shaders, mobile games performance and AI systems.
+* Tehnology-wise, I am interested in challenges like creating tools for level design, shader programming, 3d software rendering, procedural generation, mobile games performance optimization, [constraint-based-game-programming](https://www.lexaloffle.com/pico-8.php), and AI systems.
 
 * I am programming-language / ecosystem agnostic. I've programmed web-scraping bots in Python, games in Unity, fullstack projects in Angular/Ruby-on-Rails, photo processing in Matlab. I've seen some s$#@!
 
