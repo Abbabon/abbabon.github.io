@@ -246,8 +246,7 @@ Done!
 * You can create 'presets' of the animations with multiple Transform objects (including the T-Pose), and cycle through them as necessary.
 
 ## TODO
-V publish the sample project on github and link from this post
-	Done! you can find it [here](https://github.com/Abbabon/TransformRecorder)
+* ~~publish the sample project on github and link from this post~~ you can find it [here](https://github.com/Abbabon/TransformRecorder)
 * create scriptable object assets dynamically for each recorded object
 * create a unity package for project
 * public on the unity assets store
