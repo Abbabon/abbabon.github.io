@@ -6,6 +6,8 @@ tags: [Unity, beginners, tutorials, hacks]
 comments: true
 ---
 
+EDIT 10.11.2020: You can find a sample project containing everything in this post [here](https://github.com/Abbabon/TransformRecorder).
+
 We all know the ol' trick of accessing the little 'cog' above the transform, which allows you to copy a default serialization of a components' value, and paste it.
 
 ![a simple trick for simple times](/img/posts/01_01_transform_copy.png)
@@ -244,7 +246,8 @@ Done!
 * You can create 'presets' of the animations with multiple Transform objects (including the T-Pose), and cycle through them as necessary.
 
 ## TODO
-* publish on github and link from this post
+V publish the sample project on github and link from this post
+	Done! you can find it [here](https://github.com/Abbabon/TransformRecorder)
 * create scriptable object assets dynamically for each recorded object
 * create a unity package for project
 * public on the unity assets store
