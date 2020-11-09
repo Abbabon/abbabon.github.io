@@ -1,16 +1,24 @@
 ---
 layout: page
-title: About me
-subtitle: Why you'd want to go on a date with me
+title: About
 ---
 
-My name is Inigo Montoya. I have the following qualities:
+Look, this being the internet and all, I will try to be low with the bio and succinct with the flavour.
 
-- I rock a great mustache
-- I'm extremely loyal to my family
+Assuming you've clicked on About you have some questions! So, here are some answers:
 
-What else do you need?
+* Hi! I'm Amit, a professional game developer and software engineer from Israel.
 
-### my history
+* Tehnology-wise, I am interested in challenges like creating tools for level design, shader programming, procedural generation, shaders, mobile games performance and AI systems.
 
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my movie](http://en.wikipedia.org/wiki/The_Princess_Bride_%28film%29) and it will answer **all** your questions.
+* I am programming-language / ecosystem agnostic. I've programmed web-scraping bots in Python, games in Unity, fullstack projects in Angular/Ruby-on-Rails, photo processing in Matlab. I've seen some s$#@!
+
+* Game-Genre-wise, I am interested in 4X, Tactics, Grand Strategy, Narrative Adventure, Souls-like, RPGs (cRPG, jRPG, tabletop, OSR), Roguelikes, Rougelites, Rhythm Games, Board Games, and even have my VR phases from time to time.
+
+* I currently own 7 mechanical keyboards. I wonder if my 1986 Model M qualifies; if it does then I own 8.
+
+* Mezookan is Hebrew for 'bearded'. My strength stems from my beard.
+
+Even more questions?
+
+You are welcome to [contact](../contact) me.
