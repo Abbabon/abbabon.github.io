@@ -4,6 +4,7 @@ title: How to create a gradient with Unity's Shader Graph?
 subtitle: Or - make shaders not textures
 tags: [Unity, shader-graph, tech-art, tutorials]
 image: /img/posts/Gradient-4.gif
+share-img: /img/posts/Gradient-4.gif
 comments: true
 ---
 
