@@ -24,6 +24,7 @@ navbar-links:
   Contact: "contact"
   Tags: "tags"
   Resources:
+    - Unity Assets: "assets"
     - Learn markdown: "http://www.markdowntutorial.com/"
 
 # Image to show in the navigation bar - image must be a square (width = height)
@@ -179,7 +180,7 @@ date_format: "%B %-d, %Y"
 # --- Don't need to touch anything below here (but you can if you want) --- #
 
 # Output options (more information on Jekyll's site)
-timezone: "America/Vancouver"
+timezone: "Asia/Jerusalem"
 markdown: kramdown
 highlighter: rouge
 permalink: /:year-:month-:day-:title/
@@ -274,6 +275,7 @@ prose:
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
+  - jemoji
 
 # Beautiful Jekyll / Dean Attali
 # 2fc73a3a967e97599c9763d05e564189
