@@ -79,6 +79,8 @@ These are whole gameplay systems that are worth looking into if you are not inte
 
 [Dialogue System](https://bit.ly/3n1TuYN) + [Yarn Spinner](https://yarnspinner.dev/)
 
+[Master Audio](https://bit.ly/3r1P8Uf)
+
 ## Novel Abilities
 
 These assets do either something special, that is either hard to reproduce, or just doesn't worth the time for most people to try to.
