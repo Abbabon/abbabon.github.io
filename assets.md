@@ -5,7 +5,7 @@ title: Assets
 
 These are (some) of the assets I use when I make games with Unity. They are categorized freeformly by I how I see them.
 
-When I will finish my post about assets (based on a talk I gave at [MakeGamesJLM](https://www.facebook.com/groups/407019109420168/?ref=pages_group_cta)), I will also link it here and add some information about each asset and why it's worth your money. But for now, just know that an asset marked with :pizza: means that it's great for game jams!
+When I will finish my post about assets (based on a talk I gave at [MakeGamesJLM](https://docs.google.com/presentation/d/1zdq6JJvbFkyDCvGvLpMfDTs95D2WDT1-FR3L0Xy_gXI/edit?usp=sharing)), I will also link it here and add some information about each asset and why it's worth your money. But for now, just know that an asset marked with :pizza: means that it's great for game jams!
 
 A short disclaimer - the asset store links are affiliated links. If you end up buying the asset through them you pay the same, but I a percentage of that... Which I can re-invest in other Unity Assets! And cover them for this blog. A good deal all around.
 
