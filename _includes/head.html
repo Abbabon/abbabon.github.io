@@ -96,6 +96,9 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@{{ site.author.twitter }}" />
   <meta name="twitter:creator" content="@{{ site.author.twitter }}" />
+  {% if page.share-img %}
+  <meta property="twitter:image" content="{{ page.share-img }}" />
+  {% endif %}
 
   {% if page.meta-title %}
   <meta name="twitter:title" content="{{ page.meta-title }}" />
