@@ -5,6 +5,7 @@ subtitle: Or - CMD+G to the moon
 tags: [Unity, tools, tutorials, odininspector]
 image: /img/posts/SceneNavigation/sheepshake.gif
 share-img: /img/posts/SceneNavigation/SceneNavigationEditor-1.png
+share-img-twitter: /img/posts/SceneNavigation/SceneNavigationEditor-Wide.png
 comments: true
 ---
 
