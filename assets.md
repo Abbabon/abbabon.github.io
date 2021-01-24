@@ -79,8 +79,12 @@ These are whole gameplay systems that are worth looking into if you are not inte
 
 [Dialogue System](https://bit.ly/3n1TuYN) + [Yarn Spinner](https://yarnspinner.dev/)
 
+## Platform-Specific
+
+[Steamworks Complete](http://bit.ly/2KmgS5i) - the one-stop-shop for steam releases. Integrate with Achievements, chat, voice, Cloud Saves, and everything else Steam.
+
 ## Novel Abilities
 
 These assets do either something special, that is either hard to reproduce, or just doesn't worth the time for most people to try to.
 
-// TBD
+[Curved World](http://bit.ly/3nBvBrz) - if you don't have the time to develop your own complex vertex displacement shader - you can use this to create mind-bending-inception-inspired effects. Or simply light-bend the event horizon.
