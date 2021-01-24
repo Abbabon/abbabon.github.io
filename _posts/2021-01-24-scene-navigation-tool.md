@@ -207,7 +207,7 @@ The thing to note is the TableList attribute. This will display any enumerable a
 
 And.. that's it, really! If you've followed along you'll have a working navigation tool! Hurrah! In case you've switched things around, you can find the full code [in this gist file](http://bit.ly/39dv5Lp). Congrats! Here's to Odin, you new one-eyed best friend.
 
+<iframe src="https://assetstore.unity.com/linkmaker/embed/package/89041/widget-wide?aid=1100lfvqc" style="width:600px; height:130px; border:0px;"></iframe>
+
 ## Additional Ideas
 This tool can be expanded on in many ways - For example, to open scene presets, to display information on the scenes, and I'm sure you can find more. I certainly will add more information here later on, as I create more tools for my super-secret project on which... I will not expand now. But if 2021 goes in the right direction, it will not be long before I write about it. Cheers!
-
-<iframe src="https://assetstore.unity.com/linkmaker/embed/package/89041/widget-wide?aid=1100lfvqc" style="width:600px; height:130px; border:0px;"></iframe>
