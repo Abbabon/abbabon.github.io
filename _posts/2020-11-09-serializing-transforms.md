@@ -5,6 +5,7 @@ subtitle: Or - how to freeze a moment in time
 tags: [Unity, beginners, tutorials, hacks]
 image: /img/posts/01_04_falling_down.gif
 share-img: /img/posts/01_03_the_boss.png
+share-img-twitter: /img/posts/01_03_the_boss.png
 comments: true
 ---
 
