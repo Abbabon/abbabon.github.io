@@ -58,11 +58,10 @@ It was eventually compiled into a [sequal book named 'The Dichotomy of Leadershi
 
 # Closing Notes
 
-Throughout the book, are many many times, at least thrice a chapter, where Willink and Babin mention how they were handling ‘THE BAD GUYS’ and even counting the amount of ‘BOGIES’ they killed as a badge of honor, attesting to the success of the mission. It left a sour taste in my mouth every time it was mentioned.
+Many time throughout the book, at least thrice a chapter, Willink and Babin mention how they were handling ‘THE BAD GUYS’ and even counting the amount of ‘BOGIES’ they killed as a badge of honor, attesting to the success of the mission. It left a sour taste in my mouth every time it was mentioned. In my opinion, killing should not be glorified, and when it serves as a benchmark to success we should re-examine our perspective.
+
 Correct me if I'm wrong, but there's nothing like it in the tech industries nowadays. At least until [our Snowcrash future](https://www.goodreads.com/book/show/40651883-snow-crash), in which we'll re-institute Seppuku on failure or something like that. 
+Making a deadline is not a life or death thing. Yet. 
 
-Making a deadline is not a life or death thing. In my opinion, killing should not be glorified, and when it serves as a benchmark to success we should re-examine our perspective.
-Phew. This took a lot longer than I anticipated. Maybe this isn't short enough.
-
-Jocko, if you're reading this - please don't come bursting through my door and hit me :(
+Phew. This took a lot longer than I anticipated. Maybe this isn't short enough. Jocko, if you're reading this - please don't come bursting through my door and hit me :(
 
