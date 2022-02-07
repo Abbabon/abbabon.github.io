@@ -13,7 +13,7 @@ Haha! I made it with 364 days without a blog post, which means it was not a full
 
 Today we are doing something a little bit different and moving towards shorter posts, which will allow me to post more frequently. And since I'm always reviewing my read books over on [goodreads](https://www.goodreads.com/user/show/11992439) , I see no reason not to include the expanded reviews here as well.
 
-We'll start with a book I really looked forward to and was very disappointed by - "Extreme Ownership" by the ex-navy seals Jocko Willink and Leif Babin, which is New York Times’ Bestseller and one of the highly regarded management books from the recent decade. 
+We'll start with a book I really looked forward to and was very disappointed by - ["Extreme Ownership"](https://amzn.to/3HBb2p6) by the ex-navy seals Jocko Willink and Leif Babin, which is New York Times’ Bestseller and one of the highly regarded management books from the recent decade. 
 
 This book aims to borrow techniques and approaches from the author's (rich) experiences in Iraq and use them in the corporate world to train managers on all levels (but mostly upper management) to "LEAD AND WIN". 
 
