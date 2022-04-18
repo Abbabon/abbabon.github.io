@@ -1,10 +1,10 @@
 # --- General options --- #
 
 # Name of website
-title: Mezookan
+title: Entrophy as a Service
 
 # Short description of your site
-description: Things I've learned about making games, and things I know I don't know yet (about making games).
+description: Making games, baking bread, and trying to stay productive. 
 
 # --- Local development options ---
 # If your website is hosted locally rather than on GitHub, then you need to uncomment the next two parameters to set the url and baseurl
