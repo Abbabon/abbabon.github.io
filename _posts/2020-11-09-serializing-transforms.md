@@ -8,8 +8,12 @@ share-img: /img/posts/01_03_the_boss.png
 share-img-twitter: /img/posts/01_03_the_boss.png
 comments: true
 ---
+[![openupm](https://img.shields.io/npm/v/com.mezookan.transforms-recorder?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.mezookan.transforms-recorder/)
 
-EDIT 10.11.2020: You can find a sample project containing everything in this post [here](https://github.com/Abbabon/TransformRecorder).
+
+EDIT 10.06.2022: Hi, I'm from the future, [UPM is mature now!](https://docs.unity3d.com/Manual/upm-ui.html) You can also use this tool as a package, [here](https://openupm.com/packages/com.mezookan.transforms-recorder/). I also solved an emberassing bug present in the previous version, 
+
+EDIT 10.11.2020: You can find a sample project containing everything in this post [here](https://github.com/Abbabon/TransformsRecorder).
 
 We all know the ol' trick of accessing the little 'cog' above the transform, which allows you to copy a default serialization of a components' value, and paste it.
 
@@ -249,7 +253,7 @@ Done!
 * You can create 'presets' of the animations with multiple Transform objects (including the T-Pose), and cycle through them as necessary.
 
 ## TODO
-* ~~publish the sample project on github and link from this post~~ you can find it [here](https://github.com/Abbabon/TransformRecorder)
+* ~~publish the sample project on github and link from this post~~ you can find it [here](https://github.com/Abbabon/TransformsRecorder)
 * create scriptable object assets dynamically for each recorded object
 * create a unity package for project
 * public on the unity assets store
