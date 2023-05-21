@@ -47,9 +47,9 @@ These can be installed using the Unity Package Manager and are worth their weigh
 
 These are packages that can help you program a bit smarter or faster. Or cleaner. We love SOLID programming here!
 
-[Extenject](https://bit.ly/33YktNy)
+[Zenject](https://github.com/modesttree/Zenject)
 
-[RSG Promises](https://github.com/Real-Serious-Games/C-Sharp-Promise)
+[UniTask](https://github.com/Cysharp/UniTask)
 
 ## Time-Savers
 

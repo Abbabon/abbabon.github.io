@@ -95,3 +95,8 @@ itch-io:
   name: "Itch.io"
   urlTemplate: "https://{value}.itch.io"
   icon: "fab fa-itch-io"
+
+mastodon:
+  name: "Mastodon"
+  urlTemplate: "https://mastodon.gamedev.place/{value}"
+  icon: "fab fa-mastodon"
