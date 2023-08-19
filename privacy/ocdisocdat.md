@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Privacy Policy
+permalink: /ocdisocdat/privacy.html
 ---
 
 **Privacy Policy**
