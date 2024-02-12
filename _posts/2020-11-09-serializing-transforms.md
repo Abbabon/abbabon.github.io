@@ -9,7 +9,7 @@ share-img-twitter: /assets/img/posts/01_03_the_boss.png
 comments: true
 ---
 
-[![openupm](https://img.shields.io/npm/v/com.mezookan.transforms-recorder?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.mezookan.transforms-recorder/)
+[![openupm](https://img.shields.io/npm/v/com.mezookan.transforms-recorder?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.mezookan.transforms-recorder/){:target="_blank"}
 
 
 EDIT 10.06.2022: Hi, I'm from the future, [UPM is mature now!](https://docs.unity3d.com/Manual/upm-ui.html) You can also use this tool as a package, [here](https://openupm.com/packages/com.mezookan.transforms-recorder/). I also solved an emberassing bug present in the previous version, 
