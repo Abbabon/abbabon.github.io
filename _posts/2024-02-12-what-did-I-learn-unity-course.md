@@ -8,7 +8,7 @@ share-img-twitter: /assets/img/posts/academit-thumb-rect.png
 comments: true
 ---
 
-This past summer, before (the war)[https://en.wikipedia.org/wiki/Israel%E2%80%93Hamas_war] shuffled our priorities, I had the opportunity to teach a beginner's course in Unity at (The Academic College of Tel-Aviv, Yaffo.)[https://www.int.mta.ac.il/] Targeted at CS students curious about video games, this course gave me an opportunity to revisit Unity's basics, and experience teaching for the first time.
+This past summer, before [the war](https://en.wikipedia.org/wiki/Israel%E2%80%93Hamas_war) shuffled our priorities, I had the opportunity to teach a beginner's course in Unity at [The Academic College of Tel-Aviv, Yaffo](https://www.int.mta.ac.il/)/ Targeted at CS students curious about video games, this course gave me an opportunity to revisit Unity's basics, and experience teaching for the first time.
 
 👾 I'm delighted to show my students' projects in the attached video! 👾
 
