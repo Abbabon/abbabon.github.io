@@ -3,11 +3,12 @@ layout: post
 title: How to copy Transform values from Play Mode into Edit Mode in Unity
 subtitle: Or - how to freeze a moment in time
 tags: [Unity, beginners, tutorials, hacks]
-image: /img/posts/01_04_falling_down.gif
-share-img: /img/posts/01_03_the_boss.png
-share-img-twitter: /img/posts/01_03_the_boss.png
+cover-img: /assets/img/posts/01_04_falling_down.gif
+share-img: /assets/img/posts/01_03_the_boss.png
+share-img-twitter: /assets/img/posts/01_03_the_boss.png
 comments: true
 ---
+
 [![openupm](https://img.shields.io/npm/v/com.mezookan.transforms-recorder?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.mezookan.transforms-recorder/)
 
 
@@ -17,21 +18,21 @@ EDIT 10.11.2020: You can find a sample project containing everything in this pos
 
 We all know the ol' trick of accessing the little 'cog' above the transform, which allows you to copy a default serialization of a components' value, and paste it.
 
-![a simple trick for simple times](/img/posts/01_01_transform_copy.png)
+![a simple trick for simple times](/assets/img/posts/01_01_transform_copy.png)
 
 But what will you do with a hierarchy that is a bit more... complex?
 
-![and this goes on for a while...](/img/posts/01_02_hierarchy.png)
+![and this goes on for a while...](/assets/img/posts/01_02_hierarchy.png)
 
 Recently I've worked on a game with amazing character models. They were very rich in hierarchy, and had multiple animation sets. Their FBXs were big, so we wanted to use the same FBXs for different scene with the characters.
 
 Since I can't use the original model, I'll use my go-to victim, The Boss model from [Mixamo](https://www.mixamo.com/)
 
-![and this goes on for a while...](/img/posts/01_03_the_boss.png)
+![and this goes on for a while...](/assets/img/posts/01_03_the_boss.png)
 
 Let's say I want to position the model in a specific scene, 'frozen' on this animation's last frame.
 
-![](/img/posts/01_04_falling_down.gif)
+![](/assets/img/posts/01_04_falling_down.gif)
 
 Poor boss. They found him like this in the back alley...
 
@@ -50,7 +51,7 @@ Scriptable Objects are a tool to share data between different classes, but very 
 
 Here is an example file:
 
-![](/img/posts/01_05_scriptable_object_yaml.png)
+![](/assets/img/posts/01_05_scriptable_object_yaml.png)
 
 Why would someone use indentation-based formatting like YAML? or indentation-basd programming languages....?
 I digress. Let's write some C#!
@@ -232,7 +233,7 @@ Pay <3 - the order is reversed, since we want to set these properties, and speci
 
 Your componenet should look like this:
 
-![](/img/posts/01_06_component.png)
+![](/assets/img/posts/01_06_component.png)
 
  * Run the game
  * Press the 'Record Transforms' button on the component
@@ -240,13 +241,13 @@ Your componenet should look like this:
 
 Your scriptable object should contain the hierarchy now:
 
-![](/img/posts/01_07_filled_scriptable_object.png)
+![](/assets/img/posts/01_07_filled_scriptable_object.png)
 
  * Press 'Load Transforms' on the component
 
 Done!
 
-![](/img/posts/01_08_done.png)
+![](/assets/img/posts/01_08_done.png)
 
 ## Further expansion of this component
 * You don't have to necessarily record Transforms. I can see this easily used for stateful scripts. Maybe you want to capture a level's state to save it? Or maybe you need to capture the active-state of gameobjects in a certain situation in your game for debugging?

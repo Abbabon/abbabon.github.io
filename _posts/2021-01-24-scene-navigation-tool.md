@@ -3,9 +3,9 @@ layout: post
 title: Scene Navigation tool implemented easily with Odin
 subtitle: Or - CMD+G to the moon
 tags: [Unity, tools, tutorials, odininspector]
-image: /img/posts/SceneNavigation/sheepshake.gif
-share-img: /img/posts/SceneNavigation/SceneNavigationEditor-1.png
-share-img-twitter: /img/posts/SceneNavigation/SceneNavigationEditor-Wide.png
+cover-img: /assets/img/posts/SceneNavigation/sheepshake.gif
+share-img: /assets/img/posts/SceneNavigation/SceneNavigationEditor-1.png
+share-img-twitter: /assets/img/posts/SceneNavigation/SceneNavigationEditor-Wide.png
 comments: true
 ---
 
@@ -39,14 +39,16 @@ Why you should make one?
 
 Here is the basic SceneId file from my project:
 
-	namespace Game.Core.Scripts.GameTypes  
+{% highlight csharp linenos %}
+namespace Game.Core.Scripts.GameTypes  
+{  
+	public enum SceneId  
 	{  
-	 public enum SceneId  
-	 {  
-	 	MainMenu = 0,  
+		MainMenu = 0,  
 		Run = 1  
-	 }  
-	}
+	}  
+}
+{% endhighlight %}
 
 You can make one of your own. I might expand one day on my own Scene Management tool, but this is the base of it.
 
@@ -55,7 +57,7 @@ This is the only file we'll need. I would recommend creating a seperate folder a
 
 This is my vision for the final look of the tool (for now):
 
-![](/img/posts/SceneNavigation/SceneNavigationEditor-1.png)
+![](/assets/img/posts/SceneNavigation/SceneNavigationEditor-1.png)
 
 So conceptually we want to iterate each scene from our SceneId enum, and create a button to launch the relevant scene. Simple enough.
 
@@ -63,14 +65,16 @@ Our class is going to inherit from the class OdinEditorWindow, which gives us ac
 
 Ahem. Let's also use the attribute which will make the editor consider this class as a menu item. It's called - surprisingly, MenuItem. The attribute can receive the name of the menu item as a parameter, as well as a [hidden-and-not-well-documented](https://docs.unity3d.com/ScriptReference/MenuItem.html) keyboard shortcut.
 
-    public class SceneNavigationEditorWindow : OdinEditorWindow
-    {
-        [MenuItem("Tools/Scene Navigation %g")]
-        private static void OpenWindow()
-        {
-            GetWindow<SceneNavigationEditorWindow>().Show();
-        }
-    }
+{% highlight csharp linenos %}
+public class SceneNavigationEditorWindow : OdinEditorWindow
+{
+	[MenuItem("Tools/Scene Navigation %g")]
+	private static void OpenWindow()
+	{
+		GetWindow<SceneNavigationEditorWindow>().Show();
+	}
+}
+{% endhighlight %}
 
 Go back to Unity and press CMD/CTRL + G. AMAZING! You now have an empty window.
 And what shall we do with all that space....
@@ -81,24 +85,26 @@ Let's get back to the original idea. We want to create a class that will represe
 
 Let's begin. This part is straightforward.
 
-	public class GameSceneActions
-    {
-        private SceneId _sceneId;
-        public readonly string Name;
+{% highlight csharp linenos %}
+public class GameSceneActions
+{
+	private SceneId _sceneId;
+	public readonly string Name;
 
-        private string _assetPath = null;
+	private string _assetPath = null;
 
-        public GameSceneActions(SceneId sceneId)
-        {
-            _sceneId = sceneId;
-            var sceneIdString = _sceneId.ToString();
-            Name = string.Concat(sceneId.ToString()
-                    .Select(character => char.IsUpper(character) ? " " + character : character.ToString()))
-                .TrimStart(' ');
+	public GameSceneActions(SceneId sceneId)
+	{
+		_sceneId = sceneId;
+		var sceneIdString = _sceneId.ToString();
+		Name = string.Concat(sceneId.ToString()
+				.Select(character => char.IsUpper(character) ? " " + character : character.ToString()))
+			.TrimStart(' ');
 
-			LocateSceneAsset(sceneIdString);
-        }
+		LocateSceneAsset(sceneIdString);
 	}
+}
+{% endhighlight %}
 
 You regex-fu might prove useful in making that last part shorter. I'm rusty, so I'm leaving it like this for readability.
 
@@ -110,64 +116,68 @@ Since we are getting the full path (including all of the parent directories), th
 
 Here is the full method:
 
-	private void LocateSceneAsset(string sceneIdString)
+{% highlight csharp linenos %}
+private void LocateSceneAsset(string sceneIdString)
+{
+	var assetsPaths = AssetDatabase.FindAssets($"t:scene {sceneIdString}");
+	if (assetsPaths.Length == 0)
 	{
-		var assetsPaths = AssetDatabase.FindAssets($"t:scene {sceneIdString}");
-		if (assetsPaths.Length == 0)
-		{
-			Debug.Log($"No Scene Assets Found by SceneNavigationEditorWindow for {sceneIdString}");
-			return;
-		}
+		Debug.Log($"No Scene Assets Found by SceneNavigationEditorWindow for {sceneIdString}");
+		return;
+	}
 
-		foreach (var guid in assetsPaths) //for cases in which several scene of the same name exists
-		{
-			var path = AssetDatabase.GUIDToAssetPath(guid);
-			var pathParts = path.Split('/');
+	foreach (var guid in assetsPaths) //for cases in which several scene of the same name exists
+	{
+		var path = AssetDatabase.GUIDToAssetPath(guid);
+		var pathParts = path.Split('/');
 
-			if (path.Contains(".unity"))
+		if (path.Contains(".unity"))
+		{
+			var assetName = pathParts.Last().Replace(".unity", "");
+			if (String.Equals(assetName, sceneIdString, StringComparison.CurrentCultureIgnoreCase))
 			{
-				var assetName = pathParts.Last().Replace(".unity", "");
-				if (String.Equals(assetName, sceneIdString, StringComparison.CurrentCultureIgnoreCase))
-				{
-					_assetPath = path;
-					break;
-				}
+				_assetPath = path;
+				break;
+			}
 
-				if (assetName.Contains(sceneIdString))
-				{
-					_assetPath = path;
-					break;
-				}
+			if (assetName.Contains(sceneIdString))
+			{
+				_assetPath = path;
+				break;
+			}
 
-				if (sceneIdString.Contains(assetName))
-				{
-					_assetPath = path;
-					break;
-				}
+			if (sceneIdString.Contains(assetName))
+			{
+				_assetPath = path;
+				break;
 			}
 		}
 	}
+}
+{% endhighlight %}
 
 The last method we need to add to GameSceneActions is the ability to actually load the scene. As I detailed before, this will use EditorSceneManager, which controls the editor. I've also added a call to save the scene changes before transitioning. This is a bit backwards (like most of the UnityEditor namespace TBH) but we'll actually press the Save and Save Project menu items from code with EditorApplication. Wicked.
 
-	[Button("Launch Scene")]
-	public void OpenScene()
+{% highlight csharp linenos %}
+[Button("Launch Scene")]
+public void OpenScene()
+{
+	if (_assetPath != null)
 	{
-		if (_assetPath != null)
-		{
-			EditorApplication.ExecuteMenuItem("File/Save");
-			EditorApplication.ExecuteMenuItem("File/Save Project");
+		EditorApplication.ExecuteMenuItem("File/Save");
+		EditorApplication.ExecuteMenuItem("File/Save Project");
 
-			if (Event.current != null && Event.current.alt)
-			{
-				EditorSceneManager.OpenScene(_assetPath, OpenSceneMode.Additive);
-			}
-			else
-			{
-				EditorSceneManager.OpenScene(_assetPath);    
-			}
+		if (Event.current != null && Event.current.alt)
+		{
+			EditorSceneManager.OpenScene(_assetPath, OpenSceneMode.Additive);
+		}
+		else
+		{
+			EditorSceneManager.OpenScene(_assetPath);    
 		}
 	}
+}
+{% endhighlight %}
 
 Wait wait, what is Button ?? This is the true power of Odin right here... The ability to make every method in your serializable classes a button you can press in the editor. Super helpful for testing, and prevents you from creating custom renderers for you components. All with a simple attribute.
 
@@ -178,29 +188,31 @@ You'll also notice I've added the ability to open a scene in an additive manner 
 Now let's query for all of the openable scenes once we launch the menu, and display them in the window.
 Replace your SceneNavigationEditorWindow code with this:
 
-    public class SceneNavigationEditorWindow : OdinEditorWindow
-    {
-        [MenuItem("Tools/Scene Navigation %g")]
-        private static void OpenWindow()
-        {
-            GetWindow<SceneNavigationEditorWindow>().GameScenes = InitializeGameScenes();
-            GetWindow<SceneNavigationEditorWindow>().Show();
-        }
+{% highlight csharp linenos %}
+public class SceneNavigationEditorWindow : OdinEditorWindow
+{
+	[MenuItem("Tools/Scene Navigation %g")]
+	private static void OpenWindow()
+	{
+		GetWindow<SceneNavigationEditorWindow>().GameScenes = InitializeGameScenes();
+		GetWindow<SceneNavigationEditorWindow>().Show();
+	}
 
-        [TableList(AlwaysExpanded = true, IsReadOnly = true, HideToolbar = true)]
-        public List<GameSceneActions> GameScenes;
+	[TableList(AlwaysExpanded = true, IsReadOnly = true, HideToolbar = true)]
+	public List<GameSceneActions> GameScenes;
 
-        private static List<GameSceneActions> InitializeGameScenes()
-        {
-            var gameScenes = new List<GameSceneActions>();
-            foreach (var sceneId in Enum.GetValues(typeof(SceneId)))
-            {
-                var sceneActions = new GameSceneActions((SceneId) sceneId);
-                gameScenes.Add(sceneActions);
-            }
-            return gameScenes;
-        }
-    }
+	private static List<GameSceneActions> InitializeGameScenes()
+	{
+		var gameScenes = new List<GameSceneActions>();
+		foreach (var sceneId in Enum.GetValues(typeof(SceneId)))
+		{
+			var sceneActions = new GameSceneActions((SceneId) sceneId);
+			gameScenes.Add(sceneActions);
+		}
+		return gameScenes;
+	}
+}
+{% endhighlight %}
 
 Nothing fancy here code-wise, just added a static class to enumerate the SceneIds and create the values.
 

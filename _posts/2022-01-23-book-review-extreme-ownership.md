@@ -3,9 +3,9 @@ layout: post
 title: Book Review - Extreme Ownership
 subtitle: By Jocko Willink and Leif Babin
 tags: [leadership, book-review]
-image: /img/posts/extreme-ownership-book-cover.png
-share-img: /img/posts/extreme-ownership-book-cover.png
-share-img-twitter: /img/posts/extreme-ownership-book-cover.png
+cover-img: /assets/img/posts/extreme-ownership-book-cover.png
+share-img: /assets/img/posts/extreme-ownership-book-cover.png
+share-img-twitter: /assets/img/posts/extreme-ownership-book-cover.png
 comments: true
 ---
 
@@ -22,7 +22,7 @@ Look, *I get why people love this book*. And by people, I mean post-9-11 young A
 In my opinion, the book suffers from a severe juxtaposition between cut-throat-testosterone-induced military jargon and the banal office politics that sound like they are taken straight from Office Space. It’s not a joke. The author could describe how increased planning was vital to resolving a deadly hostage situation In Iraq, and in the next paragraph, they explain how it is relevant to the manufacturing of toilet paper. Both in the same tone. 
 
 <p align="center">
-  <img src="/img/office-space-gif-1.gif" />
+  <img src="/assets/img/office-space-gif-1.gif" />
 </p>
 
 Believe it or not, the corporate world ISN’T a battlefield. When your company loses, you don’t DIE. If a product sucks, you simply make a new one, There’s even something to be said about the perks of failing in the corporate and startup worlds. [Some even say it’s necessary to do it and fast](https://www.forbes.com/sites/sunniegiles/2018/04/30/how-to-fail-faster-and-why-you-should/?sh=1903491c1779). In my experience, your competitors today might be your 'comrades' tomorrow when you move to another company which pays better or has a better-fitting culture. Or is that a defection in Jocko-speak? 

@@ -3,8 +3,8 @@ layout: post
 title: How to create a gradient with Unity's Shader Graph?
 subtitle: Or - make shaders not textures
 tags: [Unity, shader-graph, tech-art, tutorials]
-image: /img/posts/Gradient-4.gif
-share-img: /img/posts/Gradient-4.gif
+cover-img: /assets/img/posts/Gradient-4.gif
+share-img: /assets/img/posts/Gradient-4.gif
 comments: true
 ---
 
@@ -13,16 +13,18 @@ Gradients. They are everywhere. From menus, to backgrounds, particle systems and
 So in this post (in which I am also learning how to tutorialize), I'll show you a quick way of blending two colour together. Why is it so hard, Unity?
 
 ## So how's this shader is built?
-	Just a note before we begin - in order to write this shader you need to have the Shader Graph package already installed. There are plenty of tutorials online so I won't repeat the process here, unless I make a full Shader Graph series later on. I will just assume basic knowledge in Unity and URP/HDRP.
+	Just a note before we begin - in order to write this shader you need to have the Shader Graph package already installed. 
+	There are plenty of tutorials online so I won't repeat the process here, unless I make a full Shader Graph series later on. 
+	I will just assume basic knowledge in Unity and URP/HDRP.
 
 Let's create a new shader. These are the properties I would expose - two colours to blend, and a 'height' parameter slider. This parameter will give us control over the colours 'blend point'. More on that later. Exposing the values means we can animate it, change it through the material according to some other variables, environment, player settings, and everything you want.
 
-![Variables](/img/posts/Gradient-1.png)
+![Variables](/assets/img/posts/Gradient-1.png)
 
 Now let's think about how to colour each pixel. Each pixel should get his colour based on his location across an axis (in this example - the Y axis, but you could use any axis). The property we'll use for this is of course its UV values. [You can check here the great explenation and visualization by CodeMonkey](https://www.youtube.com/watch?v=FGL6SffDeVU).
 So, we will sample the colours and use the [Lerp Node](https://docs.unity3d.com/Packages/com.unity.shadergraph@6.9/manual/Lerp-Node.html) according to the UV value of our pixel. Again, in this example I want a sky gradient from black to purple. We will then also use the Alpha values of these colour. And here is the result!
 
-![Sampling](/img/posts/Gradient-2.png)
+![Sampling](/assets/img/posts/Gradient-2.png)
 
 Pay <3 to 2 things:
 1. UVs are from 0 to 1, and go 'bottom-to-top' on a mesh. So our direction is messed up. Nothing a [one-minus node](https://docs.unity3d.com/Packages/com.unity.shadergraph@6.9/manual/One-Minus-Node.html) can't fix!
@@ -30,11 +32,11 @@ Pay <3 to 2 things:
 
 These are the final result:
 
-![With UVs](/img/posts/Gradient-3.png)
+![With UVs](/assets/img/posts/Gradient-3.png)
 
 You can also enhance the shader to make some 'animations' very easily but scrolling the uv values a bit with Time nodes or something like that. Use all axis! Get Creative!
 
-![dafuq is this](/img/posts/Gradient-4.gif)
+![dafuq is this](/assets/img/posts/Gradient-4.gif)
 
 ## Alternatives to using this Shader:
 1. Adding a pre-blended texture as a texture.
@@ -47,7 +49,7 @@ You can also enhance the shader to make some 'animations' very easily but scroll
 
 	A gradient-based graph would look like this:
 
-  ![using Gradient node](/img/posts/Gradient-5.png)
+  ![using Gradient node](/assets/img/posts/Gradient-5.png)
 
 
 ## Cons for using this shader

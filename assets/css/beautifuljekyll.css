@@ -60,7 +60,7 @@ a:focus {
   color: {{ site.hover-col | default: "#0085A1" }};
 }
 blockquote {
-  color: #808080;
+  color: {{ site.quote-col | default: "#808080" }};
   font-style: italic;
 }
 blockquote p:first-child {
@@ -733,7 +733,7 @@ nav.top-nav-short-permanent ~ header > .intro-header.big-img {
     padding: 9.375rem 0;
   }
   .intro-header .page-heading h1 {
-    font-size: 5rem;
+    font-size: 4rem;
   }
   .intro-header .post-heading h1 {
     font-size: 3.125rem;
@@ -781,7 +781,7 @@ nav.top-nav-short-permanent ~ header > .intro-header.big-img {
   font-weight: 800;
   letter-spacing: 1px;
   padding: 0.625rem 0.3125rem;
-  background-color: #FFF;
+  background-color: {{ site.page-link-back-col | default: "#FFF" }};;
   border-radius: 0;
   color: {{ site.text-col | default: "#404040" }};
   padding: 0.75rem 1rem;
@@ -838,9 +838,12 @@ table tr td :last-child {
 
 code {
   padding: 0.125rem 0.25rem;
-  color: #c7254e;
   background-color: #f9f2f4;
   border-radius: 0.25rem;
+}
+
+.highlight {
+  color: {{ site.code-high-col}};
 }
 
 pre code {
@@ -854,6 +857,7 @@ pre {
   line-height: 1.5em;
   border-radius: 0.25rem;
   padding: 0.59375rem;
+  color: {{ site.code-col}};
 }
 .highlight pre {
   border: none;
@@ -866,7 +870,7 @@ pre {
   background-size: auto 3em;
   background-position-y: 0.625rem;
   border: 1px solid rgba(0,0,0,0.1);
-  border-left: 0.4375rem solid #444;
+  border-left: 0.4375rem solid {{ site.code-high-col}};
 }
 .highlight > pre:not([class~="highlight"]) { /* code block with line number */
   padding: 0;
@@ -880,7 +884,7 @@ pre {
   margin: 0;
 }
 .highlight pre.lineno {
-  color: rgba(0,0,0,0.3);
+  color: {{ site.code-linenum | default: "#ffffff"}};
   border-radius: 0;
   border-right: 2px solid #444;
 }
@@ -923,6 +927,7 @@ pre {
   border: 1px solid #eee;
   border-left-width: 0.3125rem;
   border-radius: 0.3125rem 0.1875rem 0.1875rem 0.3125rem;
+  color: {{ site.box-col }}
 }
 
 .box-note {

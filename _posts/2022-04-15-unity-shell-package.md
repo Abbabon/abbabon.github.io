@@ -3,9 +3,9 @@ layout: post
 title: Unity Shell - run command-line tasks from Unity
 subtitle: yet another new package is born
 tags: [unity, package, tools, utilities]
-image: /img/posts/rmrf.png
-share-img: /img/posts/rmrf.png
-share-img-twitter: /img/posts/rmrf.png
+cover-img: /assets/img/posts/rmrf.png
+share-img: /assets/img/posts/rmrf.png
+share-img-twitter: /assets/img/posts/rmrf.png
 comments: true
 ---
 
@@ -50,7 +50,7 @@ So after forking, some gardening and consulting, I'm proud to introduce [Unity S
 ## Running shell commands... NOT from code!
 The original repository had an interesting idea I decided to implement in our project - it had 'presets' of commands as a scriptable object you can create for the Muggles in you dev team that knows how to work with Unity - but not why awk is awesome. You can write installers, symbol parsers, management utilities and more, without bothering with the `UnityEditor` namespace on the dreadful `OnGUI` loop. Here's the simplest of examples:
 
-<p align="center"><img src="/img/posts/Pasted_image_20220418155535.png"></p>
+<p align="center"><img src="/assets/img/posts/Pasted_image_20220418155535.png"></p>
 
 # Next Steps
 * In the spirit of open source and accessability, upload the package to the awesome [OpenUPM](https://openupm.com/) project. This requires getting to know the package manitainane pipeline and maybe some more gardening. 

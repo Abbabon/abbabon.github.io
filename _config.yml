@@ -145,12 +145,25 @@ navbar-var-length: false
 # --- Colours / background image --- #
 ######################################
 
+# Dracula Color Palette - https://en.wikipedia.org/wiki/Dracula_(color_scheme)
+# Background		#282a36	40 42 54	231° 15% 18%
+# Current Line		#44475a	68 71 90	232° 14% 31%
+# Foreground		#f8f8f2	248 248 242	60° 30% 96%
+# Comment		#6272a4	98 114 164	225° 27% 51%
+# Cyan		#8be9fd	139 233 253	191° 97% 77%
+# Green		#50fa7b	80 250 123	135° 94% 65%
+# Orange		#ffb86c	255 184 108	31° 100% 71%
+# Pink		#ff79c6	255 121 198	326° 100% 74%
+# Purple		#bd93f9	189 147 249	265° 89% 78%
+# Red		#ff5555	255 85 85	0° 100% 67%
+# Yellow		#f1fa8c	241 250 140	65° 92% 76%
+
+
 # Personalize the colours in your website. Colour values can be any valid CSS colour
 
 navbar-col: "#44475a"
 navbar-text-col: "#f8f8f2"
 navbar-children-col: "#44475a"
-
 page-col: "#282a36"
 link-col: "#50fa7b"
 hover-col: "#ffb86c"
@@ -163,13 +176,16 @@ footer-link-col: "#bd93f9"
 text-col: "#f8f8f2"
 preview-col: "#8be9fd"
 heading-col: "#8be9fd"
+page-link-back-col: "#44475a"
+quote-col: "#f1fa8c"
 
 #for warning, error and info boxes
 box-col: "#44475a"
 
 #for code 'highlights'
 code-col: "#f8f8f2"
-code-high-col: "#f1fa8c"
+code-high-col: "#8be9fd"
+code-linenum: "#f8f8f2"
 
 # Alternatively, the navbar, footer, and page background can be set to an image
 # instead of colour

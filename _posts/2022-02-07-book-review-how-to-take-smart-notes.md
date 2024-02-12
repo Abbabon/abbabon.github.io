@@ -3,9 +3,9 @@ layout: post
 title: Book Review - How to take Smart Notes
 subtitle: By Sönke Ahrens
 tags: [meta, writing, book-review]
-image: /img/posts/httsn-book-cover.png
-share-img: /img/posts/httsn-book-cover.png
-share-img-twitter: /img/posts/httsn-book-cover.png
+cover-img: /assets/img/posts/httsn-book-cover.png
+share-img: /assets/img/posts/httsn-book-cover.png
+share-img-twitter: /assets/img/posts/httsn-book-cover.png
 comments: true
 ---
 I have a friend that stopped smoking once. He actually tried multiple times, but that time stuck the longest, at least until our current programming project, which made him fall back in. One of the main factors of him quitting, he claimed, was [Allen Carr's writing in the book 'Easy Way to Stop Smoking'](https://amzn.to/34nz4Wc). The main principle, he said, can be understood within a few pages. Carr himself preaches that the only way to stop is to internalize some kind of inner truth, that the power to stop is within you all along. It might take you years to figure it out - but he is positive that you will do so sometime. And while some readers figure it out in the middle and stop reading there, other people still read the whole damn thing.
