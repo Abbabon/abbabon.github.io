@@ -8,6 +8,12 @@ _site
 Thumbs.db
 ehthumbs.db
 
+# theme
+beautiful-jekyll-theme-*.gem
+
+# jekyll
+.Gemfile.lock
 Gemfile.lock
 
-beautiful-jekyll-theme-*.gem
+# obsidian
+.obsidian/workspace
