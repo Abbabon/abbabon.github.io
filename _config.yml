@@ -59,7 +59,7 @@ social-network-links:
   twitter: abbabon
   itchio: abbabon
   linkedin: "amitnetanel/"
-  mastodon: "@mezookan"
+  mastodon: "mastodon.gamedev.place/@mezookan"
 #  medium: yourname
 #  reddit: yourname
 #  xing: yourname
@@ -93,8 +93,8 @@ social-network-links:
 
 # Change all these values or delete the ones you don't want.
 # Important: you must keep the "name" parameter, everything else you can remove
-author:
-  name: Amit Netanel's Blog
+author: Amit Netanel
+name: Amit Netanel's Blog
 
 # If you want your website to generate an RSS feed, provide a description
 # The URL for the feed will be https://<your_website>/feed.xml
@@ -322,7 +322,3 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   #- jemoji
-
-# Beautiful Jekyll / Dean Attali
-# 2fc73a3a967e97599c9763d05e564189
-
