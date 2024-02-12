@@ -15,4 +15,4 @@ Contact forms remind me of the days I had to wait for my mom to get off the line
 
 But I'm lazy. Maybe I should just add a cute bot here instead. Cute, un-harmful, completely innocent service bot. Boop!
 
-![Hello Human](/img/hal9000.jpg)
+![Hello Human](/assets/img/hal9000.jpg)
