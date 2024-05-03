@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Privacy Policy
-permalink: /araratfm/privacy.html
+permalink: /araratfm/privacy-updated.html
 ---
 
 **Privacy Policy**
