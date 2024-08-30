@@ -17,11 +17,13 @@ end
 subgraph store and sync
 NAS[(NAS)]
 AS(((Adobe Sync)))
+GP(((Google Photos)))
 end
 
 X100VI --Import RAF+JPEG\nvia Cable--> LrC
 iPhone --Import HEIC\nvia PhotoSync----> NAS
 iPhone --Edit and Manage Favorites--> Lr
+iPhone --Backup (High-Quality)--> GP
 
 LrC --Backup Catalogue\nvia Synology Drive--> NAS
 LrC --Store Files--> NAS
