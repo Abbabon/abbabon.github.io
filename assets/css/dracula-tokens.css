@@ -1,0 +1,301 @@
+---
+layout: null
+---
+/* ===========================================================================
+   FONTS — Lora (serif body) + Open Sans (sans headings), the Beautiful Jekyll
+   defaults this blog keeps. Both are Google Fonts; we load them from the
+   Google Fonts CDN. Source Code Pro stands in for the monospace code face.
+   =========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Source+Code+Pro:wght@400;500;600&display=swap');
+
+:root {
+  /* Families */
+  --font-serif: 'Lora', 'Times New Roman', Georgia, serif;
+  --font-sans:  'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono:  'Source Code Pro', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Role aliases */
+  --font-body:     var(--font-serif); /* paragraphs, post body */
+  --font-heading:  var(--font-sans);  /* h1–h6, nav, buttons, meta labels */
+  --font-meta:     var(--font-serif); /* italic post meta */
+  --font-code:     var(--font-mono);
+}
+
+/* ===========================================================================
+   COLORS — the Dracula palette
+   "Master the Disaster" inherits the canonical Dracula color scheme
+   (https://draculatheme.com). Base hues below, semantic aliases beneath.
+   =========================================================================== */
+
+:root {
+  /* --- Dracula base palette --- */
+  --dr-background:    #282a36; /* page background */
+  --dr-current-line:  #44475a; /* surfaces, navbar, footer, selection */
+  --dr-selection:     #44475a;
+  --dr-foreground:    #f8f8f2; /* primary text */
+  --dr-comment:       #6272a4; /* muted text, code comments */
+  --dr-cyan:          #8be9fd; /* headings, links-in-code, accents */
+  --dr-green:         #50fa7b; /* primary link color */
+  --dr-orange:        #ffb86c; /* hover, post-meta, warning */
+  --dr-pink:          #ff79c6; /* highlights, entities */
+  --dr-purple:        #bd93f9; /* footer links, strings */
+  --dr-red:           #ff5555; /* errors, danger */
+  --dr-yellow:        #f1fa8c; /* blockquotes, emphasis */
+
+  /* --- A couple of derived shades for depth (cards, borders, hovers) --- */
+  --dr-background-raised: #2f313f; /* slightly lifted surface */
+  --dr-current-line-2:    #383b4d; /* hover on current-line surfaces */
+  --dr-border:            #3a3d4d; /* hairline borders on dark */
+  --dr-border-strong:     #565a72; /* visible borders / dividers */
+
+  /* ----------------------------------------------------------------------
+     SEMANTIC ALIASES — reach for these in components, not the raw hues.
+     ---------------------------------------------------------------------- */
+
+  /* Surfaces */
+  --surface-page:    var(--dr-background);
+  --surface-card:    var(--dr-current-line);
+  --surface-raised:  var(--dr-background-raised);
+  --surface-inset:   #21232e;            /* code blocks, wells */
+  --surface-navbar:  var(--dr-current-line);
+  --surface-footer:  var(--dr-current-line);
+  --surface-hover:   var(--dr-current-line-2);
+
+  /* Text */
+  --text-body:       var(--dr-foreground);
+  --text-heading:    var(--dr-cyan);
+  --text-muted:      var(--dr-comment);
+  --text-subtle:     #9aa0c4;
+  --text-meta:       var(--dr-orange);
+  --text-on-accent:  var(--dr-background);
+
+  /* Links & interaction */
+  --link:            var(--dr-green);
+  --link-hover:      var(--dr-orange);
+  --link-footer:     var(--dr-purple);
+  --focus-ring:      var(--dr-cyan);
+  --selection-bg:    var(--dr-orange);
+  --selection-fg:    #ffffff;
+
+  /* Accents (use sparingly, with intent) */
+  --accent-primary:   var(--dr-green);
+  --accent-secondary: var(--dr-purple);
+  --accent-tertiary:  var(--dr-pink);
+  --accent-cyan:      var(--dr-cyan);
+
+  /* Quotes / emphasis */
+  --quote:           var(--dr-yellow);
+
+  /* Status / notification boxes */
+  --status-note:     var(--dr-cyan);
+  --status-info:     var(--dr-purple);
+  --status-warning:  var(--dr-orange);
+  --status-error:    var(--dr-red);
+  --status-success:  var(--dr-green);
+
+  /* Borders */
+  --border-hairline: var(--dr-border);
+  --border-divider:  var(--dr-border-strong);
+}
+
+/* ===========================================================================
+   TYPOGRAPHY — scale, weights, line-heights.
+   Body is 18px (1.125rem) Lora; headings are heavy (800) Open Sans.
+   Values mirror Beautiful Jekyll's rem scale.
+   =========================================================================== */
+
+:root {
+  /* Base */
+  --text-base-size: 1.125rem;  /* 18px body */
+  --leading-body:   1.5;
+  --leading-tight:  1.1;
+
+  /* Type scale (rem) */
+  --fs-xs:   0.8125rem; /* 13px — navbar items, small labels */
+  --fs-sm:   0.875rem;  /* 14px — captions, code, footer */
+  --fs-base: 1.125rem;  /* 18px — body */
+  --fs-md:   1.25rem;   /* 20px */
+  --fs-lg:   1.5rem;    /* 24px — h3 */
+  --fs-xl:   1.6875rem; /* 27px — subheadings */
+  --fs-2xl:  1.875rem;  /* 30px — h2 / post-title */
+  --fs-3xl:  2.25rem;   /* 36px — h1 / large post-title */
+  --fs-4xl:  3.125rem;  /* 50px — page heading */
+  --fs-5xl:  4rem;      /* 64px — hero page heading (xl screens) */
+
+  /* Weights */
+  --fw-light:    300; /* @kind other */
+  --fw-regular:  400; /* @kind other */
+  --fw-medium:   500; /* @kind other */
+  --fw-semibold: 600; /* @kind other */
+  --fw-bold:     700; /* @kind other */
+  --fw-heavy:    800; /* @kind other */
+
+  /* Letter-spacing */
+  --tracking-nav: 0.0625rem; /* uppercase navbar */
+  --tracking-btn: 1px;       /* uppercase pagination/buttons */
+}
+
+/* ===========================================================================
+   SPACING — Bootstrap-derived rem rhythm used across the blog.
+   Paragraph rhythm is generous (30px between blocks).
+   =========================================================================== */
+
+:root {
+  --space-0:   0;
+  --space-1:   0.3125rem; /* 5px  — tight gaps, tag padding */
+  --space-2:   0.625rem;  /* 10px — small gaps */
+  --space-3:   0.9375rem; /* 15px — box padding */
+  --space-4:   1.25rem;   /* 20px — standard block gap */
+  --space-5:   1.875rem;  /* 30px — paragraph rhythm, section gap */
+  --space-6:   2.1875rem; /* 35px — feed item padding (desktop) */
+  --space-7:   3.125rem;  /* 50px — footer / large section gap */
+  --space-8:   5rem;      /* 80px — intro header top margin */
+
+  /* Layout */
+  --container-md:  46rem;   /* readable post column */
+  --container-lg:  62rem;   /* wide content */
+  --navbar-height: 3.125rem;
+  --content-measure: 70ch;  /* max readable line length */
+}
+
+/* ===========================================================================
+   EFFECTS — radii, borders, shadows, motion.
+   The blog is mostly flat; shadows appear on the circular avatar and on
+   raised UI. Corners are gently rounded (4–5px), never pill-soft except tags.
+   =========================================================================== */
+
+:root {
+  /* Radii */
+  --radius-sm:   0.1875rem; /* 3px — tags, hairline chips */
+  --radius-md:   0.25rem;   /* 4px — code blocks, buttons, cards */
+  --radius-lg:   0.3125rem; /* 5px — notification boxes */
+  --radius-pill: 5rem;      /* search field */
+  --radius-full: 50%;       /* circular avatar */
+
+  /* Border widths */
+  --border-width:        1px;
+  --border-width-accent: 0.3125rem; /* 5px — colored left border on boxes/code */
+
+  /* Shadows — soft, dark-aware */
+  --shadow-avatar: 0 0 0.5rem rgba(0, 0, 0, 0.8);
+  --shadow-sm:     0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md:     0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lg:     0 10px 30px rgba(0, 0, 0, 0.45);
+  --shadow-glow:   0 0 0 3px rgba(139, 233, 253, 0.35); /* cyan focus glow */
+
+  /* Text shadow over hero imagery */
+  --text-shadow-hero: 1px 1px 3px #000;
+
+  /* Imagery treatment — feed thumbnails desaturate, color on hover */
+  --img-grayscale: grayscale(40%); /* @kind other */
+
+  /* Motion */
+  --ease-standard: ease-in-out; /* @kind other */
+  --dur-fast:   0.2s; /* @kind other */
+  --dur-normal: 0.5s; /* @kind other */
+  --dur-slow:   1s; /* @kind other */
+  --transition-color: color var(--dur-fast) var(--ease-standard);
+}
+
+/* ===========================================================================
+   MODERN — the "Dracula, after dark" expressive layer.
+   Glow shadows, gradient definitions, glass surfaces and elevation used by the
+   modernized UI kit. These build ON TOP of the core Dracula tokens; the base
+   blog look never references them, so nothing here changes the faithful theme.
+   =========================================================================== */
+
+:root {
+  /* --- Signature gradients (Dracula hues, used with restraint) --- */
+  --grad-aurora:   radial-gradient(60% 60% at 18% 12%, rgba(189,147,249,.20), transparent 70%),
+                   radial-gradient(50% 50% at 85% 8%, rgba(139,233,253,.16), transparent 70%),
+                   radial-gradient(55% 55% at 70% 90%, rgba(255,121,198,.14), transparent 70%); /* @kind other */
+  --grad-display:  linear-gradient(100deg, #8be9fd 0%, #50fa7b 38%, #bd93f9 72%, #ff79c6 100%); /* @kind other */
+  --grad-accent:   linear-gradient(120deg, #bd93f9, #ff79c6); /* @kind other */
+  --grad-cyan-green: linear-gradient(120deg, #8be9fd, #50fa7b); /* @kind other */
+  --grad-hairline: linear-gradient(120deg, rgba(139,233,253,.5), rgba(189,147,249,.5), rgba(255,121,198,.4)); /* @kind other */
+
+  /* --- Glass surfaces (sticky nav, floating cards) --- */
+  --glass-bg:      rgba(40,42,54,.62);
+  --glass-bg-2:    rgba(68,71,90,.45);
+  --glass-blur:    saturate(160%) blur(14px); /* @kind other */
+  --glass-border:  rgba(139,233,253,.14);
+
+  /* --- Elevation: depth shadow + colored glow --- */
+  --elev-1:    0 2px 8px rgba(0,0,0,.35);
+  --elev-2:    0 12px 30px rgba(0,0,0,.45);
+  --elev-3:    0 24px 60px rgba(0,0,0,.55);
+  --glow-cyan:   0 0 0 1px rgba(139,233,253,.25), 0 18px 40px -12px rgba(139,233,253,.30);
+  --glow-purple: 0 0 0 1px rgba(189,147,249,.30), 0 18px 44px -12px rgba(189,147,249,.38);
+  --glow-pink:   0 0 0 1px rgba(255,121,198,.30), 0 18px 44px -12px rgba(255,121,198,.34);
+  --glow-green:  0 0 0 1px rgba(80,250,123,.28), 0 18px 40px -12px rgba(80,250,123,.30);
+
+  /* --- Motion (modern layer leans on these) --- */
+  --ease-out-soft: cubic-bezier(.22,.61,.36,1); /* @kind other */
+  --ease-spring:   cubic-bezier(.34,1.56,.64,1); /* @kind other */
+  --dur-reveal:    0.7s; /* @kind other */
+  --lift:          translateY(-6px); /* @kind other */
+
+  /* --- Modern radii (a touch larger than the base blog) --- */
+  --radius-xl:  0.875rem; /* 14px — feature cards */
+  --radius-2xl: 1.25rem;  /* 20px — hero panels */
+}
+
+/* ===========================================================================
+   CODE — inline code + highlighted blocks, Dracula-tinted (Rouge/Pygments).
+   Token colors lifted verbatim from the blog's pygment_highlights.css.
+   =========================================================================== */
+
+:root {
+  --code-bg:        var(--surface-inset);
+  --code-fg:        var(--dr-foreground);
+  --code-comment:   var(--dr-comment);   /* #6272a4 */
+  --code-keyword:   var(--dr-pink);      /* bold pink keywords */
+  --code-type:      var(--dr-cyan);      /* #8be9fd */
+  --code-function:  var(--dr-cyan);
+  --code-string:    var(--dr-purple);    /* #bd93f9 */
+  --code-number:    var(--dr-cyan);
+  --code-entity:    var(--dr-pink);      /* #ff79c6 */
+  --code-error:     var(--dr-red);
+  --code-accent-bar: var(--dr-cyan);     /* left border on code blocks */
+}
+
+code {
+  font-family: var(--font-code);
+  font-size: 0.9em;
+  padding: 0.125rem 0.3125rem;
+  background-color: var(--surface-inset);
+  color: var(--code-type);
+  border-radius: var(--radius-md);
+}
+
+pre {
+  font-family: var(--font-code);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--code-fg);
+  background-color: var(--code-bg);
+  border-radius: var(--radius-md);
+  border-left: var(--border-width-accent) solid var(--code-accent-bar);
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+}
+pre code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  border-radius: 0;
+}
+
+/* Rouge / Pygments token classes (Dracula) */
+.highlight .c, .highlight .cm, .highlight .c1 { color: var(--code-comment); font-style: italic; }
+.highlight .k, .highlight .kd, .highlight .kr, .highlight .kc, .highlight .kp { color: var(--code-keyword); font-weight: 700; }
+.highlight .kt { color: var(--code-type); font-weight: 700; }
+.highlight .nc, .highlight .nf, .highlight .ne { color: var(--code-function); font-weight: 700; }
+.highlight .na, .highlight .no, .highlight .nn, .highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi { color: var(--code-type); }
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx { color: var(--code-string); }
+.highlight .m, .highlight .mi, .highlight .mf, .highlight .mh, .highlight .mo, .highlight .il { color: var(--code-number); }
+.highlight .ni, .highlight .ss { color: var(--code-entity); }
+.highlight .gp { color: var(--code-type); }
+.highlight .gr, .highlight .gt { color: var(--code-error); }
+.highlight .o, .highlight .ow { font-weight: 700; }

@@ -1,0 +1,28 @@
+{%- comment -%} Modern glass nav — "Dracula, after dark" {%- endcomment -%}
+<nav class="mtd-nav mtd-glass">
+  <a class="mtd-brand" href="{{ '/' | relative_url }}">
+    <img src="{{ site.avatar | relative_url }}" alt="" width="38" height="38" />
+    <span class="mtd-brand-text">
+      <span class="mtd-brand-name">{{ site.title }}</span>
+      <span class="mtd-brand-sub">~/abbabon · gamedev notes</span>
+    </span>
+  </a>
+  <div class="mtd-nav-links">
+    <a class="mtd-nav-link {% if page.url == '/' %}is-active{% endif %}" href="{{ '/' | relative_url }}">Blog</a>
+    <a class="mtd-nav-link {% if page.url contains 'about' %}is-active{% endif %}" href="{{ '/about' | relative_url }}">About</a>
+    <a class="mtd-nav-link {% if page.url contains 'contact' %}is-active{% endif %}" href="{{ '/contact' | relative_url }}">Contact</a>
+    <a class="mtd-nav-link {% if page.url contains 'tags' %}is-active{% endif %}" href="{{ '/tags' | relative_url }}">Tags</a>
+
+    <div class="mtd-nav-dropdown">
+      <button type="button" class="mtd-nav-link mtd-nav-dropdown-toggle {% if page.url contains 'assets' %}is-active{% endif %}" aria-haspopup="true" aria-expanded="false">
+        Resources <span class="mtd-caret">▾</span>
+      </button>
+      <div class="mtd-nav-menu mtd-glass">
+        <a class="mtd-nav-menu-item" href="{{ '/assets' | relative_url }}">Unity Assets</a>
+        <a class="mtd-nav-menu-item" href="http://www.markdowntutorial.com/" target="_blank" rel="noreferrer">Learn markdown</a>
+      </div>
+    </div>
+
+    <button type="button" class="mtd-btn mtd-btn-ghost mtd-btn-sm" data-mtd-subscribe-open>Subscribe</button>
+  </div>
+</nav>
