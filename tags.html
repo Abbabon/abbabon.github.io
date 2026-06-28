@@ -1,36 +1,55 @@
 ---
-layout: page
-title: 'Tag Index'
+layout: base
+title: 'Tags'
 ---
 
-{% assign date_format = site.date_format | default: "%B %-d, %Y" %}
+{%- assign date_format = site.date_format | default: "%B %-d, %Y" -%}
+{%- assign hues = "var(--dr-cyan),var(--dr-green),var(--dr-purple),var(--dr-pink),var(--dr-orange),var(--dr-yellow)" | split: "," -%}
 
-{%- capture site_tags -%}
-    {%- for tag in site.tags -%}
-        {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%}
-    {%- endfor -%}
+{%- comment -%} Sort tags by post count, descending (zero-padded for string sort). {%- endcomment -%}
+{%- capture tagdata -%}
+{%- for t in site.tags -%}{{ t[1].size | prepend: '000' | slice: -3, 3 }}~{{ t[0] }};{%- endfor -%}
 {%- endcapture -%}
-{%- assign tags_list = site_tags | split:',' | sort -%}
+{%- assign tagpairs = tagdata | split: ';' | sort | reverse -%}
 
-{%- for tag in tags_list -%}
-    <a href="#{{- tag -}}" class="btn btn-primary tag-btn"><i class="fas fa-tag" aria-hidden="true"></i>&nbsp;{{- tag -}}&nbsp;({{site.tags[tag].size}})</a>
-{%- endfor -%}
+<main class="mtd-tags">
+  <span class="mtd-eyebrow mtd-reveal">~/tags · {{ tagpairs | size }} topics · {{ site.posts | size }} posts</span>
+  <h1 class="mtd-tags-title mtd-reveal"><span class="mtd-gradient-text">Tags</span></h1>
 
-<div id="full-tags-list">
-{%- for tag in tags_list -%}
-    <h2 id="{{- tag -}}" class="linked-section">
-        <i class="fas fa-tag" aria-hidden="true"></i>
-        &nbsp;{{- tag -}}&nbsp;({{site.tags[tag].size}})
-    </h2>
-    <div class="post-list">
-        {%- for post in site.tags[tag] -%}
-            <div class="tag-entry">
-                <a href="{{ post.url | relative_url }}">{{- post.title | strip_html -}}</a>
-                <div class="entry-date">
-                    <time datetime="{{- post.date | date_to_xmlschema -}}">{{- post.date | date: date_format -}}</time>
-                </div>
-            </div>
-        {%- endfor -%}
+  {%- comment -%} ----- Tag cloud ----- {%- endcomment -%}
+  <div class="mtd-tag-cloud mtd-reveal">
+    {%- for pair in tagpairs -%}
+      {%- assign parts = pair | split: '~' -%}
+      {%- assign tag = parts[1] -%}
+      {%- assign count = site.tags[tag] | size -%}
+      {%- assign hidx = forloop.index0 | modulo: 6 -%}
+      <button type="button" class="mtd-tag-chip" data-tag="{{ tag }}" style="--hue: {{ hues[hidx] }}">
+        #{{ tag }} <span class="count">{{ count }}</span>
+      </button>
+    {%- endfor -%}
+  </div>
+
+  <hr class="mtd-rule mtd-reveal" />
+
+  <h2 class="mtd-tag-heading mtd-reveal"></h2>
+
+  {%- comment -%} ----- Per-tag post lists (toggled by JS) ----- {%- endcomment -%}
+  {%- for pair in tagpairs -%}
+    {%- assign parts = pair | split: '~' -%}
+    {%- assign tag = parts[1] -%}
+    {%- assign tagposts = site.tags[tag] -%}
+    <div class="mtd-tag-group mtd-tag-list" data-tag="{{ tag }}" data-count="{{ tagposts | size }}"{% unless forloop.first %} hidden{% endunless %}>
+      {%- for post in tagposts -%}
+        {%- assign thumb = post.cover-img | default: post.thumbnail-img -%}
+        <a class="mtd-tag-row mtd-reveal" href="{{ post.url | relative_url }}">
+          {%- if thumb -%}<img src="{{ thumb | relative_url }}" alt="" />{%- endif -%}
+          <span class="info">
+            <span class="title">{{ post.title | strip_html }}</span>
+            <span class="date">{{ post.date | date: date_format }}</span>
+          </span>
+          <span class="arrow">→</span>
+        </a>
+      {%- endfor -%}
     </div>
-{%- endfor -%}
-</div>
+  {%- endfor -%}
+</main>
