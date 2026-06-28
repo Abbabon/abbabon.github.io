@@ -324,6 +324,9 @@ defaults:
       layout: "page"
 
 # Exclude these files from production site
+# NOTE: defining `exclude` here REPLACES Jekyll's default excludes, so the
+# bundler/vendor paths below must be listed explicitly (otherwise `jekyll build`
+# in CI scans gems installed under vendor/bundle and chokes on their templates).
 exclude:
   - CHANGELOG.md
   - CNAME
@@ -333,6 +336,10 @@ exclude:
   - README.md
   - screenshot.png
   - docs/
+  - vendor
+  - .bundle
+  - .sass-cache
+  - .jekyll-cache
 
 plugins:
   - jekyll-paginate
