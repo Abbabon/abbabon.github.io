@@ -44,6 +44,17 @@ gh auth setup-git               # make git use the active gh account for HTTPS (
 
 Note: the machine's `osxkeychain` credential helper can otherwise serve a different cached token to `git push` regardless of the active `gh` account, so always verify with `gh auth status` (active account must be Abbabon) before pushing.
 
+### Commit author identity (separate from auth!)
+
+Authenticating as Abbabon controls who *pushes*; it does NOT control who *authored* a commit — that comes from `git config user.name`/`user.email`. The machine's global git identity is the glaive/`amitnglaive` account (`amit@glaivegames.com`), so commits made without overriding it get mis-attributed to that account. Before committing in this repo, set the repo-local identity to Abbabon (one-time per clone):
+
+```bash
+git config user.name "Amit Netanel"
+git config user.email "1280330+Abbabon@users.noreply.github.com"   # Abbabon's GitHub noreply (account id 1280330)
+```
+
+Then verify with `git log -1 --format='%an <%ae>'` that new commits show the Abbabon noreply email, never `amit@glaivegames.com`. The noreply address attributes the commit to the Abbabon account on GitHub and can't be blocked by email-privacy push protection.
+
 ## Conventions
 
 - The site is excluded from production for `README.md`, `CHANGELOG.md`, `Gemfile`, `LICENSE`, `screenshot.png` (see `exclude:` in `_config.yml`) — these are theme/repo docs, not site content.
