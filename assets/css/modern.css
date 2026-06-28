@@ -1,0 +1,165 @@
+---
+layout: null
+---
+/* Modern UI kit — motion + treatments that aren't worth inlining.
+   Tokens come from the design system (styles.css). */
+
+.mtd-modern {
+  background: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Aurora glow field, fixed behind everything */
+.mtd-aurora {
+  position: fixed;
+  inset: -10% -10% auto -10%;
+  height: 90vh;
+  background: var(--grad-aurora);
+  filter: blur(8px);
+  z-index: 0;
+  pointer-events: none;
+  animation: aurora-drift 22s ease-in-out infinite alternate;
+}
+@keyframes aurora-drift {
+  0%   { transform: translate3d(0,0,0) scale(1); opacity: .9; }
+  100% { transform: translate3d(0,-3%,0) scale(1.08); opacity: 1; }
+}
+
+/* subtle film grain / vignette to add depth */
+.mtd-vignette {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 0%, transparent 55%, rgba(0,0,0,.45) 100%);
+}
+
+.mtd-modern > *:not(.mtd-aurora):not(.mtd-vignette) { position: relative; z-index: 1; }
+
+/* ---- Gradient display type ---- */
+.mtd-gradient-text {
+  background: var(--grad-display);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: grad-pan 8s ease-in-out infinite alternate;
+}
+@keyframes grad-pan {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* ---- Mono eyebrow ---- */
+.mtd-eyebrow {
+  font-family: var(--font-mono);
+  font-size: .8125rem;
+  letter-spacing: .08em;
+  color: var(--accent-cyan);
+  text-transform: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+}
+.mtd-eyebrow::before {
+  content: "";
+  width: 1.75rem; height: 1px;
+  background: var(--grad-cyan-green);
+}
+
+/* ---- Glass chrome ---- */
+.mtd-glass {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+}
+
+/* ---- Cards ---- */
+.mtd-card {
+  background: linear-gradient(180deg, var(--surface-raised), var(--surface-card));
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--elev-1);
+  transition: transform var(--dur-fast) var(--ease-out-soft),
+              box-shadow var(--dur-fast) var(--ease-out-soft),
+              border-color var(--dur-fast) var(--ease-out-soft);
+  will-change: transform;
+}
+.mtd-card:hover {
+  transform: var(--lift);
+  box-shadow: var(--glow-purple), var(--elev-2);
+  border-color: transparent;
+}
+.mtd-card:hover .mtd-card-img { filter: grayscale(0%); transform: scale(1.05); }
+.mtd-card-img {
+  filter: var(--img-grayscale);
+  transition: filter var(--dur-normal) var(--ease-out-soft), transform var(--dur-normal) var(--ease-out-soft);
+}
+
+/* feature card glows cyan instead */
+.mtd-feature:hover { box-shadow: var(--glow-cyan), var(--elev-3); }
+
+/* ---- Scroll/entrance reveal — pure CSS, always ends visible ---- */
+.mtd-reveal {
+  animation: mtd-reveal-in var(--dur-reveal) var(--ease-out-soft) both;
+}
+@keyframes mtd-reveal-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+.mtd-reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mtd-aurora, .mtd-gradient-text { animation: none; }
+  .mtd-reveal { animation: none; opacity: 1; transform: none; }
+  .mtd-card { transition: none; }
+}
+
+/* ---- Pills / meta ---- */
+.mtd-pill {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .03em;
+  color: var(--text-subtle);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-pill);
+  padding: .2rem .6rem;
+  white-space: nowrap;
+  background: rgba(255,255,255,.02);
+  transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+.mtd-pill:hover { color: var(--accent-cyan); border-color: var(--accent-cyan); }
+
+/* link underline sweep */
+.mtd-link {
+  color: var(--link);
+  text-decoration: none;
+  background-image: linear-gradient(var(--link-hover), var(--link-hover));
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: left 100%;
+  transition: background-size var(--dur-fast) var(--ease-out-soft), color var(--dur-fast);
+  padding-bottom: 2px;
+}
+.mtd-link:hover { color: var(--link-hover); background-size: 100% 2px; }
+
+/* gradient hairline divider */
+.mtd-rule {
+  height: 1px; border: 0;
+  background: var(--grad-hairline);
+  opacity: .5;
+}
+
+/* button shine on hover handled inline; key reveal of CTA row */
+.mtd-blink { animation: blink 1.2s steps(2,start) infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ---- Responsive collapses ---- */
+@media (max-width: 860px) {
+  .mtd-hero-grid { grid-template-columns: 1fr !important; }
+  [data-mtd-feature] { grid-template-columns: 1fr !important; }
+  [data-mtd-feature] > div:first-child { min-height: 14rem !important; }
+}
