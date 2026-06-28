@@ -1,6 +1,7 @@
 ---
 layout: page
 title: About
+show-back: true
 ---
 
 Look, this being the internet and all, I will try to be low with the bio and succinct with the flavour.
