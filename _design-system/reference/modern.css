@@ -1,9 +1,5 @@
----
-layout: null
----
 /* Modern UI kit — motion + treatments that aren't worth inlining.
-   Tokens come from the design system (dracula-tokens.css). Verbatim port of
-   the handoff reference/modern.css (.mtd-* treatment layer). */
+   Tokens come from the design system (styles.css). */
 
 .mtd-modern {
   background: var(--surface-page);

@@ -1,0 +1,50 @@
+{%- comment -%} Podcast section — embedded Spotify players for shows in _data/podcasts.yml {%- endcomment -%}
+{%- assign pods = site.data.podcasts -%}
+{%- if pods and pods.size > 0 -%}
+<section class="mtd-section" id="mtd-podcast">
+  <div class="mtd-sec-head mtd-reveal">
+    <h2>Podcast</h2>
+    <span class="mtd-sec-eyebrow">// on the mic · {{ pods | size }}</span>
+    <hr class="mtd-rule" />
+  </div>
+  <div class="mtd-podcast-grid">
+    {%- for pod in pods -%}
+      {%- assign accent = pod.accent | default: 'cyan' -%}
+      <article class="mtd-card mtd-podcast-card mtd-reveal">
+        <div class="mtd-podcast-head" data-accent="{{ accent }}">
+          <span class="mtd-podcast-mic"><i class="fas fa-microphone-lines"></i></span>
+          <span class="mtd-podcast-meta">
+            <span class="mtd-podcast-title">{{ pod.title }}</span>
+            {%- if pod.tagline -%}<span class="mtd-podcast-tagline">{{ pod.tagline }}</span>{%- endif -%}
+          </span>
+          <span class="mtd-wave" aria-hidden="true">
+            {%- assign bars = "60,100,45,85,30,70,50,95,40,75,55" | split: "," -%}
+            {%- for b in bars -%}<span style="height:{{ b }}%;animation-delay:{{ forloop.index0 | times: 9 }}0ms"></span>{%- endfor -%}
+          </span>
+        </div>
+        {%- if pod.description -%}<p class="mtd-podcast-desc">{{ pod.description }}</p>{%- endif -%}
+        {%- if pod.spotify_show -%}
+          <div class="mtd-podcast-player">
+            <iframe title="{{ pod.title }} on Spotify" loading="lazy"
+              src="https://open.spotify.com/embed/show/{{ pod.spotify_show }}?utm_source=generator&theme=0"
+              width="100%" height="232" frameborder="0" allowfullscreen
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+          </div>
+        {%- endif -%}
+        <div class="mtd-podcast-links">
+          {%- if pod.spotify_url -%}
+            <a class="mtd-btn mtd-btn-primary mtd-btn-sm" href="{{ pod.spotify_url }}" target="_blank" rel="noreferrer">
+              <i class="fab fa-spotify"></i> Listen on Spotify
+            </a>
+          {%- endif -%}
+          {%- if pod.youtube_url and pod.youtube_url != "" -%}
+            <a class="mtd-podcast-icon" href="{{ pod.youtube_url }}" target="_blank" rel="noreferrer" aria-label="Watch on YouTube" title="Watch on YouTube">
+              <i class="fab fa-youtube"></i>
+            </a>
+          {%- endif -%}
+        </div>
+      </article>
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}

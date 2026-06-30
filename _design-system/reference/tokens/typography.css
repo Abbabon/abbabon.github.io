@@ -1,0 +1,36 @@
+/* ===========================================================================
+   TYPOGRAPHY — scale, weights, line-heights.
+   Body is 18px (1.125rem) Lora; headings are heavy (800) Open Sans.
+   Values mirror Beautiful Jekyll's rem scale.
+   =========================================================================== */
+
+:root {
+  /* Base */
+  --text-base-size: 1.125rem;  /* 18px body */
+  --leading-body:   1.5;
+  --leading-tight:  1.1;
+
+  /* Type scale (rem) */
+  --fs-xs:   0.8125rem; /* 13px — navbar items, small labels */
+  --fs-sm:   0.875rem;  /* 14px — captions, code, footer */
+  --fs-base: 1.125rem;  /* 18px — body */
+  --fs-md:   1.25rem;   /* 20px */
+  --fs-lg:   1.5rem;    /* 24px — h3 */
+  --fs-xl:   1.6875rem; /* 27px — subheadings */
+  --fs-2xl:  1.875rem;  /* 30px — h2 / post-title */
+  --fs-3xl:  2.25rem;   /* 36px — h1 / large post-title */
+  --fs-4xl:  3.125rem;  /* 50px — page heading */
+  --fs-5xl:  4rem;      /* 64px — hero page heading (xl screens) */
+
+  /* Weights */
+  --fw-light:    300; /* @kind other */
+  --fw-regular:  400; /* @kind other */
+  --fw-medium:   500; /* @kind other */
+  --fw-semibold: 600; /* @kind other */
+  --fw-bold:     700; /* @kind other */
+  --fw-heavy:    800; /* @kind other */
+
+  /* Letter-spacing */
+  --tracking-nav: 0.0625rem; /* uppercase navbar */
+  --tracking-btn: 1px;       /* uppercase pagination/buttons */
+}

@@ -1,0 +1,75 @@
+---
+layout: base
+---
+
+{%- comment -%}
+  Project landing page. A project is NOT a blog post — it has an image, a store
+  link, a video link and a description, and the template renders whichever of
+  those are populated.
+{%- endcomment -%}
+
+<main>
+  <article class="mtd-page mtd-project">
+    <a class="mtd-eyebrow mtd-reveal mtd-project-back" href="{{ '/' | relative_url }}#mtd-projects">← back to projects</a>
+
+    <h1 class="mtd-page-title mtd-reveal"><span class="mtd-gradient-text">{{ page.title | strip_html }}</span></h1>
+
+    {%- if page.subtitle or page.org or page.category -%}
+      <p class="mtd-project-meta mtd-reveal">
+        {%- if page.subtitle -%}{{ page.subtitle | strip_html }}{%- elsif page.org -%}{{ page.org }}{%- endif -%}
+        {%- if page.category -%} · {{ page.category }}{%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- assign img = page.image | default: page.cover-img | default: page.thumbnail -%}
+    {%- if img -%}
+      <img class="mtd-project-hero mtd-reveal" src="{{ img | relative_url }}" alt="{{ page.title | strip_html }}" />
+    {%- endif -%}
+
+    {%- comment -%} Description = the page body (whatever markdown is written) {%- endcomment -%}
+    {%- assign body = content | strip -%}
+    {%- if body != "" -%}
+      <div class="mtd-page-body mtd-post-body mtd-reveal">{{ content }}</div>
+    {%- elsif page.description -%}
+      <div class="mtd-page-body mtd-post-body mtd-reveal"><p>{{ page.description }}</p></div>
+    {%- endif -%}
+
+    {%- comment -%} Video: embed YouTube/Vimeo, otherwise link out {%- endcomment -%}
+    {%- if page.video_url and page.video_url != "" -%}
+      {%- assign v = page.video_url -%}
+      {%- assign vembed = "" -%}
+      {%- if v contains "youtube.com/watch?v=" -%}
+        {%- assign vid = v | split: "v=" | last | split: "&" | first -%}
+        {%- assign vembed = "https://www.youtube.com/embed/" | append: vid -%}
+      {%- elsif v contains "youtu.be/" -%}
+        {%- assign vid = v | split: "youtu.be/" | last | split: "?" | first -%}
+        {%- assign vembed = "https://www.youtube.com/embed/" | append: vid -%}
+      {%- endif -%}
+      {%- if vembed != "" -%}
+        <div class="mtd-project-video mtd-reveal">
+          <iframe src="{{ vembed }}" title="{{ page.title | strip_html }} video" loading="lazy"
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if page.store_url or page.video_url -%}
+      <div class="mtd-project-actions mtd-reveal">
+        {%- if page.store_url and page.store_url != "" -%}
+          <a class="mtd-btn mtd-btn-primary" href="{{ page.store_url }}" target="_blank" rel="noreferrer">
+            <i class="fas fa-store"></i> {{ page.store_label | default: "Get it" }}
+          </a>
+        {%- endif -%}
+        {%- if page.video_url and page.video_url != "" -%}
+          <a class="mtd-btn mtd-btn-ghost" href="{{ page.video_url }}" target="_blank" rel="noreferrer">
+            <i class="fas fa-play"></i> Watch the video
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="mtd-page-back mtd-reveal">
+      <a class="mtd-btn mtd-btn-ghost mtd-btn-sm" href="{{ '/' | relative_url }}#mtd-projects">← All projects</a>
+    </div>
+  </article>
+</main>

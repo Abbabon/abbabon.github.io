@@ -1,0 +1,42 @@
+/* ===========================================================================
+   MODERN — the "Dracula, after dark" expressive layer.
+   Glow shadows, gradient definitions, glass surfaces and elevation used by the
+   modernized UI kit. These build ON TOP of the core Dracula tokens; the base
+   blog look never references them, so nothing here changes the faithful theme.
+   =========================================================================== */
+
+:root {
+  /* --- Signature gradients (Dracula hues, used with restraint) --- */
+  --grad-aurora:   radial-gradient(60% 60% at 18% 12%, rgba(189,147,249,.20), transparent 70%),
+                   radial-gradient(50% 50% at 85% 8%, rgba(139,233,253,.16), transparent 70%),
+                   radial-gradient(55% 55% at 70% 90%, rgba(255,121,198,.14), transparent 70%); /* @kind other */
+  --grad-display:  linear-gradient(100deg, #8be9fd 0%, #50fa7b 38%, #bd93f9 72%, #ff79c6 100%); /* @kind other */
+  --grad-accent:   linear-gradient(120deg, #bd93f9, #ff79c6); /* @kind other */
+  --grad-cyan-green: linear-gradient(120deg, #8be9fd, #50fa7b); /* @kind other */
+  --grad-hairline: linear-gradient(120deg, rgba(139,233,253,.5), rgba(189,147,249,.5), rgba(255,121,198,.4)); /* @kind other */
+
+  /* --- Glass surfaces (sticky nav, floating cards) --- */
+  --glass-bg:      rgba(40,42,54,.62);
+  --glass-bg-2:    rgba(68,71,90,.45);
+  --glass-blur:    saturate(160%) blur(14px); /* @kind other */
+  --glass-border:  rgba(139,233,253,.14);
+
+  /* --- Elevation: depth shadow + colored glow --- */
+  --elev-1:    0 2px 8px rgba(0,0,0,.35);
+  --elev-2:    0 12px 30px rgba(0,0,0,.45);
+  --elev-3:    0 24px 60px rgba(0,0,0,.55);
+  --glow-cyan:   0 0 0 1px rgba(139,233,253,.25), 0 18px 40px -12px rgba(139,233,253,.30);
+  --glow-purple: 0 0 0 1px rgba(189,147,249,.30), 0 18px 44px -12px rgba(189,147,249,.38);
+  --glow-pink:   0 0 0 1px rgba(255,121,198,.30), 0 18px 44px -12px rgba(255,121,198,.34);
+  --glow-green:  0 0 0 1px rgba(80,250,123,.28), 0 18px 40px -12px rgba(80,250,123,.30);
+
+  /* --- Motion (modern layer leans on these) --- */
+  --ease-out-soft: cubic-bezier(.22,.61,.36,1); /* @kind other */
+  --ease-spring:   cubic-bezier(.34,1.56,.64,1); /* @kind other */
+  --dur-reveal:    0.7s; /* @kind other */
+  --lift:          translateY(-6px); /* @kind other */
+
+  /* --- Modern radii (a touch larger than the base blog) --- */
+  --radius-xl:  0.875rem; /* 14px — feature cards */
+  --radius-2xl: 1.25rem;  /* 20px — hero panels */
+}

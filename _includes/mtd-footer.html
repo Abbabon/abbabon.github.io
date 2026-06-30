@@ -1,8 +1,52 @@
-{%- comment -%} Modern glass footer — "Dracula, after dark" {%- endcomment -%}
+{%- comment -%} Modern glass footer — expanded (4-col) on home, compact elsewhere {%- endcomment -%}
 {%- assign s = site.social-network-links -%}
+{%- assign expanded = false -%}
+{%- if page.url == '/' -%}{%- assign expanded = true -%}{%- endif -%}
 <footer class="mtd-footer">
   <hr class="mtd-rule" />
   <div class="mtd-footer-inner mtd-glass">
+    {%- if expanded -%}
+    <div class="mtd-footer-cols">
+      <div class="mtd-footer-col mtd-footer-about">
+        <div class="mtd-footer-brand">
+          <img src="{{ site.avatar | relative_url }}" alt="" width="40" height="40" />
+          <span class="name">{{ site.title }}</span>
+        </div>
+        <p class="mtd-footer-blurb">
+          Notes on game dev, Unity, editor tooling and tech art — by a tired
+          engineer who has seen some things.
+        </p>
+        <div class="mtd-footer-social">
+          {%- if site.rss-description -%}<a href="{{ '/feed.xml' | relative_url }}" aria-label="RSS" title="RSS"><i class="fas fa-rss"></i></a>{%- endif -%}
+          {%- if s.email -%}<a href="mailto:{{ s.email }}" aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a>{%- endif -%}
+          {%- if s.github -%}<a href="https://github.com/{{ s.github }}" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a>{%- endif -%}
+          {%- if s.twitter -%}<a href="https://twitter.com/{{ s.twitter }}" aria-label="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>{%- endif -%}
+          {%- if s.itchio -%}<a href="https://{{ s.itchio }}.itch.io/" aria-label="itch.io" title="itch.io"><i class="fab fa-itch-io"></i></a>{%- endif -%}
+        </div>
+      </div>
+      <div class="mtd-footer-col">
+        <span class="mtd-footer-head">Explore</span>
+        <a href="{{ '/' | relative_url }}">Blog</a>
+        <a href="{{ '/' | relative_url }}#mtd-projects">Projects</a>
+        <a href="{{ '/' | relative_url }}#mtd-podcast">Podcast</a>
+        <a href="{{ '/tags' | relative_url }}">Tags</a>
+      </div>
+      <div class="mtd-footer-col">
+        <span class="mtd-footer-head">Connect</span>
+        <a href="{{ '/about' | relative_url }}">About</a>
+        <a href="{{ '/contact' | relative_url }}">Contact</a>
+        {%- if s.github -%}<a href="https://github.com/{{ s.github }}" target="_blank" rel="noreferrer">GitHub</a>{%- endif -%}
+        {%- if s.itchio -%}<a href="https://{{ s.itchio }}.itch.io/" target="_blank" rel="noreferrer">itch.io</a>{%- endif -%}
+      </div>
+      <div class="mtd-footer-col">
+        <span class="mtd-footer-head">Elsewhere</span>
+        <a href="{{ '/assets' | relative_url }}">Unity Assets</a>
+        {%- if s.linkedin -%}<a href="https://linkedin.com/in/{{ s.linkedin }}" target="_blank" rel="noreferrer">LinkedIn</a>{%- endif -%}
+        <a href="{{ '/feed.xml' | relative_url }}">RSS feed</a>
+        <a href="http://www.markdowntutorial.com/" target="_blank" rel="noreferrer">Learn Markdown</a>
+      </div>
+    </div>
+    {%- else -%}
     <div class="mtd-footer-row">
       <div class="mtd-footer-brand">
         <img src="{{ site.avatar | relative_url }}" alt="" width="44" height="44" />
@@ -12,27 +56,16 @@
         </div>
       </div>
       <div class="mtd-footer-social">
-        {%- if site.rss-description -%}
-          <a href="{{ '/feed.xml' | relative_url }}" aria-label="RSS" title="RSS"><i class="fas fa-rss"></i></a>
-        {%- endif -%}
-        {%- if s.email -%}
-          <a href="mailto:{{ s.email }}" aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a>
-        {%- endif -%}
-        {%- if s.github -%}
-          <a href="https://github.com/{{ s.github }}" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a>
-        {%- endif -%}
-        {%- if s.twitter -%}
-          <a href="https://twitter.com/{{ s.twitter }}" aria-label="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>
-        {%- endif -%}
-        {%- if s.itchio -%}
-          <a href="https://{{ s.itchio }}.itch.io/" aria-label="itch.io" title="itch.io"><i class="fab fa-itch-io"></i></a>
-        {%- endif -%}
-        {%- if s.linkedin -%}
-          <a href="https://linkedin.com/in/{{ s.linkedin }}" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        {%- endif -%}
+        {%- if site.rss-description -%}<a href="{{ '/feed.xml' | relative_url }}" aria-label="RSS" title="RSS"><i class="fas fa-rss"></i></a>{%- endif -%}
+        {%- if s.email -%}<a href="mailto:{{ s.email }}" aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a>{%- endif -%}
+        {%- if s.github -%}<a href="https://github.com/{{ s.github }}" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a>{%- endif -%}
+        {%- if s.twitter -%}<a href="https://twitter.com/{{ s.twitter }}" aria-label="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>{%- endif -%}
+        {%- if s.itchio -%}<a href="https://{{ s.itchio }}.itch.io/" aria-label="itch.io" title="itch.io"><i class="fab fa-itch-io"></i></a>{%- endif -%}
+        {%- if s.linkedin -%}<a href="https://linkedin.com/in/{{ s.linkedin }}" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin"></i></a>{%- endif -%}
       </div>
     </div>
-    <div class="mtd-footer-copy">
+    {%- endif -%}
+    <div class="mtd-footer-copy {% if expanded %}is-expanded{% endif %}">
       &copy; {{ site.time | date: '%Y' }} {{ site.author }} · built with too much coffee ·
       <a class="mtd-link" href="{{ '/about' | relative_url }}">about</a>
       {% unless site.remove-ads %}<br />Powered by <a class="mtd-link" href="https://beautifuljekyll.com">Beautiful Jekyll</a>{% endunless %}
