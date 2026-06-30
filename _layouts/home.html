@@ -12,13 +12,18 @@ layout: base
       <div>
         <span class="mtd-eyebrow mtd-reveal">~/blog · refactoring dumpster fires</span>
         <h1 class="mtd-reveal"><span class="mtd-gradient-text">Master<br />the Disaster</span></h1>
+        <p class="mtd-hero-subtitle mtd-reveal"><span>Amit Netanel's</span> Dev Log</p>
         <p class="mtd-hero-tagline mtd-reveal">
           Notes on Game Dev, Unity, Editor Tooling and Tech Art — written by a tired
           engineer who has <em>seen some things</em>.
         </p>
         <div class="mtd-hero-cta mtd-reveal">
           <a class="mtd-btn mtd-btn-primary" href="#mtd-writing">Read the blog</a>
-          <a class="mtd-btn mtd-btn-ghost" href="{{ '/about' | relative_url }}">About me</a>
+          <nav class="mtd-jump-pills" aria-label="Jump to section">
+            <a class="mtd-jump-pill" data-hue="pink" href="#mtd-podcast">Podcasts</a>
+            <a class="mtd-jump-pill" data-hue="purple" href="#mtd-projects">Projects</a>
+            <a class="mtd-jump-pill" data-hue="orange" href="#mtd-contact">Let's talk</a>
+          </nav>
         </div>
       </div>
 
@@ -99,4 +104,13 @@ layout: base
       {%- endfor -%}
     </div>
   </section>
+
+  {%- comment -%} ===================== PODCAST ===================== {%- endcomment -%}
+  {% include mtd-podcast.html %}
+
+  {%- comment -%} ===================== PROJECTS ===================== {%- endcomment -%}
+  {% include mtd-projects.html %}
+
+  {%- comment -%} ===================== CONTACT CTA ===================== {%- endcomment -%}
+  {% include mtd-contact-cta.html %}
 </main>

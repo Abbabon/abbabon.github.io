@@ -1,0 +1,58 @@
+/* ===========================================================================
+   CODE — inline code + highlighted blocks, Dracula-tinted (Rouge/Pygments).
+   Token colors lifted verbatim from the blog's pygment_highlights.css.
+   =========================================================================== */
+
+:root {
+  --code-bg:        var(--surface-inset);
+  --code-fg:        var(--dr-foreground);
+  --code-comment:   var(--dr-comment);   /* #6272a4 */
+  --code-keyword:   var(--dr-pink);      /* bold pink keywords */
+  --code-type:      var(--dr-cyan);      /* #8be9fd */
+  --code-function:  var(--dr-cyan);
+  --code-string:    var(--dr-purple);    /* #bd93f9 */
+  --code-number:    var(--dr-cyan);
+  --code-entity:    var(--dr-pink);      /* #ff79c6 */
+  --code-error:     var(--dr-red);
+  --code-accent-bar: var(--dr-cyan);     /* left border on code blocks */
+}
+
+code {
+  font-family: var(--font-code);
+  font-size: 0.9em;
+  padding: 0.125rem 0.3125rem;
+  background-color: var(--surface-inset);
+  color: var(--code-type);
+  border-radius: var(--radius-md);
+}
+
+pre {
+  font-family: var(--font-code);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--code-fg);
+  background-color: var(--code-bg);
+  border-radius: var(--radius-md);
+  border-left: var(--border-width-accent) solid var(--code-accent-bar);
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+}
+pre code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  border-radius: 0;
+}
+
+/* Rouge / Pygments token classes (Dracula) */
+.highlight .c, .highlight .cm, .highlight .c1 { color: var(--code-comment); font-style: italic; }
+.highlight .k, .highlight .kd, .highlight .kr, .highlight .kc, .highlight .kp { color: var(--code-keyword); font-weight: 700; }
+.highlight .kt { color: var(--code-type); font-weight: 700; }
+.highlight .nc, .highlight .nf, .highlight .ne { color: var(--code-function); font-weight: 700; }
+.highlight .na, .highlight .no, .highlight .nn, .highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi { color: var(--code-type); }
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx { color: var(--code-string); }
+.highlight .m, .highlight .mi, .highlight .mf, .highlight .mh, .highlight .mo, .highlight .il { color: var(--code-number); }
+.highlight .ni, .highlight .ss { color: var(--code-entity); }
+.highlight .gp { color: var(--code-type); }
+.highlight .gr, .highlight .gt { color: var(--code-error); }
+.highlight .o, .highlight .ow { font-weight: 700; }

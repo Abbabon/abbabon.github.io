@@ -1,0 +1,33 @@
+{%- comment -%} "Let's talk" contact CTA band {%- endcomment -%}
+{%- assign s = site.social-network-links -%}
+<section class="mtd-section" id="mtd-contact">
+  <div class="mtd-sec-head mtd-reveal">
+    <h2>Let's talk</h2>
+    <span class="mtd-sec-eyebrow">// say hi</span>
+    <hr class="mtd-rule" />
+  </div>
+  <div class="mtd-cta mtd-reveal">
+    <div class="mtd-cta-text">
+      <span class="mtd-eyebrow">~/contact · open inbox</span>
+      <h3 class="mtd-cta-head"><span class="mtd-gradient-text">Got a weird tooling<br />problem? Let's jam.</span></h3>
+      <p class="mtd-cta-blurb">
+        Questions, collaborations, game-jam invites, or just to argue about
+        mechanical keyboards — I read everything.
+      </p>
+    </div>
+    <div class="mtd-cta-actions">
+      <div class="mtd-cta-buttons">
+        <a class="mtd-btn mtd-btn-primary" href="{{ '/contact' | relative_url }}">Say hi</a>
+        {%- if s.itchio -%}
+          <a class="mtd-btn mtd-btn-ghost" href="https://{{ s.itchio }}.itch.io/" target="_blank" rel="noreferrer">Play my games</a>
+        {%- endif -%}
+      </div>
+      <div class="mtd-cta-social">
+        {%- if s.github -%}<a href="https://github.com/{{ s.github }}" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a>{%- endif -%}
+        {%- if s.itchio -%}<a href="https://{{ s.itchio }}.itch.io/" target="_blank" rel="noreferrer" aria-label="itch.io" title="itch.io"><i class="fab fa-itch-io"></i></a>{%- endif -%}
+        {%- if s.twitter -%}<a href="https://twitter.com/{{ s.twitter }}" target="_blank" rel="noreferrer" aria-label="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>{%- endif -%}
+        {%- if s.email -%}<a href="mailto:{{ s.email }}" aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>

@@ -307,6 +307,14 @@ paginate: 5
 kramdown:
   input: GFM
 
+# Collections — "projects" are standalone landing pages (not blog posts):
+# each has an image, a store link, a video link and a description; the project
+# template renders whichever fields are populated. See _projects/.
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
 # Default YAML values (more information on Jekyll's site)
 defaults:
   -
@@ -322,6 +330,12 @@ defaults:
       path: "" # any file that's not a post will be a "page" layout by default
     values:
       layout: "page"
+  -
+    scope:
+      path: ""
+      type: "projects" # projects use their own landing-page template
+    values:
+      layout: "project"
 
 # Exclude these files from production site
 # NOTE: defining `exclude` here REPLACES Jekyll's default excludes, so the

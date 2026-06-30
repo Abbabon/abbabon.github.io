@@ -1,0 +1,29 @@
+{%- comment -%} Projects section — cards from the `projects` collection {%- endcomment -%}
+{%- assign projects = site.projects | sort: "order" -%}
+{%- if projects and projects.size > 0 -%}
+<section class="mtd-section" id="mtd-projects">
+  <div class="mtd-sec-head mtd-reveal">
+    <h2>Projects</h2>
+    <span class="mtd-sec-eyebrow">// shipped &amp; open-source · {{ projects | size }}</span>
+    <hr class="mtd-rule" />
+  </div>
+  <div class="mtd-projects-grid">
+    {%- for p in projects -%}
+      {%- assign thumb = p.image | default: p.cover-img | default: p.thumbnail -%}
+      <a class="mtd-card mtd-project-card mtd-reveal" href="{{ p.url | relative_url }}">
+        <div class="mtd-project-media">
+          {%- if thumb -%}<img class="mtd-card-img" src="{{ thumb | relative_url }}" alt="" />{%- endif -%}
+          {%- if p.category -%}<span class="mtd-project-cat">// {{ p.category }}</span>{%- endif -%}
+        </div>
+        <div class="mtd-project-body">
+          <h3>{{ p.title | strip_html }}</h3>
+          {%- if p.org -%}<span class="mtd-project-org">{{ p.org }}</span>{%- endif -%}
+          {%- assign desc = p.description | default: p.excerpt -%}
+          <p class="mtd-project-desc">{{ desc | strip_html | truncatewords: 26 }}</p>
+          <span class="mtd-read">{{ p.cta | default: "Read more" }} →</span>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}

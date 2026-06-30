@@ -1,0 +1,27 @@
+# Podcasts Amit hosts / co-hosts. Each renders as a card in the home Podcast
+# section with an embedded Spotify player + outbound links.
+#   spotify_show : the show id from the open.spotify.com/show/<id> URL (used for
+#                  the embed player and the "Listen on Spotify" link)
+#   youtube_url  : optional — link to the YouTube show/channel (leave blank to hide)
+#   accent       : dr- hue used for the mic chip / glow (cyan | purple | pink | green | orange)
+- title: The Transform Movers
+  show: Podcast
+  tagline: conversations on change & craft
+  spotify_show: "3N71q3mhwjuHxJKK4az8df"
+  spotify_url: "https://open.spotify.com/show/3N71q3mhwjuHxJKK4az8df"
+  youtube_url: ""
+  accent: cyan
+  description: >-
+    Conversations about moving teams, tools and people forward — the messy,
+    human side of building software and shipping change.
+
+- title: Tech Debt Club
+  show: Podcast
+  tagline: paying down the interest, one episode at a time
+  spotify_show: "6bOD3zpZUdYgKUf3HovRAo"
+  spotify_url: "https://open.spotify.com/show/6bOD3zpZUdYgKUf3HovRAo"
+  youtube_url: ""
+  accent: purple
+  description: >-
+    Honest talk about the cruft we all live with — refactoring, legacy systems,
+    and the engineering culture that lets tech debt pile up (or not).

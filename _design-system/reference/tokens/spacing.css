@@ -1,0 +1,22 @@
+/* ===========================================================================
+   SPACING — Bootstrap-derived rem rhythm used across the blog.
+   Paragraph rhythm is generous (30px between blocks).
+   =========================================================================== */
+
+:root {
+  --space-0:   0;
+  --space-1:   0.3125rem; /* 5px  — tight gaps, tag padding */
+  --space-2:   0.625rem;  /* 10px — small gaps */
+  --space-3:   0.9375rem; /* 15px — box padding */
+  --space-4:   1.25rem;   /* 20px — standard block gap */
+  --space-5:   1.875rem;  /* 30px — paragraph rhythm, section gap */
+  --space-6:   2.1875rem; /* 35px — feed item padding (desktop) */
+  --space-7:   3.125rem;  /* 50px — footer / large section gap */
+  --space-8:   5rem;      /* 80px — intro header top margin */
+
+  /* Layout */
+  --container-md:  46rem;   /* readable post column */
+  --container-lg:  62rem;   /* wide content */
+  --navbar-height: 3.125rem;
+  --content-measure: 70ch;  /* max readable line length */
+}

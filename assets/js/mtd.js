@@ -128,19 +128,92 @@
     wrapper.appendChild(btn);
   });
 
-  /* ---- Entrance reveal: add .is-in as elements scroll into view ----
-     CSS animates .mtd-reveal on mount and always ends visible, so this is a
-     progressive enhancement only. */
-  var reveals = document.querySelectorAll(".mtd-reveal");
-  if (reveals.length && "IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-in");
-          io.unobserve(entry.target);
+  var reduceMotion =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- Entrance reveal: one-shot .mtd-revealing as elements scroll in ----
+     Resting state of .mtd-reveal is VISIBLE (CSS), so content is never stuck
+     hidden — this is a progressive enhancement that adds a staggered fade-up
+     as each row enters the viewport, then removes the class on a timer. */
+  (function () {
+    if (reduceMotion) return; // already visible, no animation
+    var root = document.querySelector(".mtd-modern") || document.body;
+    var raf = 0;
+    var reveal = function () {
+      raf = 0;
+      var vh = window.innerHeight || 800;
+      var els = root.querySelectorAll(".mtd-reveal:not([data-seen])");
+      Array.prototype.forEach.call(els, function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < vh * 0.94 && r.bottom > -80) {
+          el.setAttribute("data-seen", "1");
+          var sibs = el.parentElement
+            ? Array.prototype.filter.call(el.parentElement.children, function (c) {
+                return c.classList.contains("mtd-reveal");
+              })
+            : [el];
+          var delay = Math.min(Math.max(0, sibs.indexOf(el)), 6) * 55;
+          el.style.animationDelay = delay + "ms";
+          el.classList.add("mtd-revealing");
+          setTimeout(function () {
+            el.classList.remove("mtd-revealing");
+            el.style.animationDelay = "";
+          }, 640 + delay);
         }
       });
-    }, { rootMargin: "0px 0px -8% 0px" });
-    reveals.forEach(function (el) { io.observe(el); });
-  }
+    };
+    var onScroll = function () {
+      if (!raf) raf = requestAnimationFrame(reveal);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    requestAnimationFrame(reveal);
+    setTimeout(reveal, 250);
+  })();
+
+  /* ---- Animal-crossing drift field — soft Dracula diamonds rising forever ----
+     Purely decorative; populated into an empty .mtd-drift container so no-JS
+     visitors simply see nothing extra. Disabled under reduced motion. */
+  (function () {
+    var field = document.querySelector(".mtd-drift");
+    if (!field || reduceMotion) return;
+    var hues = [
+      "var(--dr-purple)", "var(--dr-cyan)", "var(--dr-pink)",
+      "var(--dr-green)", "var(--dr-purple)", "var(--dr-cyan)"
+    ];
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < 20; i++) {
+      var op = 0.05 + Math.random() * 0.11;
+      var size = 8 + Math.random() * 26;
+      var d = document.createElement("span");
+      d.className = "mtd-diamond";
+      d.style.left = Math.random() * 100 + "%";
+      d.style.width = size + "px";
+      d.style.height = size + "px";
+      d.style.background = hues[i % hues.length];
+      d.style.animationDuration = 26 + Math.random() * 30 + "s";
+      d.style.animationDelay = -Math.random() * 50 + "s";
+      d.style.setProperty("--drift", (Math.random() * 2 - 1) * 60 + "px");
+      d.style.setProperty("--rot", Math.random() * 90 + "deg");
+      d.style.setProperty("--op", op);
+      d.style.opacity = op;
+      frag.appendChild(d);
+    }
+    field.appendChild(frag);
+  })();
+
+  /* ---- Gentle scroll parallax: expose scrollY to the background layers ---- */
+  (function () {
+    var raf = 0;
+    var onScroll = function () {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        document.documentElement.style.setProperty("--mtd-scroll", String(window.scrollY));
+        raf = 0;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  })();
 })();

@@ -1,0 +1,38 @@
+/* ===========================================================================
+   EFFECTS — radii, borders, shadows, motion.
+   The blog is mostly flat; shadows appear on the circular avatar and on
+   raised UI. Corners are gently rounded (4–5px), never pill-soft except tags.
+   =========================================================================== */
+
+:root {
+  /* Radii */
+  --radius-sm:   0.1875rem; /* 3px — tags, hairline chips */
+  --radius-md:   0.25rem;   /* 4px — code blocks, buttons, cards */
+  --radius-lg:   0.3125rem; /* 5px — notification boxes */
+  --radius-pill: 5rem;      /* search field */
+  --radius-full: 50%;       /* circular avatar */
+
+  /* Border widths */
+  --border-width:        1px;
+  --border-width-accent: 0.3125rem; /* 5px — colored left border on boxes/code */
+
+  /* Shadows — soft, dark-aware */
+  --shadow-avatar: 0 0 0.5rem rgba(0, 0, 0, 0.8);
+  --shadow-sm:     0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md:     0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lg:     0 10px 30px rgba(0, 0, 0, 0.45);
+  --shadow-glow:   0 0 0 3px rgba(139, 233, 253, 0.35); /* cyan focus glow */
+
+  /* Text shadow over hero imagery */
+  --text-shadow-hero: 1px 1px 3px #000;
+
+  /* Imagery treatment — feed thumbnails desaturate, color on hover */
+  --img-grayscale: grayscale(40%); /* @kind other */
+
+  /* Motion */
+  --ease-standard: ease-in-out; /* @kind other */
+  --dur-fast:   0.2s; /* @kind other */
+  --dur-normal: 0.5s; /* @kind other */
+  --dur-slow:   1s; /* @kind other */
+  --transition-color: color var(--dur-fast) var(--ease-standard);
+}
