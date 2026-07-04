@@ -32,7 +32,9 @@ common-js:
 
   <div class="mtd-modern">
     <div class="mtd-aurora"></div>
+    {%- if page.layout == "home" -%}
     <div class="mtd-drift" aria-hidden="true"></div>
+    {%- endif -%}
     <div class="mtd-vignette"></div>
 
     {% include mtd-nav.html %}
