@@ -343,11 +343,13 @@ defaults:
 # in CI scans gems installed under vendor/bundle and chokes on their templates).
 exclude:
   - CHANGELOG.md
+  - CLAUDE.md
   - CNAME
   - Gemfile
   - Gemfile.lock
   - LICENSE
   - README.md
+  - STYLE.md
   - screenshot.png
   - docs/
   - vendor
