@@ -27,7 +27,7 @@
       <div class="mtd-footer-col">
         <span class="mtd-footer-head">Explore</span>
         <a href="{{ '/' | relative_url }}">Blog</a>
-        <a href="{{ '/' | relative_url }}#mtd-projects">Projects</a>
+        {%- if site.projects.size > 0 -%}<a href="{{ '/' | relative_url }}#mtd-projects">Projects</a>{%- endif -%}
         <a href="{{ '/' | relative_url }}#mtd-podcast">Podcast</a>
         <a href="{{ '/tags' | relative_url }}">Tags</a>
       </div>

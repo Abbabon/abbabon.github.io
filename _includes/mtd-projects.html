@@ -10,7 +10,8 @@
   <div class="mtd-projects-grid">
     {%- for p in projects -%}
       {%- assign thumb = p.image | default: p.cover-img | default: p.thumbnail -%}
-      <a class="mtd-card mtd-project-card mtd-reveal" href="{{ p.url | relative_url }}">
+      {%- assign target = p.link | default: p.url -%}
+      <a class="mtd-card mtd-project-card mtd-reveal" href="{{ target | relative_url }}">
         <div class="mtd-project-media">
           {%- if thumb -%}<img class="mtd-card-img" src="{{ thumb | relative_url }}" alt="" />{%- endif -%}
           {%- if p.category -%}<span class="mtd-project-cat">// {{ p.category }}</span>{%- endif -%}

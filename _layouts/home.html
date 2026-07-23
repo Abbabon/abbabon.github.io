@@ -21,7 +21,7 @@ layout: base
           <a class="mtd-btn mtd-btn-primary" href="#mtd-writing">Read the blog</a>
           <nav class="mtd-jump-pills" aria-label="Jump to section">
             <a class="mtd-jump-pill" data-hue="pink" href="#mtd-podcast">Podcasts</a>
-            <a class="mtd-jump-pill" data-hue="purple" href="#mtd-projects">Projects</a>
+            {% if site.projects.size > 0 %}<a class="mtd-jump-pill" data-hue="purple" href="#mtd-projects">Projects</a>{% endif %}
             <a class="mtd-jump-pill" data-hue="orange" href="#mtd-contact">Let's talk</a>
           </nav>
         </div>

@@ -10,7 +10,7 @@
   <div class="mtd-nav-links">
     <a class="mtd-nav-link {% if page.url == '/' %}is-active{% endif %}" href="{{ '/' | relative_url }}">Blog</a>
     <a class="mtd-nav-link" href="{{ '/' | relative_url }}#mtd-podcast">Podcast</a>
-    <a class="mtd-nav-link" href="{{ '/' | relative_url }}#mtd-projects">Projects</a>
+    {% if site.projects.size > 0 %}<a class="mtd-nav-link" href="{{ '/' | relative_url }}#mtd-projects">Projects</a>{% endif %}
     <a class="mtd-nav-link {% if page.url contains 'about' %}is-active{% endif %}" href="{{ '/about' | relative_url }}">About</a>
     <a class="mtd-nav-link {% if page.url contains 'contact' %}is-active{% endif %}" href="{{ '/contact' | relative_url }}">Contact</a>
     <a class="mtd-nav-link {% if page.url contains 'tags' %}is-active{% endif %}" href="{{ '/tags' | relative_url }}">Tags</a>
