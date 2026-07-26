@@ -48,6 +48,8 @@ body > main { padding-top: 0; }
   gap: 0.7rem;
   text-decoration: none;
 }
+/* beat Bootstrap's global a:hover underline (higher specificity than .mtd-brand) */
+.mtd-brand:hover, .mtd-brand:focus { text-decoration: none; }
 .mtd-brand img {
   border-radius: 50%;
   box-shadow: var(--glow-purple);
@@ -58,7 +60,9 @@ body > main { padding-top: 0; }
   font-weight: 800;
   font-size: 1.02rem;
   color: var(--text-body);
+  transition: color var(--dur-fast, 0.15s);
 }
+.mtd-brand:hover .mtd-brand-name { color: var(--accent-cyan); }
 .mtd-brand-sub {
   font-family: var(--font-mono);
   font-size: 0.66rem;
@@ -83,7 +87,7 @@ body > main { padding-top: 0; }
   transition: color 0.2s;
   white-space: nowrap;
 }
-.mtd-nav-link:hover { color: var(--link-hover); }
+.mtd-nav-link:hover, .mtd-nav-link:focus { color: var(--link-hover); text-decoration: none; }
 .mtd-nav-link.is-active { color: var(--accent-cyan); }
 .mtd-nav-link.is-active:hover { color: var(--link-hover); }
 
