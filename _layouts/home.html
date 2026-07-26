@@ -22,6 +22,7 @@ layout: base
           <nav class="mtd-jump-pills" aria-label="Jump to section">
             <a class="mtd-jump-pill" data-hue="pink" href="#mtd-podcast">Podcasts</a>
             {% if site.projects.size > 0 %}<a class="mtd-jump-pill" data-hue="purple" href="#mtd-projects">Projects</a>{% endif %}
+            {% if site.consulting.size > 0 %}<a class="mtd-jump-pill" data-hue="green" href="#mtd-consulting">Consulting</a>{% endif %}
             <a class="mtd-jump-pill" data-hue="orange" href="#mtd-contact">Let's talk</a>
           </nav>
         </div>
@@ -110,6 +111,9 @@ layout: base
 
   {%- comment -%} ===================== PROJECTS ===================== {%- endcomment -%}
   {% include mtd-projects.html %}
+
+  {%- comment -%} ================= CONSULTATION WORK ================= {%- endcomment -%}
+  {% include mtd-consulting.html %}
 
   {%- comment -%} ===================== CONTACT CTA ===================== {%- endcomment -%}
   {% include mtd-contact-cta.html %}

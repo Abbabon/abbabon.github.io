@@ -1,41 +1,6 @@
 {%- comment -%} Projects section — cards from the `projects` collection {%- endcomment -%}
-{%- assign projects = site.projects | sort: "order" -%}
-{%- if projects and projects.size > 0 -%}
-<section class="mtd-section" id="mtd-projects">
-  <div class="mtd-sec-head mtd-reveal">
-    <h2>Projects</h2>
-    <span class="mtd-sec-eyebrow">// shipped &amp; open-source · {{ projects | size }}</span>
-    <hr class="mtd-rule" />
-  </div>
-  <div class="mtd-projects-grid">
-    {%- for p in projects -%}
-      {%- assign thumb = p.image | default: p.cover-img | default: p.thumbnail -%}
-      {%- assign target = p.link | default: p.url -%}
-      {%- comment -%} Direct action links — rendered as clickable islands on top of the whole-card link {%- endcomment -%}
-      {%- assign play = p.play_url -%}
-      {%- assign watch = p.watch_url | default: p.video_url -%}
-      {%- assign repo = p.repo_url -%}
-      <div class="mtd-card mtd-project-card mtd-reveal">
-        <div class="mtd-project-media">
-          {%- if thumb -%}<img class="mtd-card-img" src="{{ thumb | relative_url }}" alt="" />{%- endif -%}
-          {%- if p.category -%}<span class="mtd-project-cat">// {{ p.category }}</span>{%- endif -%}
-        </div>
-        <div class="mtd-project-body">
-          <h3 class="mtd-project-title"><a class="mtd-stretch" href="{{ target | relative_url }}">{{ p.title | strip_html }}</a></h3>
-          {%- if p.org -%}<span class="mtd-project-org">{{ p.org }}</span>{%- endif -%}
-          {%- assign desc = p.description | default: p.excerpt -%}
-          <p class="mtd-project-desc">{{ desc | strip_html | truncatewords: 26 }}</p>
-          {%- if play or watch or repo -%}
-            <div class="mtd-project-links">
-              {%- if play -%}<a class="mtd-plink" href="{{ play }}" target="_blank" rel="noreferrer"><i class="fas fa-play"></i> Play</a>{%- endif -%}
-              {%- if watch -%}<a class="mtd-plink" href="{{ watch }}" target="_blank" rel="noreferrer"><i class="fab fa-youtube"></i> Watch</a>{%- endif -%}
-              {%- if repo -%}<a class="mtd-plink" href="{{ repo }}" target="_blank" rel="noreferrer"><i class="fab fa-github"></i> Code</a>{%- endif -%}
-            </div>
-          {%- endif -%}
-          <a class="mtd-read mtd-plink-flat" href="{{ target | relative_url }}">{{ p.cta | default: "Read more" }} →</a>
-        </div>
-      </div>
-    {%- endfor -%}
-  </div>
-</section>
-{%- endif -%}
+{% include mtd-card-grid.html
+   items=site.projects
+   id="mtd-projects"
+   heading="Projects"
+   eyebrow="shipped &amp; open-source" %}

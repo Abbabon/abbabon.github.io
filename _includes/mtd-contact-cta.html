@@ -8,21 +8,30 @@
   </div>
   <div class="mtd-cta mtd-reveal">
     <div class="mtd-cta-text">
-      <span class="mtd-eyebrow">~/contact · open inbox</span>
-      <h3 class="mtd-cta-head"><span class="mtd-gradient-text">Got a weird tooling<br />problem? Let's jam.</span></h3>
+      <span class="mtd-eyebrow">~/contact · open inbox · open for work</span>
+      <h3 class="mtd-cta-head"><span class="mtd-gradient-text">Got a wicked tech<br />issue? Let's jam.</span></h3>
       <p class="mtd-cta-blurb">
-        Questions, collaborations, game-jam invites, or just to argue about
-        mechanical keyboards — I read everything.
+        <strong>I'm available for consultation and freelance work.</strong> Unity
+        architecture, editor tooling, build pipelines, performance rescues, or a
+        second pair of eyes on a codebase that has started to smell — I've spent
+        years untangling exactly that, and I'm happy to do it for you too.
+      </p>
+      <p class="mtd-cta-blurb">
+        Not hiring? Still write. Questions, collaborations, game-jam invites, or
+        just to argue about mechanical keyboards — I read everything.
       </p>
     </div>
     <div class="mtd-cta-actions">
       <div class="mtd-cta-buttons">
-        <a class="mtd-btn mtd-btn-primary" href="{{ '/contact' | relative_url }}">Say hi</a>
-        {%- if s.itchio -%}
-          <a class="mtd-btn mtd-btn-ghost" href="https://{{ s.itchio }}.itch.io/" target="_blank" rel="noreferrer">Play my games</a>
+        {%- if s.email -%}
+          <a class="mtd-btn mtd-btn-primary" href="mailto:{{ s.email }}"><i class="fas fa-envelope"></i> {{ s.email }}</a>
+        {%- endif -%}
+        {%- if s.linkedin -%}
+          <a class="mtd-btn mtd-btn-ghost" href="https://linkedin.com/in/{{ s.linkedin }}" target="_blank" rel="noreferrer"><i class="fab fa-linkedin"></i> Connect on LinkedIn</a>
         {%- endif -%}
       </div>
       <div class="mtd-cta-social">
+        {%- if s.linkedin -%}<a href="https://linkedin.com/in/{{ s.linkedin }}" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin"></i></a>{%- endif -%}
         {%- if s.github -%}<a href="https://github.com/{{ s.github }}" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a>{%- endif -%}
         {%- if s.itchio -%}<a href="https://{{ s.itchio }}.itch.io/" target="_blank" rel="noreferrer" aria-label="itch.io" title="itch.io"><i class="fab fa-itch-io"></i></a>{%- endif -%}
         {%- if s.twitter -%}<a href="https://twitter.com/{{ s.twitter }}" target="_blank" rel="noreferrer" aria-label="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>{%- endif -%}

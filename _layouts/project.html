@@ -5,12 +5,23 @@ layout: base
 {%- comment -%}
   Project landing page. A project is NOT a blog post — it has an image, a store
   link, a video link and a description, and the template renders whichever of
-  those are populated.
+  those are populated. Shared by the `projects` and `consulting` collections;
+  the back-links point at whichever home section the item came from.
 {%- endcomment -%}
+
+{%- if page.collection == 'consulting' -%}
+  {%- assign back_anchor = '#mtd-consulting' -%}
+  {%- assign back_label = 'back to consultation work' -%}
+  {%- assign back_all = 'All consultation work' -%}
+{%- else -%}
+  {%- assign back_anchor = '#mtd-projects' -%}
+  {%- assign back_label = 'back to projects' -%}
+  {%- assign back_all = 'All projects' -%}
+{%- endif -%}
 
 <main>
   <article class="mtd-page mtd-project">
-    <a class="mtd-eyebrow mtd-reveal mtd-project-back" href="{{ '/' | relative_url }}#mtd-projects">← back to projects</a>
+    <a class="mtd-eyebrow mtd-reveal mtd-project-back" href="{{ '/' | relative_url }}{{ back_anchor }}">← {{ back_label }}</a>
 
     <h1 class="mtd-page-title mtd-reveal"><span class="mtd-gradient-text">{{ page.title | strip_html }}</span></h1>
 
@@ -56,7 +67,7 @@ layout: base
 
     {%- comment -%} Action buttons — play / watch / repo, with legacy store_url fallback {%- endcomment -%}
     {%- assign play_url = page.play_url | default: page.store_url -%}
-    {%- if play_url or watch_url or page.repo_url -%}
+    {%- if play_url or watch_url or page.repo_url or page.site_url -%}
       <div class="mtd-project-actions mtd-reveal">
         {%- if play_url and play_url != "" -%}
           <a class="mtd-btn mtd-btn-primary" href="{{ play_url }}" target="_blank" rel="noreferrer">
@@ -73,11 +84,16 @@ layout: base
             <i class="fab fa-github"></i> {{ page.repo_label | default: "View on GitHub" }}
           </a>
         {%- endif -%}
+        {%- if page.site_url and page.site_url != "" -%}
+          <a class="mtd-btn mtd-btn-ghost" href="{{ page.site_url }}" target="_blank" rel="noreferrer">
+            <i class="fas fa-arrow-up-right-from-square"></i> {{ page.site_label | default: "Visit the site" }}
+          </a>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
     <div class="mtd-page-back mtd-reveal">
-      <a class="mtd-btn mtd-btn-ghost mtd-btn-sm" href="{{ '/' | relative_url }}#mtd-projects">← All projects</a>
+      <a class="mtd-btn mtd-btn-ghost mtd-btn-sm" href="{{ '/' | relative_url }}{{ back_anchor }}">← {{ back_all }}</a>
     </div>
   </article>
 </main>

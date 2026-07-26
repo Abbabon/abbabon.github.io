@@ -5,18 +5,25 @@ eyebrow: "~/contact · say hi"
 show-back: true
 ---
 
-There's a link to literally every possible social network I'm receiving messages on in the footer of this page. Feel free to ask questions, submit your remarks, and invite me to jam with you on your games!
+Two ways in, and I read both.
 
-The best thing you could do, is to play my games on [itch.io](https://abbabon.itch.io/) and give me some feedback on them!
+**Email** for anything with substance — a project, a problem, a question, a
+proposal. **LinkedIn** if you'd rather keep it professional, or you want to see
+the CV before you commit to a sentence.
 
-But don't try to sell me stuff. I already have a dirty Mechanical Keyboards obsession, and no money for anything else. Unless you have a KeyCult up for grabs, perhaps?
-
-<div class="mtd-box mtd-box-note">
-  <div class="mtd-box-title">re: contact forms</div>
-  Contact forms remind me of the days I had to wait for my mom to get off the line so I could go back to ICQ. But I'm lazy — so here's a cute, un-harmful, completely innocent service bot instead. Boop!
+<div class="mtd-contact-actions">
+  <a class="mtd-btn mtd-btn-primary" href="mailto:{{ site.social-network-links.email }}">
+    <i class="fas fa-envelope"></i> {{ site.social-network-links.email }}
+  </a>
+  <a class="mtd-btn mtd-btn-ghost" href="https://linkedin.com/in/{{ site.social-network-links.linkedin }}" target="_blank" rel="noreferrer">
+    <i class="fab fa-linkedin"></i> Connect on LinkedIn
+  </a>
 </div>
 
-<figure class="mtd-figure">
-  <img src="{{ '/assets/img/hal9000.jpg' | relative_url }}" alt="Hello, Human." />
-  <figcaption>Hello, Human.</figcaption>
-</figure>
+I'm currently **open for consultation and freelance work** — Unity architecture,
+editor tooling, build pipelines, performance rescues, and second opinions on
+codebases that have started to fight back. Tell me what's broken and we'll figure
+out whether I'm the right person to fix it.
+
+Not a work thing? Also fine. Questions, remarks, game-jam invites, and arguments
+about mechanical keyboards all land in the same inbox.

@@ -314,6 +314,9 @@ collections:
   projects:
     output: true
     permalink: /projects/:name/
+  consulting:
+    output: true
+    permalink: /consulting/:name/
 
 # Default YAML values (more information on Jekyll's site)
 defaults:
@@ -334,6 +337,12 @@ defaults:
     scope:
       path: ""
       type: "projects" # projects use their own landing-page template
+    values:
+      layout: "project"
+  -
+    scope:
+      path: ""
+      type: "consulting" # consultation work reuses the project landing-page template
     values:
       layout: "project"
 

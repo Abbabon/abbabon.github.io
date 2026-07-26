@@ -1,0 +1,10 @@
+{%- comment -%}
+  Consultation Work section — cards from the `consulting` collection.
+  Same card shape as Projects (optional post link, optional action links), but
+  presented under its own header. Renders nothing while the collection is empty.
+{%- endcomment -%}
+{% include mtd-card-grid.html
+   items=site.consulting
+   id="mtd-consulting"
+   heading="Consultation Work"
+   eyebrow="freelance &amp; advisory" %}
