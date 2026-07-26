@@ -120,9 +120,12 @@ layout: null
 }
 /* card-as-link: beat Bootstrap's global a:hover underline */
 a.mtd-card:hover, a.mtd-card:focus { text-decoration: none; }
-.mtd-card:hover .mtd-card-img { filter: grayscale(0%); transform: scale(1.05); }
+.mtd-card:hover .mtd-card-img { filter: grayscale(0%); transform: scale(1.08); }
 .mtd-card-img {
   filter: var(--img-grayscale);
+  /* slight rest overscan so the image edge never sits exactly on the clip
+     boundary mid-transition (which flashes a 1px hairline on rapid hover) */
+  transform: scale(1.03);
   transition: filter var(--dur-normal) var(--ease-out-soft), transform var(--dur-normal) var(--ease-out-soft);
 }
 

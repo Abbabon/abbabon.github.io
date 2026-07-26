@@ -4,8 +4,7 @@ org: Open source
 category: macos · tools
 image: "/assets/img/posts/QuickStudy/quick-study-search.png"
 link: /2026-07-17-quick-study/
-store_url: "https://github.com/Abbabon/quick-study"
-store_label: View on GitHub
+repo_url: "https://github.com/Abbabon/quick-study"
 cta: Read the post
 accent: purple
 order: 0

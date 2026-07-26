@@ -599,6 +599,29 @@ body > main { padding-top: 0; }
 .mtd-post-body th, .mtd-post-body td { border: 1px solid var(--border-hairline); padding: 0.5rem 0.8rem; }
 .mtd-post-body th { background: var(--surface-inset); color: var(--text-heading); }
 
+/* In-body screenshots that sit alongside the text (portrait shots especially) */
+.mtd-post-body .mtd-shot { margin: 1.4rem auto; }
+.mtd-post-body .mtd-shot img { width: 100%; height: auto; margin: 0; display: block; }
+.mtd-post-body .mtd-shot figcaption {
+  text-align: center;
+  margin-top: 0.55rem;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.mtd-post-body .mtd-shot-portrait { max-width: 300px; }
+.mtd-post-body .mtd-shot-wide { max-width: 640px; }
+@media (min-width: 760px) {
+  .mtd-post-body .mtd-shot-portrait { max-width: 268px; }
+  .mtd-post-body .mtd-shot-right { float: right; margin: 0.3rem 0 1rem 2rem; }
+  .mtd-post-body .mtd-shot-left  { float: left;  margin: 0.3rem 2rem 1rem 0; }
+  /* keep each section starting clean, so a tall float never bleeds past its heading */
+  .mtd-post-body h1, .mtd-post-body h2, .mtd-post-body h3 { clear: both; }
+}
+
+/* Inline call-to-action button block (Play links, top and bottom of a post) */
+.mtd-post-body .mtd-post-cta { margin: 1.8rem 0; clear: both; }
+
 /* ---- Code blocks: wrap on by default, with a per-block wrap toggle ---- */
 .mtd-codeblock { position: relative; margin: 1.6rem 0; }
 .mtd-codeblock pre,
@@ -1097,6 +1120,33 @@ html { scroll-behavior: smooth; }
   inset: 0;
   background: linear-gradient(180deg, transparent 45%, rgba(40, 42, 54, 0.9));
 }
+
+/* Scale the gradient overlays in lockstep with the image on hover, so the
+   gradient's inflection tracks the image content instead of leaving a seam. */
+.mtd-feature-media::after,
+.mtd-grid-media::after,
+.mtd-project-media::after {
+  transform-origin: center;
+  /* match the image's rest overscan so the two track together and neither
+     edge crosses the clip boundary mid-transition */
+  transform: scale(1.03);
+  transition: transform var(--dur-normal) var(--ease-out-soft);
+}
+.mtd-card:hover .mtd-feature-media::after,
+.mtd-card:hover .mtd-grid-media::after,
+.mtd-card:hover .mtd-project-media::after {
+  transform: scale(1.08);
+}
+/* The image is layer-promoted (it animates both filter and transform), so
+   Chrome stops applying the media's overflow:hidden clip to it mid-animation
+   and it bleeds past the bottom edge on rapid hover. Promoting the clip
+   container to its own compositor layer forces the clip to hold on the GPU. */
+.mtd-feature-media,
+.mtd-grid-media,
+.mtd-project-media {
+  transform: translateZ(0);
+  isolation: isolate;
+}
 .mtd-project-cat {
   position: absolute;
   left: 0.9rem;
@@ -1129,6 +1179,54 @@ html { scroll-behavior: smooth; }
   margin: 0.7rem 0 0;
 }
 .mtd-project-card .mtd-read { margin-top: auto; padding-top: 1rem; font-weight: 700; font-size: 0.85rem; }
+
+/* Whole-card link (stretched) + independently-clickable action islands */
+.mtd-project-card { position: relative; }
+.mtd-project-title { margin: 0; }
+.mtd-project-title a { color: var(--text-heading); text-decoration: none; }
+.mtd-project-title a:hover { color: var(--link); text-decoration: none; }
+.mtd-project-card .mtd-stretch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.mtd-project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.95rem;
+}
+.mtd-project-card .mtd-plink {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-hairline);
+  background: var(--surface-inset);
+  color: var(--text-body);
+  text-decoration: none;
+  transition: border-color var(--dur-fast) var(--ease-out-soft),
+              color var(--dur-fast) var(--ease-out-soft),
+              background var(--dur-fast) var(--ease-out-soft);
+}
+.mtd-project-card .mtd-plink:hover,
+.mtd-project-card .mtd-plink:focus {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+.mtd-project-card .mtd-plink i { font-size: 0.8rem; }
+/* keep the "Read the post" link above the stretched overlay so it hovers on its own */
+.mtd-project-card .mtd-read.mtd-plink-flat { position: relative; z-index: 1; text-decoration: none; }
+.mtd-project-card .mtd-read.mtd-plink-flat:hover { text-decoration: none; }
 
 /* ---- Project landing page ---- */
 .mtd-project-back { margin-bottom: 1.2rem; }
