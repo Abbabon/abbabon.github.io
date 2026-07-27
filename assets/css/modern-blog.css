@@ -626,6 +626,25 @@ body > main { padding-top: 0; }
 /* Inline call-to-action button block (Play links, top and bottom of a post) */
 .mtd-post-body .mtd-post-cta { margin: 1.8rem 0; clear: both; }
 
+/* Self-hosted video clips embedded in the body of a post */
+.mtd-post-body .mtd-video { margin: 2rem 0; clear: both; }
+.mtd-post-body .mtd-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-hairline);
+  box-shadow: var(--elev-2);
+  background: #000;
+}
+.mtd-post-body .mtd-video figcaption {
+  text-align: center;
+  margin-top: 0.6rem;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
 /* ---- Code blocks: wrap on by default, with a per-block wrap toggle ---- */
 .mtd-codeblock { position: relative; margin: 1.6rem 0; }
 .mtd-codeblock pre,
