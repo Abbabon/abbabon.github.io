@@ -1,6 +1,14 @@
-{%- comment -%} Projects section — cards from the `projects` collection {%- endcomment -%}
+{%- comment -%}
+  Projects section — cards from the `projects` collection. Capped at 8 cards on
+  desktop and (via CSS) 2 on phones; the rest live at /projects/.
+{%- endcomment -%}
 {% include mtd-card-grid.html
    items=site.projects
    id="mtd-projects"
    heading="Projects"
-   eyebrow="shipped &amp; open-source" %}
+   eyebrow="shipped &amp; open-source"
+   limit=8
+   mobile_cap=true
+   more_url="/projects/"
+   more_label="All projects"
+   more_noun="project" %}

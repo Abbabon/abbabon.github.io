@@ -3,7 +3,7 @@
 {%- if pods and pods.size > 0 -%}
 <section class="mtd-section" id="mtd-podcast">
   <div class="mtd-sec-head mtd-reveal">
-    <h2>Podcast</h2>
+    <h2>Podcast{% unless pods.size == 1 %}s{% endunless %}</h2>
     <span class="mtd-sec-eyebrow">// on the mic · {{ pods | size }}</span>
     <hr class="mtd-rule" />
   </div>

@@ -28,9 +28,9 @@
         <span class="mtd-footer-head">Explore</span>
         <a href="{{ '/' | relative_url }}">Blog</a>
         <a href="{{ '/posts/' | relative_url }}">All posts</a>
-        {%- if site.projects.size > 0 -%}<a href="{{ '/' | relative_url }}#mtd-projects">Projects</a>{%- endif -%}
-        {%- if site.consulting.size > 0 -%}<a href="{{ '/' | relative_url }}#mtd-consulting">Consulting</a>{%- endif -%}
-        <a href="{{ '/' | relative_url }}#mtd-podcast">Podcast</a>
+        {%- if site.projects.size > 0 -%}<a href="{{ '/projects/' | relative_url }}">All projects</a>{%- endif -%}
+        {%- if site.consulting.size > 0 -%}<a href="{{ '/consulting/' | relative_url }}">All consultation work</a>{%- endif -%}
+        <a href="{{ '/' | relative_url }}#mtd-podcast">Podcast{% unless site.data.podcasts.size == 1 %}s{% endunless %}</a>
         <a href="{{ '/tags' | relative_url }}">Tags</a>
       </div>
       <div class="mtd-footer-col">

@@ -143,6 +143,33 @@ body > main { padding-top: 0; }
 }
 .mtd-nav-menu-item:hover { color: var(--link-hover); background: var(--surface-hover); }
 
+/* The wordmark must never wrap. `.mtd-nav-links` is a flex sibling that won't
+   shrink below its content, so without this the brand is the only thing left
+   to give and it collapses into a 2–3 line stack. */
+.mtd-brand-name { white-space: nowrap; }
+
+/* mobile: the avatar carries the brand, and the links scroll sideways.
+   Six links plus Subscribe never fit next to the wordmark at these widths, and
+   there is no hamburger in this nav — so drop the text (the avatar still links
+   home) and let the row scroll instead of overflowing the viewport.
+   `margin-left: auto` with `min-width: 0` gives both behaviours from one rule:
+   auto margins eat free space first, so the row stays right-aligned while it
+   fits and only shrinks-and-scrolls once it doesn't. Deliberately no
+   `justify-content: flex-end` — that combination makes the start of an
+   overflowing flex row unreachable. */
+@media (max-width: 860px) {
+  .mtd-brand-text { display: none; }
+  .mtd-nav-links {
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .mtd-nav-links::-webkit-scrollbar { display: none; }
+  .mtd-nav-links > * { flex: 0 0 auto; }
+}
+
 /* mobile: collapse the wordmark sub-line and tighten gaps */
 @media (max-width: 560px) {
   .mtd-brand-sub { display: none; }
@@ -1431,6 +1458,22 @@ html { scroll-behavior: smooth; }
 @media (max-width: 860px) {
   .mtd-podcast-grid,
   .mtd-projects-grid { grid-template-columns: 1fr; }
+
+  /* The hero terminal is decoration, and it is the first thing to squeeze the
+     headline once the grid gets narrow — drop it and give the copy the full
+     width instead of leaving it in a 57% column. */
+  .mtd-hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .mtd-terminal { display: none; }
+
+  /* Home-page grids ship a full desktop set of cards but show only the 2
+     newest on small screens; the "see all" row under each grid is the way
+     through to the rest. `loading="lazy"` on the card images means the hidden
+     ones are never fetched. */
+  .mtd-mobile-cap > *:nth-child(n + 3) { display: none; }
+
+  /* The "N older / N more" counts describe the desktop cap, so they'd be wrong
+     next to a 2-card grid. Keep the link, drop the count. */
+  .mtd-more-row .mtd-more-note { display: none; }
 }
 
 /* ---------------------------------------------------------------------------

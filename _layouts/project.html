@@ -13,10 +13,12 @@ layout: base
   {%- assign back_anchor = '#mtd-consulting' -%}
   {%- assign back_label = 'back to consultation work' -%}
   {%- assign back_all = 'All consultation work' -%}
+  {%- assign back_all_url = '/consulting/' -%}
 {%- else -%}
   {%- assign back_anchor = '#mtd-projects' -%}
   {%- assign back_label = 'back to projects' -%}
   {%- assign back_all = 'All projects' -%}
+  {%- assign back_all_url = '/projects/' -%}
 {%- endif -%}
 
 <main>
@@ -93,7 +95,7 @@ layout: base
     {%- endif -%}
 
     <div class="mtd-page-back mtd-reveal">
-      <a class="mtd-btn mtd-btn-ghost mtd-btn-sm" href="{{ '/' | relative_url }}{{ back_anchor }}">← {{ back_all }}</a>
+      <a class="mtd-btn mtd-btn-ghost mtd-btn-sm" href="{{ back_all_url | relative_url }}">← {{ back_all }}</a>
     </div>
   </article>
 </main>

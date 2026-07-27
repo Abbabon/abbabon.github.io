@@ -83,23 +83,29 @@ layout: base
   {%- comment -%} ===================== GRID ===================== {%- endcomment -%}
   {%- comment -%}
     Home shows the featured post + the 8 next-most-recent ones; everything older
-    lives on the paginated archive at /posts/.
+    lives on the paginated archive at /posts/. On phones the grid is trimmed to
+    its 2 newest cards by CSS (`mtd-mobile-cap`), so the "previous posts" link
+    shows whenever there are more than 3 posts in total — even when nothing was
+    trimmed server-side.
   {%- endcomment -%}
   {%- assign home_limit = 8 -%}
   {%- assign recent = posts | slice: 1, home_limit -%}
   {%- assign shown = recent | size | plus: 1 -%}
+  {%- assign total = posts | size -%}
   <section class="mtd-section mtd-section-writing" id="mtd-writing">
     <div class="mtd-sec-head mtd-reveal">
       <h2>Latest writing</h2>
-      <span class="mtd-sec-eyebrow">// archive · {{ posts | size | minus: 1 }}</span>
+      <span class="mtd-sec-eyebrow">// archive · {{ total | minus: 1 }}</span>
       <hr class="mtd-rule" />
     </div>
-    {% include mtd-post-grid.html posts=recent %}
-    {%- assign older = posts | size | minus: shown -%}
-    {%- if older > 0 -%}
+    {% include mtd-post-grid.html posts=recent mobile_cap=true %}
+    {%- assign older = total | minus: shown -%}
+    {%- if total > 3 -%}
       <div class="mtd-more-row mtd-reveal">
         <a class="mtd-btn mtd-btn-ghost" href="{{ '/posts/' | relative_url }}">Previous posts →</a>
-        <span class="mtd-more-note">{{ older }} older post{% unless older == 1 %}s{% endunless %} in the archive</span>
+        {%- if older > 0 -%}
+          <span class="mtd-more-note">{{ older }} older post{% unless older == 1 %}s{% endunless %} in the archive</span>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </section>
