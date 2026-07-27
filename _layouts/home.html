@@ -81,29 +81,27 @@ layout: base
   {%- endif -%}
 
   {%- comment -%} ===================== GRID ===================== {%- endcomment -%}
+  {%- comment -%}
+    Home shows the featured post + the 8 next-most-recent ones; everything older
+    lives on the paginated archive at /posts/.
+  {%- endcomment -%}
+  {%- assign home_limit = 8 -%}
+  {%- assign recent = posts | slice: 1, home_limit -%}
+  {%- assign shown = recent | size | plus: 1 -%}
   <section class="mtd-section mtd-section-writing" id="mtd-writing">
     <div class="mtd-sec-head mtd-reveal">
       <h2>Latest writing</h2>
       <span class="mtd-sec-eyebrow">// archive · {{ posts | size | minus: 1 }}</span>
       <hr class="mtd-rule" />
     </div>
-    <div class="mtd-grid">
-      {%- for post in posts offset: 1 -%}
-        {%- assign thumb = post.cover-img | default: post.thumbnail-img -%}
-        <a class="mtd-card mtd-grid-card mtd-reveal" href="{{ post.url | relative_url }}">
-          <div class="mtd-grid-media">
-            {%- if thumb -%}<img class="mtd-card-img" src="{{ thumb | relative_url }}" alt="" />{%- endif -%}
-            {%- if post.tags.first -%}<span class="mtd-grid-tag">#{{ post.tags.first }}</span>{%- endif -%}
-          </div>
-          <div class="mtd-grid-body">
-            <span class="mtd-grid-date">{{ post.date | date: "%B %-d, %Y" }}</span>
-            <h3>{{ post.title | strip_html }}</h3>
-            <p class="mtd-grid-excerpt">{{ post.excerpt | strip_html | truncatewords: 24 }}</p>
-            <span class="mtd-read">Read →</span>
-          </div>
-        </a>
-      {%- endfor -%}
-    </div>
+    {% include mtd-post-grid.html posts=recent %}
+    {%- assign older = posts | size | minus: shown -%}
+    {%- if older > 0 -%}
+      <div class="mtd-more-row mtd-reveal">
+        <a class="mtd-btn mtd-btn-ghost" href="{{ '/posts/' | relative_url }}">Previous posts →</a>
+        <span class="mtd-more-note">{{ older }} older post{% unless older == 1 %}s{% endunless %} in the archive</span>
+      </div>
+    {%- endif -%}
   </section>
 
   {%- comment -%} ===================== PODCAST ===================== {%- endcomment -%}

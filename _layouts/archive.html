@@ -1,0 +1,64 @@
+---
+layout: base
+---
+
+{%- comment -%}
+  Paginated post archive. Driven by jekyll-paginate: `paginate` posts per page,
+  page 1 at /posts/ and the rest at /posts/page:num/ (see `paginate_path`).
+  The page that uses this layout must be posts/index.html.
+{%- endcomment -%}
+
+<main class="mtd-archive">
+  <header class="mtd-section">
+    <span class="mtd-eyebrow mtd-reveal">{{ page.eyebrow | default: "~/posts · the full archive" }}</span>
+    <h1 class="mtd-page-title mtd-reveal"><span class="mtd-gradient-text">{{ page.title | strip_html }}</span></h1>
+    {%- if page.subtitle -%}
+      <p class="mtd-post-subtitle mtd-reveal">{{ page.subtitle | strip_html }}</p>
+    {%- endif -%}
+  </header>
+
+  <section class="mtd-section">
+    <div class="mtd-sec-head mtd-reveal">
+      <h2>{% if paginator.page > 1 %}Page {{ paginator.page }}{% else %}Everything{% endif %}</h2>
+      <span class="mtd-sec-eyebrow">// {{ site.posts | size }} posts · page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+      <hr class="mtd-rule" />
+    </div>
+
+    {% include mtd-post-grid.html posts=paginator.posts %}
+
+    {%- if paginator.total_pages > 1 -%}
+      <nav class="mtd-pager mtd-reveal" aria-label="Archive pages">
+        {%- if paginator.previous_page -%}
+          <a class="mtd-btn mtd-btn-ghost mtd-btn-sm" href="{{ paginator.previous_page_path | relative_url }}">← Newer</a>
+        {%- else -%}
+          <span class="mtd-btn mtd-btn-ghost mtd-btn-sm is-disabled" aria-disabled="true">← Newer</span>
+        {%- endif -%}
+
+        <span class="mtd-pager-nums">
+          {%- for p in (1..paginator.total_pages) -%}
+            {%- if p == 1 -%}
+              {%- assign ppath = '/posts/' -%}
+            {%- else -%}
+              {%- assign ppath = site.paginate_path | replace: ':num', p -%}
+            {%- endif -%}
+            {%- if p == paginator.page -%}
+              <span class="mtd-pager-num is-current" aria-current="page">{{ p }}</span>
+            {%- else -%}
+              <a class="mtd-pager-num" href="{{ ppath | relative_url }}">{{ p }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </span>
+
+        {%- if paginator.next_page -%}
+          <a class="mtd-btn mtd-btn-ghost mtd-btn-sm" href="{{ paginator.next_page_path | relative_url }}">Older →</a>
+        {%- else -%}
+          <span class="mtd-btn mtd-btn-ghost mtd-btn-sm is-disabled" aria-disabled="true">Older →</span>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+
+    <div class="mtd-page-back mtd-reveal">
+      <a class="mtd-btn mtd-btn-ghost mtd-btn-sm" href="{{ '/' | relative_url }}">← Back home</a>
+    </div>
+  </section>
+</main>

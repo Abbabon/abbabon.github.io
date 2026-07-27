@@ -8,7 +8,7 @@
     </span>
   </a>
   <div class="mtd-nav-links">
-    <a class="mtd-nav-link {% if page.url == '/' %}is-active{% endif %}" href="{{ '/' | relative_url }}">Blog</a>
+    <a class="mtd-nav-link {% if page.url == '/' or page.url contains '/posts' %}is-active{% endif %}" href="{{ '/' | relative_url }}">Blog</a>
     <a class="mtd-nav-link" href="{{ '/' | relative_url }}#mtd-podcast">Podcast</a>
     {% if site.projects.size > 0 %}<a class="mtd-nav-link" href="{{ '/' | relative_url }}#mtd-projects">Projects</a>{% endif %}
     {% if site.consulting.size > 0 %}<a class="mtd-nav-link" href="{{ '/' | relative_url }}#mtd-consulting">Consulting</a>{% endif %}

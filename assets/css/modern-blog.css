@@ -453,6 +453,67 @@ body > main { padding-top: 0; }
 }
 .mtd-grid-card .mtd-read { margin-top: auto; padding-top: 0.9rem; font-weight: 700; font-size: 0.85rem; }
 
+/* ---- "Previous posts" row under the home grid ---- */
+.mtd-more-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.8rem;
+}
+.mtd-more-note {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   ARCHIVE (/posts/) + PAGER
+   --------------------------------------------------------------------------- */
+.mtd-archive { padding-top: 3.5rem; }
+.mtd-archive .mtd-page-title { margin-bottom: 0.4rem; }
+
+.mtd-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  margin-top: 2.6rem;
+}
+.mtd-pager .is-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+  cursor: default;
+}
+.mtd-pager-nums { display: flex; align-items: center; gap: 0.35rem; }
+.mtd-modern .mtd-pager-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  height: 2.1rem;
+  padding: 0 0.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.mtd-modern a.mtd-pager-num:hover,
+.mtd-modern a.mtd-pager-num:focus {
+  color: var(--link-hover);
+  border-color: var(--link-hover);
+  text-decoration: none;
+}
+.mtd-modern .mtd-pager-num.is-current {
+  color: var(--text-on-accent);
+  background: var(--accent-primary);
+  font-weight: 700;
+}
+
 /* ---------------------------------------------------------------------------
    FOOTER
    --------------------------------------------------------------------------- */
