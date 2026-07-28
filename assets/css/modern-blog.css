@@ -47,10 +47,18 @@ body > main { padding-top: 0; }
   align-items: center;
   gap: 0.7rem;
   text-decoration: none;
+  /* the nav is a flex row and the links can overflow it (see the ≤860px block);
+     without this the brand is the flex item that gives, and the avatar gets
+     squeezed narrower than it is tall. */
+  flex: 0 0 auto;
 }
 /* beat Bootstrap's global a:hover underline (higher specificity than .mtd-brand) */
 .mtd-brand:hover, .mtd-brand:focus { text-decoration: none; }
 .mtd-brand img {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
   border-radius: 50%;
   box-shadow: var(--glow-purple);
 }
