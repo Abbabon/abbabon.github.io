@@ -741,6 +741,30 @@ body > main { padding-top: 0; }
   color: var(--text-muted);
 }
 
+/* Portrait (phone) clips: cap the width and let two sit side by side on desktop */
+.mtd-post-body .mtd-video-portrait { max-width: 300px; margin-left: auto; margin-right: auto; }
+.mtd-post-body .mtd-video-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.6rem;
+  margin: 2rem 0;
+  clear: both;
+}
+.mtd-post-body .mtd-video-row .mtd-video { margin: 0; flex: 1 1 240px; }
+/* Clips in a row come from different phones, so their aspect ratios differ:
+   on desktop pin a shared height and let each width follow, so the row lines up. */
+@media (min-width: 760px) {
+  .mtd-post-body .mtd-video-row .mtd-video { flex: 0 0 auto; max-width: none; width: auto; }
+  /* one box for every clip — the recordings have three different aspect ratios,
+     so the video fills the box and gives up a few percent at the edges */
+  .mtd-post-body .mtd-video-row .mtd-video video { height: 540px; width: 292px; object-fit: cover; }
+  /* width:0 + min-width:100% keeps the caption from widening the figure past
+     the clip, so the clips sit exactly `gap` apart and the caption wraps under each */
+  .mtd-post-body .mtd-video-row .mtd-video figcaption { width: 0; min-width: 100%; }
+}
+
 /* ---- Code blocks: wrap on by default, with a per-block wrap toggle ---- */
 .mtd-codeblock { position: relative; margin: 1.6rem 0; }
 .mtd-codeblock pre,

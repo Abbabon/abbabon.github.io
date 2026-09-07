@@ -10,7 +10,9 @@
   overflow-x: hidden;
 }
 
-/* Aurora glow field, fixed behind everything. Parallaxes gently on scroll. */
+/* Aurora glow field, fixed behind everything. Parallaxes gently on scroll —
+   capped at 8vh so a long page never drags it below its own top edge (it
+   starts 10% above the viewport) and leaves a dark band behind. */
 .mtd-aurora {
   position: fixed;
   inset: -10% -10% auto -10%;
@@ -19,12 +21,12 @@
   filter: blur(8px);
   z-index: 0;
   pointer-events: none;
-  transform: translate3d(0, calc(var(--mtd-scroll, 0) * 0.06px), 0);
+  transform: translate3d(0, min(calc(var(--mtd-scroll, 0) * 0.06px), 8vh), 0);
   animation: aurora-drift 22s ease-in-out infinite alternate;
 }
 @keyframes aurora-drift {
-  0%   { transform: translate3d(0, calc(var(--mtd-scroll, 0) * 0.06px), 0) scale(1); opacity: .9; }
-  100% { transform: translate3d(0, calc(var(--mtd-scroll, 0) * 0.06px - 3%), 0) scale(1.08); opacity: 1; }
+  0%   { transform: translate3d(0, min(calc(var(--mtd-scroll, 0) * 0.06px), 8vh), 0) scale(1); opacity: .9; }
+  100% { transform: translate3d(0, calc(min(min(calc(var(--mtd-scroll, 0) * 0.06px), 8vh), 8vh) - 3%), 0) scale(1.08); opacity: 1; }
 }
 
 /* ---- 'Animal Crossing' drift field — soft Dracula diamonds rising forever ---- */
