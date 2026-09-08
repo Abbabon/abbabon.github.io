@@ -83,7 +83,7 @@ All tokens live in `reference/tokens/`. Key values:
 - Spacing rhythm: 5 / 10 / 15 / 20 / 30 / 35 / 50 / 80 px (`--space-1`…`--space-8`). Content max-width `76rem` (home) / `46–50rem` (post/about).
 - Radii: `--radius-md` 4px (buttons/code), `--radius-xl` 14px (cards), `--radius-2xl` 20px (hero image/modal), `--radius-pill` for tags.
 - Easing: `--ease-out-soft` `cubic-bezier(.22,.61,.36,1)`; hover lift `translateY(-6px)`; durations 0.2s (color) / 0.5s (image) / 0.7s (entrance).
-- Images: feed thumbnails sit at `grayscale(40%)` (`--img-grayscale`), animate to full color + `scale(1.05)` on card hover.
+- Images: feed thumbnails sit at full color (`--img-grayscale: grayscale(0%)`), only the bottom/side gradient overlays remain; `scale(1.05)` on card hover.
 
 ---
 
@@ -106,7 +106,7 @@ All tokens live in `reference/tokens/`. Key values:
 
 ### 4. Home — Grid ("Latest writing")
 - `repeat(auto-fill, minmax(17rem,1fr))`, 1.4rem gap.
-- Card: 16:9 image (grayscale→color on hover) with bottom gradient + cyan mono `#tag` overlay; body = mono date, cyan title, 3-line clamped excerpt, green "Read →". Hover → purple glow + `translateY(-6px)`.
+- Card: 16:9 image (full color, scales on hover) with bottom gradient + cyan mono `#tag` overlay; body = mono date, cyan title, 3-line clamped excerpt, green "Read →". Hover → purple glow + `translateY(-6px)`.
 
 ### 4b. Home page sections (updated)
 These were added after the original handoff. All sit in `_layouts/home.html` after the writing grid, each wrapped in an anchor id used by the nav + hero pills.
@@ -128,7 +128,7 @@ These were added after the original handoff. All sit in `_layouts/home.html` aft
 ### 6. Tags archive
 - Mono eyebrow `~/tags · N topics · M posts`, gradient "Tags" H1.
 - **Tag cloud:** pill per tag, each in a rotating Dracula hue, showing count; the active pill is filled. Click selects.
-- Below: `#tag — N posts` heading, then a list of post rows (56px grayscale thumb, title, date, "→") that slide right + cyan border on hover. Click → post.
+- Below: `#tag — N posts` heading, then a list of post rows (56px thumb, title, date, "→") that slide right + cyan border on hover. Click → post.
 
 ### 7. Subscribe modal (RSS-only)
 - Full-screen scrim (`rgba(20,21,28,.66)` + blur). Centered glass panel, `--radius-2xl`, `--glow-purple`.

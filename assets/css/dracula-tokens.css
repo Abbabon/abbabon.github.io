@@ -187,8 +187,9 @@ layout: null
   /* Text shadow over hero imagery */
   --text-shadow-hero: 1px 1px 3px #000;
 
-  /* Imagery treatment — feed thumbnails desaturate, color on hover */
-  --img-grayscale: grayscale(40%); /* @kind other */
+  /* Imagery treatment — thumbnails stay full color; the token is kept so the
+     hover transition and any future treatment have one place to change */
+  --img-grayscale: grayscale(0%); /* @kind other */
 
   /* Motion */
   --ease-standard: ease-in-out; /* @kind other */
