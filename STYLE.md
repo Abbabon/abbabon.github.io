@@ -52,3 +52,31 @@ A distillation of the blog's voice, based on the published posts (Scene Navigati
 - Excessive emoji or hashtag noise.
 - Long intros about "in today's fast-paced world of game development". Get to the pain point.
 - Pretending everything is polished — the blog's charm is honesty about trade-offs, hacks, and unfinished edges.
+
+## Tells to hunt after drafting (and what not to touch)
+
+Drafts written with an LLM keep a few habits that the posts above never had.
+After drafting or substantially editing a post, run the `humanize-post` skill
+(`.claude/skills/humanize-post/`); this section is the blog-specific part of
+its rules.
+
+**Kill on sight**
+
+- "Not X but Y" in any form, including the flipped closer ("Not a workflow I'd recommend. Very much one I'd do again.") and the split form ("It wasn't bad. It just wasn't the bet.").
+- One-line closers that restate the paragraph, and mirrored send-offs ("The game froze. The chat never did.").
+- Aphorisms dressed as the point ("the game is what you lost, the people are what you keep").
+- Run-ups: "Here's the thing", "what nobody tells you", "Honestly?" as an opener.
+- Scripted Q&A pairs: "Is it X? Not really. Was it Y? Absolutely."
+- Arguing with no one: "I don't say this with bitterness", "To be clear".
+- Triads with the same opener three times ("Chili deserved… Chili deserved… Chili got…").
+- The words: quietly, pivotal, testament, landscape, robust, seamless, crucial, delve, "for once" as a sigh.
+
+**Budget, don't ban**
+
+- Spaced ` - ` dashes: about 5 per post, the rate of the hand-written ones. Never `—`.
+- One rhetorical question, one fragment ("That's it."), one ALL-CAPS joke, one exclamation per post.
+- Bold: key terms and one dramatic beat, not every list item. A list whose bold labels are a real inventory (steps, sins, the domains rules) is fine.
+
+**Leave alone**
+
+Everything in "Voice & Persona" and "Sentence-level tics" above. The TL;DR line, the `Or -` subtitle, parentheses, British spellings, self-deprecation about posting frequency, and the emoji sign-off are the voice, not tells. Posts dated before 2025 are hand-written; never run the skill on them.
