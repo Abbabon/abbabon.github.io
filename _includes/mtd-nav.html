@@ -1,0 +1,21 @@
+{%- comment -%} Modern glass nav — "Dracula, after dark" {%- endcomment -%}
+<nav class="mtd-nav mtd-glass">
+  <a class="mtd-brand" href="{{ '/' | relative_url }}">
+    <img src="{{ site.avatar | relative_url }}" alt="" width="38" height="38" />
+    <span class="mtd-brand-text">
+      <span class="mtd-brand-name">{{ site.title }}</span>
+      <span class="mtd-brand-sub">~/abbabon · gamedev notes</span>
+    </span>
+  </a>
+  <div class="mtd-nav-links">
+    <a class="mtd-nav-link {% if page.url == '/' or page.url contains '/posts' %}is-active{% endif %}" href="{{ '/' | relative_url }}">Blog</a>
+    <a class="mtd-nav-link" href="{{ '/' | relative_url }}#mtd-podcast">Podcast{% unless site.data.podcasts.size == 1 %}s{% endunless %}</a>
+    {% if site.projects.size > 0 %}<a class="mtd-nav-link {% if page.url contains '/projects' %}is-active{% endif %}" href="{{ '/' | relative_url }}#mtd-projects">Projects</a>{% endif %}
+    {% if site.consulting.size > 0 %}<a class="mtd-nav-link {% if page.url contains '/consulting' %}is-active{% endif %}" href="{{ '/' | relative_url }}#mtd-consulting">Consulting</a>{% endif %}
+    <a class="mtd-nav-link {% if page.url contains 'about' %}is-active{% endif %}" href="{{ '/about' | relative_url }}">About</a>
+    <a class="mtd-nav-link {% if page.url contains 'contact' %}is-active{% endif %}" href="{{ '/contact' | relative_url }}">Contact</a>
+    <a class="mtd-nav-link {% if page.url contains 'tags' %}is-active{% endif %}" href="{{ '/tags' | relative_url }}">Tags</a>
+
+    <button type="button" class="mtd-btn mtd-btn-ghost mtd-btn-sm" data-mtd-subscribe-open>Subscribe</button>
+  </div>
+</nav>

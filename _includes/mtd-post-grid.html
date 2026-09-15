@@ -1,0 +1,25 @@
+{%- comment -%}
+  Blog post card grid, shared by the home page ("Latest writing") and the
+  paginated archive at /posts/. Edit this, not the callers.
+
+  Params:
+    posts      — a list of post documents (required; renders nothing if empty)
+    mobile_cap — truthy: CSS trims the grid to its 2 newest cards on phones
+{%- endcomment -%}
+<div class="mtd-grid{% if include.mobile_cap %} mtd-mobile-cap{% endif %}">
+  {%- for post in include.posts -%}
+    {%- assign thumb = post.cover-img | default: post.thumbnail-img -%}
+    <a class="mtd-card mtd-grid-card mtd-reveal" href="{{ post.url | relative_url }}">
+      <div class="mtd-grid-media">
+        {%- if thumb -%}<img class="mtd-card-img" src="{{ thumb | relative_url }}" alt="" loading="lazy" />{%- endif -%}
+        {%- if post.tags.first -%}<span class="mtd-grid-tag">#{{ post.tags.first }}</span>{%- endif -%}
+      </div>
+      <div class="mtd-grid-body">
+        <span class="mtd-grid-date">{{ post.date | date: "%B %-d, %Y" }}</span>
+        <h3>{{ post.title | strip_html }}</h3>
+        <p class="mtd-grid-excerpt">{{ post.excerpt | strip_html | truncatewords: 24 }}</p>
+        <span class="mtd-read">Read →</span>
+      </div>
+    </a>
+  {%- endfor -%}
+</div>

@@ -1,0 +1,123 @@
+// Podcast appearances — a featured one plus a couple of guest spots.
+window.MTD_PODCASTS = [
+  {
+    id: 'tooling-that-ships',
+    show: 'The Indie Pipeline',
+    episode: 'Ep. 47',
+    title: 'Editor Tooling That Actually Ships',
+    duration: '58 min',
+    date: 'March 2024',
+    tags: ['unity', 'tooling', 'workflow'],
+    blurb: 'Why most custom Unity tools rot in a forgotten folder, and the handful of habits that make editor tooling survive contact with a real team and a real deadline.',
+    featured: true,
+  },
+  { id: 'shaders-without-fear', show: 'Pixel & Polygon', episode: 'Ep. 12', title: 'Shaders Without Fear', duration: '41 min', date: 'Nov 2023', tags: ['shaders', 'shadergraph'] },
+  { id: 'shipping-mobile', show: 'Build & Break', episode: 'Ep. 05', title: 'Shipping Mobile Without Burning Out', duration: '63 min', date: 'Aug 2023', tags: ['mobile', 'performance'] },
+];
+
+// Things I've built — packages, editor tools, tech-art and jam games.
+window.MTD_PROJECTS = [
+  { id: 'unity-shell', title: 'Unity Shell', org: 'Open source', cat: 'package · tools', thumb: '../../assets/img/posts/rmrf.png', post: 'unity-shell', cta: 'Read the post', glow: 'green' },
+  { id: 'scene-nav', title: 'Scene Navigation Tool', org: 'Editor extension', cat: 'editor · unity', thumb: '../../assets/img/posts/SceneNavigation/SceneNavigationEditor-Wide.png', post: 'scene-navigation', cta: 'Read the post', glow: 'cyan' },
+  { id: 'shader-gradient', title: 'Shader Graph Gradient', org: 'Tech art', cat: 'shader · tech art', thumb: '../../assets/img/posts/Gradient-1.png', post: 'shader-gradient', cta: 'Read the post', glow: 'pink' },
+  { id: 'itch-games', title: 'Game Jam Games', org: 'abbabon.itch.io', cat: 'games · jams', thumb: '../../assets/img/posts/01_03_the_boss.png', href: 'https://abbabon.itch.io/', cta: 'Play on itch.io', glow: 'purple' },
+];
+
+// Post data lifted from the real blog (abbabon.github.io / "Master the Disaster")
+window.MTD_POSTS = [
+  {
+    id: 'teaching-unity',
+    title: 'What did I learn from teaching Unity?',
+    subtitle: null,
+    author: 'Amit Netanel',
+    date: 'February 12, 2024',
+    tags: ['unity', 'teaching'],
+    thumbnail: '../../assets/img/posts/academit-thumb-rect.png',
+    excerpt: 'This past summer, before the war shuffled our priorities, I had the opportunity to teach a beginner\u2019s course in Unity at The Academic College of Tel-Aviv, Yaffo. It gave me a chance to revisit Unity\u2019s basics and experience teaching for the first time.',
+    body: [
+      { type: 'p', html: 'This past summer, before the war shuffled our priorities, I had the opportunity to teach a beginner\u2019s course in Unity at The Academic College of Tel-Aviv, Yaffo. Targeted at CS students curious about video games, this course gave me an opportunity to revisit Unity\u2019s basics, and experience teaching for the first time.' },
+      { type: 'p', html: '\uD83D\uDC7E I\u2019m delighted to show my students\u2019 projects in the attached video! \uD83D\uDC7E' },
+      { type: 'img', src: '../../assets/img/posts/academit-thumb-rect.png', caption: 'Eight weeks. Singletons, object pools, pathfinding, and even some VR.' },
+      { type: 'h', text: '\uD83C\uDF93 So, what did I learn from teaching Unity? \uD83C\uDF93' },
+      { type: 'p', html: 'Nothing, and I mean <em>nothing</em>, is \u201Cobvious\u201D to everyone. Not a single mouse click. Successfully teaching a technological tool requires a delicate balance of being coherent and focused on context, without omitting details.' },
+      { type: 'box', variant: 'note', title: 'The big one', html: 'The best way to truly learn something \u2014 and find the gaps in your own knowledge \u2014 is to teach it to someone else. The accompanying anxiety ensures thorough preparation.' },
+      { type: 'p', html: 'In the next few months, I\u2019m planning to revamp this course to focus more on the programming aspects of Unity development. Stay tuned! \uD83D\uDE80' },
+    ],
+  },
+  {
+    id: 'unity-shell',
+    title: 'Unity Shell \u2014 run command-line tasks from Unity',
+    subtitle: 'yet another new package is born',
+    author: 'Amit Netanel',
+    date: 'April 15, 2022',
+    tags: ['unity', 'package', 'tools', 'utilities'],
+    thumbnail: '../../assets/img/posts/rmrf.png',
+    excerpt: 'I forked a repository for a package that simplifies working with the command line in the Unity Editor, and made it more readable and available.',
+    body: [
+      { type: 'box', variant: 'success', title: 'TL;DR', html: 'I forked a package that simplifies working with the command line in the Unity Editor, and made it more readable and available \u2014 Unity Shell.' },
+      { type: 'p', html: 'So recently I found myself in the fortunate position to develop new game infrastructures for our mobile gaming studio. The basic premise of that infrastructure is this: open source, package-oriented Unity projects.' },
+      { type: 'p', html: 'You suspect something will be used in the future by other projects? Package it. Ship it. Use it. Pull-Request it. Change it. Publish it. That\u2019s my humble attempt at making slogans.' },
+      { type: 'h', text: 'Running shell command processes from code' },
+      { type: 'p', html: 'C# has had the <code>System.Diagnostics</code> namespace for a long time, and the <code>Process</code> class is one of its main superstars. The downside, like many earlier C# interfaces, is that it\u2019s complex and somewhat arcane in places.' },
+      { type: 'code', html: '<span class="k">var</span> <span class="nv">result</span> = <span class="k">await</span> <span class="nc">Shell</span>.<span class="nf">Run</span>(<span class="s">"npm publish"</span>);' },
+      { type: 'box', variant: 'warning', title: 'THE GRAVE SINS OF OPEN SOURCE REPOSITORIES', html: 'Unclean code. Lacking documentation. Lack of accessibility. I could go on and on over each of those points, and we might do so in the future.' },
+      { type: 'p', html: 'So after forking, some gardening and consulting, I\u2019m proud to introduce Unity Shell, a lightweight package to run your shell commands with!' },
+    ],
+  },
+  {
+    id: 'smart-notes',
+    title: 'Book Review: How to Take Smart Notes',
+    subtitle: 'the Zettelkasten rabbit hole',
+    author: 'Amit Netanel',
+    date: 'February 7, 2022',
+    tags: ['books', 'productivity', 'notes'],
+    thumbnail: '../../assets/img/posts/httsn-book-cover.png',
+    excerpt: 'A book about a note-taking system that promises to change how you think and write. Did it survive contact with my actual workflow?',
+    body: [
+      { type: 'p', html: 'A book about a note-taking system that promises to change how you think and write. Did it survive contact with my actual workflow? Mostly.' },
+      { type: 'p', html: 'The core idea \u2014 a slip-box of atomic, linked notes \u2014 is genuinely good. The evangelism around it is exhausting. As always, take what works and leave the rest.' },
+    ],
+  },
+  {
+    id: 'extreme-ownership',
+    title: 'Book Review: Extreme Ownership',
+    subtitle: 'Navy SEALs, but for your sprint board',
+    author: 'Amit Netanel',
+    date: 'January 23, 2022',
+    tags: ['books', 'leadership'],
+    thumbnail: '../../assets/img/posts/extreme-ownership-book-cover.png',
+    excerpt: 'Two former Navy SEALs write a business leadership book. It is exactly as intense as that sounds, and surprisingly applicable to shipping software.',
+    body: [
+      { type: 'p', html: 'Two former Navy SEALs write a business leadership book. It is exactly as intense as that sounds, and surprisingly applicable to shipping software.' },
+      { type: 'p', html: 'The central thesis \u2014 own everything in your world, no excuses \u2014 is a useful lens even when the war-story framing gets heavy.' },
+    ],
+  },
+  {
+    id: 'scene-navigation',
+    title: 'A Unity Scene Navigation Tool',
+    subtitle: 'stop dragging scenes into the hierarchy like an animal',
+    author: 'Amit Netanel',
+    date: 'January 24, 2021',
+    tags: ['unity', 'tools', 'editor'],
+    thumbnail: '../../assets/img/posts/SceneNavigation/SceneNavigationEditor-Wide.png',
+    excerpt: 'A small editor window that lists every scene in your project and lets you jump between them with one click.',
+    body: [
+      { type: 'p', html: 'A small editor window that lists every scene in your project and lets you jump between them with one click. The kind of tool you build once and never work without again.' },
+      { type: 'img', src: '../../assets/img/posts/SceneNavigation/SceneNavigationEditor-Wide.png', caption: 'One click to any scene.' },
+    ],
+  },
+  {
+    id: 'shader-gradient',
+    title: 'Shader Graph Gradient',
+    subtitle: 'pretty colors, math edition',
+    author: 'Amit Netanel',
+    date: 'July 22, 2020',
+    tags: ['unity', 'shaders', 'shadergraph'],
+    thumbnail: '../../assets/img/posts/Gradient-1.png',
+    excerpt: 'Building a configurable gradient in Unity\u2019s Shader Graph, and the surprising number of ways to get it subtly wrong.',
+    body: [
+      { type: 'p', html: 'Building a configurable gradient in Unity\u2019s Shader Graph, and the surprising number of ways to get it subtly wrong.' },
+      { type: 'img', src: '../../assets/img/posts/Gradient-1.png', caption: 'The good ending.' },
+    ],
+  },
+];

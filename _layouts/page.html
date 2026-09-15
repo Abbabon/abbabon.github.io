@@ -2,30 +2,47 @@
 layout: base
 ---
 
-{% include header.html type="page" %}
+{%- assign slug = page.title | default: "page" | downcase | replace: " ", "-" -%}
+{%- assign is_about = false -%}
+{%- if page.url contains "about" -%}{%- assign is_about = true -%}{%- endif -%}
 
-<main class="{% if page.full-width %} container-fluid {% else %} container-md {% endif %}">
-  <div class="row">
-    <div class="{% if page.full-width %} col {% else %} col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 {% endif %}">
-      {% if page.before-content %}
-        <div class="before-content">
-          {% for file in page.before-content %}
-            {% include {{ file }} %}
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      {{ content }}
-
-      {% if page.after-content %}
-        <div class="after-content">
-          {% for file in page.after-content %}
-            {% include {{ file }} %}
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      {% include comments.html %}
+<main class="mtd-page">
+  {%- if is_about -%}
+    <span class="mtd-eyebrow mtd-reveal">~/about · whoami</span>
+    <div class="mtd-page-head">
+      <img class="mtd-reveal" src="{{ site.avatar | relative_url }}" alt="" width="96" height="96" />
+      <h1 class="mtd-reveal"><span class="mtd-gradient-text">{{ page.title | strip_html }}</span></h1>
     </div>
+  {%- else -%}
+    {%- if page.eyebrow -%}{%- assign eyebrow = page.eyebrow -%}{%- else -%}{%- assign eyebrow = slug | prepend: '~/' -%}{%- endif -%}
+    <span class="mtd-eyebrow mtd-reveal">{{ eyebrow }}</span>
+    <h1 class="mtd-page-title mtd-reveal"><span class="mtd-gradient-text">{{ page.title | strip_html }}</span></h1>
+    {%- if page.subtitle -%}
+      <p class="mtd-post-subtitle mtd-reveal">{{ page.subtitle | strip_html }}</p>
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- if page.before-content -%}
+    <div class="before-content">
+      {%- for file in page.before-content -%}{% include {{ file }} %}{%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <div class="mtd-page-body mtd-reveal">
+    {{ content }}
   </div>
+
+  {%- if page.after-content -%}
+    <div class="after-content">
+      {%- for file in page.after-content -%}{% include {{ file }} %}{%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if page.show-back -%}
+    <div class="mtd-page-back mtd-reveal">
+      <a class="mtd-btn mtd-btn-ghost mtd-btn-sm" href="{{ '/' | relative_url }}">← All posts</a>
+    </div>
+  {%- endif -%}
+
+  {% include comments.html %}
 </main>

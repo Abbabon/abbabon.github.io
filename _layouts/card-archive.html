@@ -1,0 +1,47 @@
+---
+layout: base
+---
+
+{%- comment -%}
+  Full listing for a card collection (projects, consultation work) — the
+  counterpart to _layouts/archive.html, which does the same for blog posts.
+  Not paginated: these collections are small enough to show in one page.
+
+  Front matter on the page using this layout:
+    collection  — name of the site collection to list, e.g. "projects"
+    title       — page <h1>
+    subtitle    — optional line under the title
+    eyebrow     — optional "~/..." line above the title
+    heading     — section <h2> over the grid (default "Everything")
+    sec_eyebrow — the "// ..." line next to that heading
+    empty_note  — text shown when the collection has no entries yet
+{%- endcomment -%}
+
+{%- assign items = site[page.collection] -%}
+
+<main class="mtd-archive">
+  <header class="mtd-section">
+    <span class="mtd-eyebrow mtd-reveal">{{ page.eyebrow | default: "~/the full list" }}</span>
+    <h1 class="mtd-page-title mtd-reveal"><span class="mtd-gradient-text">{{ page.title | strip_html }}</span></h1>
+    {%- if page.subtitle -%}
+      <p class="mtd-post-subtitle mtd-reveal">{{ page.subtitle | strip_html }}</p>
+    {%- endif -%}
+  </header>
+
+  {%- if items and items.size > 0 -%}
+    {% include mtd-card-grid.html
+       items=items
+       heading=page.heading
+       eyebrow=page.sec_eyebrow %}
+  {%- else -%}
+    <section class="mtd-section">
+      <p class="mtd-more-note mtd-reveal">{{ page.empty_note | default: "Nothing here yet — check back soon." }}</p>
+    </section>
+  {%- endif -%}
+
+  <section class="mtd-section">
+    <div class="mtd-page-back mtd-reveal">
+      <a class="mtd-btn mtd-btn-ghost mtd-btn-sm" href="{{ '/' | relative_url }}">← Back home</a>
+    </div>
+  </section>
+</main>

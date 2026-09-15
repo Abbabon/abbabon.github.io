@@ -1,6 +1,8 @@
 ---
 layout: page
 title: Assets
+eyebrow: "~/resources · assets & tools"
+show-back: true
 ---
 
 These are (some) of the assets I use when I make games with Unity. They are categorized freeformly by I how I see them.

@@ -1,0 +1,76 @@
+/* ===========================================================================
+   COLORS — the Dracula palette
+   "Master the Disaster" inherits the canonical Dracula color scheme
+   (https://draculatheme.com). Base hues below, semantic aliases beneath.
+   =========================================================================== */
+
+:root {
+  /* --- Dracula base palette --- */
+  --dr-background:    #282a36; /* page background */
+  --dr-current-line:  #44475a; /* surfaces, navbar, footer, selection */
+  --dr-selection:     #44475a;
+  --dr-foreground:    #f8f8f2; /* primary text */
+  --dr-comment:       #6272a4; /* muted text, code comments */
+  --dr-cyan:          #8be9fd; /* headings, links-in-code, accents */
+  --dr-green:         #50fa7b; /* primary link color */
+  --dr-orange:        #ffb86c; /* hover, post-meta, warning */
+  --dr-pink:          #ff79c6; /* highlights, entities */
+  --dr-purple:        #bd93f9; /* footer links, strings */
+  --dr-red:           #ff5555; /* errors, danger */
+  --dr-yellow:        #f1fa8c; /* blockquotes, emphasis */
+
+  /* --- A couple of derived shades for depth (cards, borders, hovers) --- */
+  --dr-background-raised: #2f313f; /* slightly lifted surface */
+  --dr-current-line-2:    #383b4d; /* hover on current-line surfaces */
+  --dr-border:            #3a3d4d; /* hairline borders on dark */
+  --dr-border-strong:     #565a72; /* visible borders / dividers */
+
+  /* ----------------------------------------------------------------------
+     SEMANTIC ALIASES — reach for these in components, not the raw hues.
+     ---------------------------------------------------------------------- */
+
+  /* Surfaces */
+  --surface-page:    var(--dr-background);
+  --surface-card:    var(--dr-current-line);
+  --surface-raised:  var(--dr-background-raised);
+  --surface-inset:   #21232e;            /* code blocks, wells */
+  --surface-navbar:  var(--dr-current-line);
+  --surface-footer:  var(--dr-current-line);
+  --surface-hover:   var(--dr-current-line-2);
+
+  /* Text */
+  --text-body:       var(--dr-foreground);
+  --text-heading:    var(--dr-cyan);
+  --text-muted:      var(--dr-comment);
+  --text-subtle:     #9aa0c4;
+  --text-meta:       var(--dr-orange);
+  --text-on-accent:  var(--dr-background);
+
+  /* Links & interaction */
+  --link:            var(--dr-green);
+  --link-hover:      var(--dr-orange);
+  --link-footer:     var(--dr-purple);
+  --focus-ring:      var(--dr-cyan);
+  --selection-bg:    var(--dr-orange);
+  --selection-fg:    #ffffff;
+
+  /* Accents (use sparingly, with intent) */
+  --accent-primary:   var(--dr-green);
+  --accent-secondary: var(--dr-purple);
+  --accent-tertiary:  var(--dr-pink);
+  --accent-cyan:      var(--dr-cyan);
+
+  /* Quotes / emphasis */
+  --quote:           var(--dr-yellow);
+
+  /* Status / notification boxes */
+  --status-note:     var(--dr-cyan);
+  --status-info:     var(--dr-purple);
+  --status-warning:  var(--dr-orange);
+  --status-error:    var(--dr-red);
+  --status-success:  var(--dr-green);
+
+  /* Borders */
+  --border-hairline: var(--dr-border);
+  --border-divider:  var(--dr-border-strong);
+}

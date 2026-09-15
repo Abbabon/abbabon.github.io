@@ -1,0 +1,23 @@
+{%- comment -%} Subscribe modal — RSS-only, no backend. {%- endcomment -%}
+{%- assign feed_url = '/feed.xml' | absolute_url -%}
+<div class="mtd-modal" id="mtd-subscribe" hidden>
+  <div class="mtd-modal-panel mtd-glass" role="dialog" aria-modal="true" aria-labelledby="mtd-subscribe-title">
+    <button class="mtd-modal-close" type="button" aria-label="Close" data-mtd-subscribe-close>&times;</button>
+    <span class="mtd-eyebrow">~/subscribe</span>
+    <h2 id="mtd-subscribe-title"><span class="mtd-gradient-text">Follow via RSS</span></h2>
+    <p class="mtd-modal-blurb">
+      No newsletter, no tracking — just an honest feed. Drop this URL into your reader
+      of choice (NetNewsWire, Feedly, Reeder…).
+    </p>
+    <div class="mtd-modal-field">
+      <code class="mtd-modal-feed">{{ feed_url }}</code>
+      <button class="mtd-btn mtd-btn-primary" type="button" data-mtd-copy="{{ feed_url }}">Copy</button>
+    </div>
+    <div class="mtd-modal-foot">
+      <a class="mtd-link" href="{{ '/feed.xml' | relative_url }}">
+        <i class="fas fa-rss"></i> Open feed.xml
+      </a>
+      <a class="mtd-modal-whatsrss" href="https://aboutfeeds.com/" target="_blank" rel="noreferrer">· what's RSS?</a>
+    </div>
+  </div>
+</div>

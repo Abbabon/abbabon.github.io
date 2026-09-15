@@ -1,0 +1,893 @@
+// "Dracula, after dark" — modern, dynamic recreation of Master the Disaster.
+const { useState: useS, useEffect: useE, useRef: useR } = React;
+const DS = window.MasterTheDisasterDesignSystem_2098ba;
+const { useTweaks, TweaksPanel, TweakSection, TweakColor, TweakToggle, TweakRadio } = window;
+
+// default wrap for code blocks flows through context so the tweak is live
+const WrapCtx = React.createContext(true);
+
+const MTD_TWEAK_DEFAULTS = {
+  accent: '#50fa7b',
+  cardGlow: 'purple',
+  headline: 'gradient',
+  aurora: true,
+  drift: true,
+  motion: true,
+  codeWrap: true,
+};
+
+const MTD_GLOWS = {
+  purple: '0 0 0 1px rgba(189,147,249,.30), 0 18px 44px -12px rgba(189,147,249,.38)',
+  cyan: '0 0 0 1px rgba(139,233,253,.25), 0 18px 40px -12px rgba(139,233,253,.30)',
+  pink: '0 0 0 1px rgba(255,121,198,.30), 0 18px 44px -12px rgba(255,121,198,.34)',
+  green: '0 0 0 1px rgba(80,250,123,.28), 0 18px 40px -12px rgba(80,250,123,.30)',
+};
+
+/* ---------- reveal: rect-based scroll reveal with per-row stagger; resting state stays visible ---------- */
+function useReveal() {
+  const ref = useR(null);
+  useE(() => {
+    const root = ref.current;
+    if (!root) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // already visible
+    let raf = 0;
+    const reveal = () => {
+      raf = 0;
+      const vh = window.innerHeight || 800;
+      root.querySelectorAll('.mtd-reveal:not([data-seen])').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < vh * 0.94 && r.bottom > -80) {
+          el.setAttribute('data-seen', '1');
+          const sibs = el.parentElement ? Array.from(el.parentElement.children).filter((c) => c.classList.contains('mtd-reveal')) : [el];
+          const delay = Math.min(Math.max(0, sibs.indexOf(el)), 6) * 55;
+          el.style.animationDelay = delay + 'ms';
+          el.classList.add('mtd-revealing');
+          // timers run even when frames are frozen -> element always settles visible
+          setTimeout(() => { el.classList.remove('mtd-revealing'); el.style.animationDelay = ''; }, 640 + delay);
+        }
+      });
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(reveal); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    requestAnimationFrame(reveal);
+    const t1 = setTimeout(reveal, 250);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+      clearTimeout(t1);
+    };
+  }, []);
+  return ref;
+}
+
+/* ---------- animal-crossing style drifting background ---------- */
+function DriftField() {
+  const data = useR(null);
+  if (!data.current) {
+    const hues = ['var(--dr-purple)', 'var(--dr-cyan)', 'var(--dr-pink)', 'var(--dr-green)', 'var(--dr-purple)', 'var(--dr-cyan)'];
+    data.current = Array.from({ length: 20 }, (_, i) => {
+      const op = 0.05 + Math.random() * 0.11;
+      return {
+        left: Math.random() * 100,
+        size: 8 + Math.random() * 26,
+        dur: 26 + Math.random() * 30,
+        delay: -Math.random() * 50,
+        hue: hues[i % hues.length],
+        drift: (Math.random() * 2 - 1) * 60,
+        rot: Math.random() * 90,
+        op,
+      };
+    });
+  }
+  return (
+    <div className="mtd-drift" aria-hidden="true">
+      {data.current.map((d, i) => (
+        <span key={i} className="mtd-diamond" style={{
+          left: d.left + '%', width: d.size, height: d.size, background: d.hue,
+          animationDuration: d.dur + 's', animationDelay: d.delay + 's',
+          '--drift': d.drift + 'px', '--rot': d.rot + 'deg', '--op': d.op, opacity: d.op,
+        }} />
+      ))}
+    </div>
+  );
+}
+
+/* ---------- sticky glass nav ---------- */
+function Nav({ onHome, onWriting, onPodcast, onProjects, onAbout, onContact, onTags, onResources, onSubscribe, active }) {
+  const [scrolled, setScrolled] = useS(false);
+  useE(() => {
+    const f = () => setScrolled(window.scrollY > 24);
+    window.addEventListener('scroll', f, { passive: true });
+    return () => window.removeEventListener('scroll', f);
+  }, []);
+  const link = (label, on, isActive) => (
+    <a href="#" onClick={(e) => { e.preventDefault(); on && on(); }}
+       style={{
+         fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '.85rem',
+         textTransform: 'uppercase', letterSpacing: '.06em',
+         color: isActive ? 'var(--accent-cyan)' : 'var(--text-body)', textDecoration: 'none',
+         transition: 'color .2s', whiteSpace: 'nowrap',
+       }}
+       onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--link-hover)')}
+       onMouseLeave={(e) => (e.currentTarget.style.color = isActive ? 'var(--accent-cyan)' : 'var(--text-body)')}>
+      {label}
+    </a>
+  );
+  return (
+    <nav className="mtd-glass" style={{
+      position: 'sticky', top: 0, zIndex: 50,
+      display: 'flex', alignItems: 'center', gap: '1.25rem',
+      padding: '.7rem 1.5rem',
+      borderLeft: 0, borderRight: 0, borderTop: 0,
+      boxShadow: scrolled ? 'var(--elev-2)' : 'none',
+      transition: 'box-shadow .3s',
+    }}>
+      <a href="#" onClick={(e) => { e.preventDefault(); onHome(); }}
+         style={{ display: 'flex', alignItems: 'center', gap: '.7rem', textDecoration: 'none' }}>
+        <img src="../../assets/img/avatar-icon.png" alt="" width="38" height="38"
+             style={{ borderRadius: '50%', boxShadow: 'var(--glow-purple)' }} />
+        <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
+          <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.02rem', color: 'var(--text-body)' }}>Master the Disaster</span>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.66rem', color: 'var(--text-muted)', letterSpacing: '.04em' }}>~/abbabon · gamedev notes</span>
+        </span>
+      </a>
+      <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '1.15rem' }}>
+        {link('Blog', onWriting, active === 'home')}
+        {link('Podcast', onPodcast)}
+        {link('Projects', onProjects)}
+        {link('About', onAbout, active === 'about')}
+        {link('Contact', onContact, active === 'contact')}
+        {link('Tags', onTags, active === 'tags')}
+        <DS.Button variant="ghost" size="sm" onClick={onSubscribe}>Subscribe</DS.Button>
+      </div>
+    </nav>
+  );
+}
+
+/* ---------- nav dropdown (Resources) ---------- */
+function NavDropdown({ label, items, active }) {
+  const [open, setOpen] = useS(false);
+  return (
+    <div style={{ position: 'relative' }} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <button onClick={() => setOpen((o) => !o)}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: '.3rem', background: 'transparent', border: 0, cursor: 'pointer',
+          fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '.85rem', textTransform: 'uppercase', letterSpacing: '.06em',
+          color: (open || active) ? 'var(--link-hover)' : 'var(--text-body)', whiteSpace: 'nowrap', transition: 'color .2s' }}>
+        {label} <span style={{ fontSize: '.6em', opacity: .8 }}>▾</span>
+      </button>
+      {open && (
+        <div className="mtd-glass" style={{ position: 'absolute', top: '100%', right: 0, marginTop: '.4rem', minWidth: '12rem',
+          borderRadius: 'var(--radius-md)', boxShadow: 'var(--elev-2)', padding: '.4rem', display: 'flex', flexDirection: 'column', zIndex: 60 }}>
+          {items.map((it) => (
+            <a key={it.label} href={it.href || '#'} target={it.href ? '_blank' : undefined} rel={it.href ? 'noreferrer' : undefined}
+              onClick={(e) => { if (it.onClick) { e.preventDefault(); it.onClick(); } setOpen(false); }}
+              style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '.78rem', textTransform: 'uppercase', letterSpacing: '.04em',
+                color: 'var(--text-body)', textDecoration: 'none', padding: '.5rem .7rem', borderRadius: 'var(--radius-sm)', whiteSpace: 'nowrap' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--link-hover)'; e.currentTarget.style.background = 'var(--surface-hover)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-body)'; e.currentTarget.style.background = 'transparent'; }}>
+              {it.label}
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------- fake terminal card for the hero ---------- */
+function TerminalCard() {
+  const C = {
+    g: 'var(--dr-green)', c: 'var(--dr-cyan)', p: 'var(--dr-purple)',
+    pk: 'var(--dr-pink)', o: 'var(--dr-orange)', y: 'var(--dr-yellow)',
+    m: 'var(--dr-comment)', f: 'var(--dr-foreground)',
+  };
+  const line = (...segs) => segs.map(([t, col], i) => <span key={i} style={{ color: col || C.f }}>{t}</span>);
+  const rows = [
+    line(['> ', C.f], ['whoami', C.g]),
+    line(['# game dev · software engineer · IL', C.m]),
+    line(['# 8 mechanical keyboards', C.m]),
+    [<br key="b1" />],
+    line(['> ', C.f], ['cat', C.g], [' topics.txt', C.f]),
+    line(['unity', C.c], ['  ', C.f], ['shaders', C.pk], ['  ', C.f], ['tooling', C.p]),
+    line(['serialization', C.o], ['  ', C.f], ['books', C.y]),
+    [<br key="b2" />],
+    line(['> ', C.f], ['npm', C.g], [' publish unity-shell', C.f]),
+    line(['+ published ', C.m], ['v1.0.0', C.c], [' 🎉', C.m]),
+    [<span key="cur" style={{ color: C.f }}>{'> '}</span>, <span key="blink" className="mtd-blink" style={{ color: C.f }}>▋</span>],
+  ];
+  return (
+    <div className="mtd-glass mtd-reveal" style={{ borderRadius: 'var(--radius-xl)', boxShadow: 'var(--elev-2)', overflow: 'hidden', minWidth: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem', padding: '.6rem .8rem', borderBottom: '1px solid var(--border-hairline)', background: 'rgba(0,0,0,.18)' }}>
+        <span style={{ width: 11, height: 11, borderRadius: '50%', background: '#ff5555' }}></span>
+        <span style={{ width: 11, height: 11, borderRadius: '50%', background: '#f1fa8c' }}></span>
+        <span style={{ width: 11, height: 11, borderRadius: '50%', background: '#50fa7b' }}></span>
+        <span style={{ marginLeft: '.5rem', fontFamily: 'var(--font-mono)', fontSize: '.7rem', color: 'var(--text-muted)' }}>amit@disaster — zsh</span>
+      </div>
+      <div style={{ margin: 0, padding: '1rem 1.1rem', fontFamily: 'var(--font-mono)', fontSize: '.82rem', lineHeight: 1.75 }}>
+        {rows.map((r, i) => <div key={i} style={{ minHeight: '1.4em' }}>{r}</div>)}
+      </div>
+    </div>
+  );
+}
+
+/* ---------- hero ---------- */
+function Hero({ onBlog, onAbout, onSection }) {
+  const jumps = [
+    ['Podcasts', 'mtd-podcast', 'var(--dr-pink)'],
+    ['Projects', 'mtd-projects', 'var(--dr-purple)'],
+    ["Let's talk", 'mtd-contact', 'var(--dr-orange)'],
+  ];
+  return (
+    <header style={{ padding: '4.5rem 1.5rem 3rem', maxWidth: '76rem', margin: '0 auto' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.15fr) minmax(0,.85fr)', gap: '2.5rem', alignItems: 'center' }} className="mtd-hero-grid">
+        <div>
+          <span className="mtd-eyebrow mtd-reveal">~/blog · refactoring dumpster fires</span>
+          <h1 className="mtd-reveal" style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 'clamp(2.3rem, 5vw, 3.8rem)', lineHeight: 1.04, margin: '1rem 0 0', letterSpacing: '-.02em', textWrap: 'balance' }}>
+            <span className="mtd-gradient-text">Master the Disaster</span>
+          </h1>
+          <p className="mtd-reveal" style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 'clamp(1.05rem, 2vw, 1.4rem)', margin: '.75rem 0 0', color: 'var(--text-subtle)', letterSpacing: '.005em' }}>
+            <span style={{ color: 'var(--accent-cyan)' }}>Amit Netanel's</span> Dev Log
+          </p>
+          <p className="mtd-reveal" style={{ fontFamily: 'var(--font-body)', fontSize: '1.2rem', lineHeight: 1.6, color: 'var(--text-subtle)', maxWidth: '34ch', margin: '1.4rem 0 0' }}>
+            Notes on Game Dev, Unity, Editor Tooling and Tech Art — written by a tired engineer who has <em style={{ color: 'var(--quote)', fontStyle: 'italic' }}>seen some things</em>.
+          </p>
+          <div className="mtd-reveal" style={{ display: 'flex', gap: '.7rem', marginTop: '1.9rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            <DS.Button variant="primary" onClick={onBlog}>Read the blog</DS.Button>
+            <nav aria-label="Jump to section" style={{ display: 'contents' }}>
+              {jumps.map(([label, id, col]) => (
+                <a key={id} href={'#' + id} onClick={(e) => { e.preventDefault(); onSection(id); }}
+                   style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontFamily: 'var(--font-heading)', fontWeight: 800,
+                     textTransform: 'uppercase', letterSpacing: 'var(--tracking-btn)', fontSize: '0.875rem', lineHeight: 1, whiteSpace: 'nowrap',
+                     textDecoration: 'none', color: col, border: '1px solid ' + col, borderRadius: 'var(--radius-md)', padding: '0.75rem 1.4rem',
+                     backgroundColor: 'transparent', transition: 'background-color var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard), border-color var(--dur-fast) var(--ease-standard)' }}
+                   onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = col; e.currentTarget.style.color = 'var(--text-on-accent)'; }}
+                   onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = col; }}>
+                  {label}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </div>
+        <TerminalCard />
+      </div>
+    </header>
+  );
+}
+
+/* ---------- featured (latest) post ---------- */
+function Featured({ post, onOpen }) {
+  return (
+    <section style={{ maxWidth: '76rem', margin: '1rem auto 0', padding: '0 1.5rem' }}>
+      <SectionHead eyebrow="// pinned" title="Latest dispatch" />
+      <article className="mtd-card mtd-feature mtd-reveal" onClick={() => onOpen(post.id)}
+        style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1.1fr)', cursor: 'pointer' }} data-mtd-feature>
+        <div style={{ position: 'relative', minHeight: '20rem', overflow: 'hidden' }}>
+          <img className="mtd-card-img" src={post.thumbnail} alt=""
+               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, transparent 40%, var(--surface-card))' }}></div>
+        </div>
+        <div style={{ padding: '2rem 2.2rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.74rem', color: 'var(--accent-tertiary)', letterSpacing: '.05em', marginBottom: '.7rem' }}>{post.date} · {post.tags[0]}</span>
+          <h3 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '2rem', lineHeight: 1.1, margin: 0, color: 'var(--text-heading)' }}>{post.title}</h3>
+          {post.subtitle && <p style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', color: 'var(--text-meta)', margin: '.5rem 0 0' }}>{post.subtitle}</p>}
+          <p style={{ fontFamily: 'var(--font-body)', color: 'var(--text-subtle)', lineHeight: 1.6, margin: '1rem 0 1.3rem' }}>{post.excerpt}</p>
+          <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            {post.tags.slice(0, 4).map((t) => <span key={t} className="mtd-pill">#{t}</span>)}
+            <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-heading)', fontWeight: 800, color: 'var(--link)', fontSize: '.9rem' }}>Read →</span>
+          </div>
+        </div>
+      </article>
+    </section>
+  );
+}
+
+/* ---------- section header ---------- */
+function SectionHead({ eyebrow, title, count }) {
+  return (
+    <div className="mtd-reveal" style={{ display: 'flex', alignItems: 'baseline', gap: '1rem', margin: '2.6rem 0 1.3rem' }}>
+      <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.6rem', color: 'var(--text-body)', margin: 0 }}>{title}</h2>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.78rem', color: 'var(--text-muted)' }}>{eyebrow}{count != null ? ' \u00B7 ' + count : ''}</span>
+      <hr className="mtd-rule" style={{ flex: 1, alignSelf: 'center' }} />
+    </div>
+  );
+}
+
+/* ---------- post grid card ---------- */
+function GridCard({ post, onOpen }) {
+  return (
+    <article className="mtd-card mtd-reveal" onClick={() => onOpen(post.id)} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ position: 'relative', aspectRatio: '16/9', overflow: 'hidden' }}>
+        <img className="mtd-card-img" src={post.thumbnail} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 50%, rgba(40,42,54,.85))' }}></div>
+        <span style={{ position: 'absolute', left: '.8rem', bottom: '.8rem', fontFamily: 'var(--font-mono)', fontSize: '.7rem', color: 'var(--accent-cyan)', whiteSpace: 'nowrap' }}>#{post.tags[0]}</span>
+      </div>
+      <div style={{ padding: '1.1rem 1.2rem 1.3rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.7rem', color: 'var(--text-muted)' }}>{post.date}</span>
+        <h3 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.18rem', lineHeight: 1.18, margin: '.4rem 0 .5rem', color: 'var(--text-heading)' }}>{post.title}</h3>
+        <p style={{ fontFamily: 'var(--font-body)', fontSize: '.95rem', color: 'var(--text-subtle)', lineHeight: 1.5, margin: 0, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.excerpt}</p>
+        <span style={{ marginTop: 'auto', paddingTop: '.9rem', fontFamily: 'var(--font-heading)', fontWeight: 700, color: 'var(--link)', fontSize: '.85rem' }}>Read →</span>
+      </div>
+    </article>
+  );
+}
+
+/* ---------- podcast section ---------- */
+function PodcastSection({ onContact }) {
+  const eps = window.MTD_PODCASTS;
+  const [feat, ...rest] = eps;
+  const bars = [0.6, 1, 0.45, 0.85, 0.3, 0.7, 0.5, 0.95, 0.4, 0.75, 0.55];
+  return (
+    <section style={{ maxWidth: '76rem', margin: '0 auto', padding: '0 1.5rem' }}>
+      <SectionHead eyebrow="// on the mic" title="Podcast" count={eps.length} />
+      <div className="mtd-podcast-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.15fr) minmax(0,.85fr)', gap: '1.4rem', alignItems: 'stretch' }}>
+        {/* featured episode */}
+        <article className="mtd-card mtd-feature mtd-reveal" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,.9fr) minmax(0,1.1fr)' }} data-mtd-feature>
+          <div style={{ position: 'relative', minHeight: '15rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '1.4rem 1.5rem',
+            background: 'radial-gradient(120% 120% at 20% 10%, rgba(139,233,253,.22), transparent 60%), radial-gradient(120% 120% at 90% 100%, rgba(189,147,249,.22), transparent 60%), var(--surface-inset)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
+              <span style={{ width: 42, height: 42, borderRadius: '50%', display: 'grid', placeItems: 'center', background: 'rgba(0,0,0,.25)', boxShadow: 'var(--glow-cyan)', color: 'var(--accent-cyan)', fontSize: '1.1rem' }}>
+                <i className="fas fa-microphone-lines"></i>
+              </span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.74rem', color: 'var(--text-subtle)' }}>{feat.show} · {feat.episode}</span>
+            </div>
+            <div className="mtd-wave" aria-hidden="true">
+              {bars.map((h, i) => <span key={i} style={{ height: (h * 100) + '%', animationDelay: (i * 0.09) + 's' }} />)}
+            </div>
+          </div>
+          <div style={{ padding: '1.6rem 1.7rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', color: 'var(--accent-tertiary)', letterSpacing: '.05em', marginBottom: '.55rem' }}>{feat.date} · {feat.duration}</span>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.55rem', lineHeight: 1.12, margin: 0, color: 'var(--text-heading)' }}>{feat.title}</h3>
+            <p style={{ fontFamily: 'var(--font-body)', color: 'var(--text-subtle)', lineHeight: 1.55, margin: '.8rem 0 1.2rem' }}>{feat.blurb}</p>
+            <div style={{ display: 'flex', gap: '.6rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <DS.Button variant="primary" size="sm"><i className="fas fa-play" style={{ marginRight: '.45rem', fontSize: '.8em' }}></i>Listen</DS.Button>
+              <span style={{ display: 'flex', gap: '.9rem', marginLeft: '.3rem', fontSize: '1.15rem', color: 'var(--link-footer)' }}>
+                <a href="#" aria-label="Spotify" style={iconLink}><i className="fab fa-spotify"></i></a>
+                <a href="#" aria-label="Apple Podcasts" style={iconLink}><i className="fab fa-apple"></i></a>
+                <a href="#" aria-label="YouTube" style={iconLink}><i className="fab fa-youtube"></i></a>
+              </span>
+            </div>
+          </div>
+        </article>
+        {/* more episodes */}
+        <div className="mtd-reveal" style={{ display: 'flex', flexDirection: 'column', gap: '.7rem', justifyContent: 'center' }}>
+          {rest.map((ep) => (
+            <button key={ep.id} className="mtd-ep-row">
+              <span style={{ width: 38, height: 38, flex: '0 0 auto', borderRadius: 'var(--radius-md)', display: 'grid', placeItems: 'center', background: 'var(--surface-inset)', color: 'var(--accent-cyan)' }}>
+                <i className="fas fa-play" style={{ fontSize: '.75rem' }}></i>
+              </span>
+              <span style={{ display: 'flex', flexDirection: 'column', minWidth: 0, flex: 1 }}>
+                <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, color: 'var(--text-heading)', fontSize: '1rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ep.title}</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.7rem', color: 'var(--text-muted)' }}>{ep.show} · {ep.episode} · {ep.duration}</span>
+              </span>
+              <span style={{ marginLeft: 'auto', color: 'var(--link)', fontFamily: 'var(--font-heading)', fontWeight: 800 }}>→</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+const iconLink = { color: 'var(--link-footer)', transition: 'color .2s, transform .2s', display: 'inline-flex' };
+
+/* ---------- projects section ---------- */
+function ProjectsSection({ onOpen }) {
+  const projects = window.MTD_PROJECTS;
+  const open = (p) => { if (p.post) onOpen(p.post); else if (p.href) window.open(p.href, '_blank', 'noopener'); };
+  return (
+    <section style={{ maxWidth: '76rem', margin: '0 auto', padding: '0 1.5rem' }}>
+      <SectionHead eyebrow="// shipped & open-source" title="Projects" count={projects.length} />
+      <div className="mtd-projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: '1.4rem' }}>
+        {projects.map((p) => (
+          <article key={p.id} className="mtd-card mtd-reveal" onClick={() => open(p)} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ position: 'relative', aspectRatio: '16/9', overflow: 'hidden' }}>
+              <img className="mtd-card-img" src={p.thumb} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 45%, rgba(40,42,54,.9))' }}></div>
+              <span style={{ position: 'absolute', left: '.9rem', bottom: '.85rem', fontFamily: 'var(--font-mono)', fontSize: '.7rem', color: 'var(--accent-cyan)', letterSpacing: '.05em' }}>// {p.cat}</span>
+            </div>
+            <div style={{ padding: '1.1rem 1.3rem 1.3rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.25rem', margin: 0, color: 'var(--text-heading)' }}>{p.title}</h3>
+              {p.org && <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', color: 'var(--accent-tertiary)', margin: '.3rem 0 0' }}>{p.org}</span>}
+              <p style={{ fontFamily: 'var(--font-body)', fontSize: '.95rem', color: 'var(--text-subtle)', lineHeight: 1.5, margin: '.7rem 0 0' }}>{p.desc}</p>
+              <span style={{ marginTop: 'auto', paddingTop: '1rem', fontFamily: 'var(--font-heading)', fontWeight: 700, color: 'var(--link)', fontSize: '.85rem' }}>{p.cta} →</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------- contact CTA band ---------- */
+function ContactCTA({ onContact }) {
+  const socials = [['fab fa-github', 'GitHub'], ['fab fa-itch-io', 'itch.io'], ['fab fa-twitter', 'Twitter'], ['fas fa-envelope', 'Email']];
+  return (
+    <section style={{ maxWidth: '76rem', margin: '0 auto', padding: '0 1.5rem' }}>
+      <SectionHead eyebrow="// say hi" title="Let's talk" />
+      <div className="mtd-cta mtd-reveal" style={{ padding: '2.8rem clamp(1.5rem, 5vw, 3.4rem)', display: 'grid', gridTemplateColumns: 'minmax(0,1.4fr) minmax(0,1fr)', gap: '2rem', alignItems: 'center' }}>
+        <div style={{ minWidth: 0 }}>
+          <span className="mtd-eyebrow">~/contact · open inbox</span>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 'clamp(1.9rem, 4.5vw, 3rem)', lineHeight: 1.05, margin: '.9rem 0 0', letterSpacing: '-.02em' }}>
+            <span className="mtd-gradient-text">Got a weird tooling<br />problem? Let's jam.</span>
+          </h2>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: '1.1rem', color: 'var(--text-subtle)', lineHeight: 1.6, margin: '1.1rem 0 0', maxWidth: '46ch' }}>
+            Questions, collaborations, game-jam invites, or just to argue about mechanical keyboards — I read everything.
+          </p>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem', alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', gap: '.8rem', flexWrap: 'wrap' }}>
+            <DS.Button variant="primary" onClick={onContact}>Say hi</DS.Button>
+            <DS.Button variant="ghost" onClick={() => window.open('https://abbabon.itch.io/', '_blank', 'noopener')}>Play my games</DS.Button>
+          </div>
+          <div style={{ display: 'flex', gap: '1.2rem', fontSize: '1.4rem', color: 'var(--link-footer)', paddingTop: '.3rem' }}>
+            {socials.map(([cls, label]) => (
+              <a key={label} href="#" aria-label={label} style={iconLink}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--link-hover)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--link-footer)'; e.currentTarget.style.transform = 'none'; }}>
+                <i className={cls}></i>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- footer ---------- */
+function Footer({ onAbout, onHome, onContact, onTags, expanded }) {
+  const icons = [['fas fa-rss', 'RSS'], ['fas fa-envelope', 'Email'], ['fab fa-github', 'GitHub'], ['fab fa-twitter', 'Twitter'], ['fab fa-itch-io', 'itch.io'], ['fab fa-linkedin', 'LinkedIn'], ['fab fa-mastodon', 'Mastodon']];
+  const colLink = (label, on, href) => (
+    <a key={label} href={href || '#'} target={href ? '_blank' : undefined} rel={href ? 'noreferrer' : undefined}
+       onClick={(e) => { if (on) { e.preventDefault(); on(); } }}
+       style={{ fontFamily: 'var(--font-body)', fontSize: '.92rem', color: 'var(--text-subtle)', textDecoration: 'none', transition: 'color .2s' }}
+       onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--link-hover)')}
+       onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-subtle)')}>{label}</a>
+  );
+  const colHead = (t) => <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--accent-cyan)' }}>{t}</span>;
+  return (
+    <footer style={{ marginTop: '4rem', position: 'relative' }}>
+      <hr className="mtd-rule" style={{ maxWidth: '76rem', margin: '0 auto' }} />
+      <div className="mtd-glass" style={{ borderLeft: 0, borderRight: 0, borderBottom: 0, marginTop: '0' }}>
+        {expanded && (
+          <div className="mtd-footer-cols" style={{ maxWidth: '76rem', margin: '0 auto', padding: '3rem 1.5rem 1.6rem', display: 'grid', gridTemplateColumns: 'minmax(0,1.5fr) repeat(3, minmax(0,1fr))', gap: '2rem' }}>
+            <div style={{ maxWidth: '30ch' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '.7rem' }}>
+                <img src="../../assets/img/avatar-icon.png" alt="" width="40" height="40" style={{ borderRadius: '50%', boxShadow: 'var(--glow-purple)' }} />
+                <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, color: 'var(--text-body)' }}>Master the Disaster</span>
+              </div>
+              <p style={{ fontFamily: 'var(--font-body)', fontSize: '.92rem', color: 'var(--text-muted)', lineHeight: 1.55, margin: '.9rem 0 1.1rem' }}>
+                Notes on game dev, Unity, editor tooling and tech art — by a tired engineer who has seen some things.
+              </p>
+              <div style={{ display: 'flex', gap: '.9rem', fontSize: '1.25rem' }}>
+                {icons.slice(0, 5).map(([cls, label]) => (
+                  <a key={label} href="#" aria-label={label} style={iconLink}
+                     onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--link-hover)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                     onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--link-footer)'; e.currentTarget.style.transform = 'none'; }}>
+                    <i className={cls}></i>
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '.7rem' }}>
+              {colHead('Explore')}
+              {colLink('Blog', onHome)}
+              {colLink('Projects', () => { onHome(); setTimeout(() => { const el = document.getElementById('mtd-projects'); el && el.scrollIntoView({ behavior: 'smooth' }); }, 60); })}
+              {colLink('Podcast', () => { onHome(); setTimeout(() => { const el = document.getElementById('mtd-podcast'); el && el.scrollIntoView({ behavior: 'smooth' }); }, 60); })}
+              {colLink('Tags', onTags)}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '.7rem' }}>
+              {colHead('Connect')}
+              {colLink('About', onAbout)}
+              {colLink('Contact', onContact)}
+              {colLink('GitHub', null, 'https://github.com/Abbabon')}
+              {colLink('itch.io', null, 'https://abbabon.itch.io/')}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '.7rem' }}>
+              {colHead('Elsewhere')}
+              {colLink('Medium', null, 'https://medium.com/')}
+              {colLink('LinkedIn', null, 'https://linkedin.com/')}
+              {colLink('RSS feed', null, 'https://abbabon.github.io/feed.xml')}
+              {colLink('Learn Markdown', null, 'http://www.markdowntutorial.com/')}
+            </div>
+          </div>
+        )}
+        {!expanded && (
+          <div style={{ maxWidth: '76rem', margin: '0 auto', padding: '2.6rem 1.5rem', display: 'flex', flexWrap: 'wrap', gap: '1.5rem', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '.8rem' }}>
+              <img src="../../assets/img/avatar-icon.png" alt="" width="44" height="44" style={{ borderRadius: '50%', boxShadow: 'var(--glow-purple)' }} />
+              <div>
+                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, color: 'var(--text-body)' }}>Master the Disaster</div>
+                <div style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', fontSize: '.85rem', color: 'var(--text-muted)' }}>refactoring one dumpster fire at the time</div>
+              </div>
+            </div>
+            <div style={{ marginLeft: 'auto', display: 'flex', gap: '1rem', fontSize: '1.3rem' }}>
+              {icons.map(([cls, label]) => (
+                <a key={label} href="#" aria-label={label} style={{ color: 'var(--link-footer)', transition: 'color .2s, transform .2s' }}
+                   onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--link-hover)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                   onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--link-footer)'; e.currentTarget.style.transform = 'none'; }}>
+                  <i className={cls}></i>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+        <div style={{ textAlign: 'center', padding: '0 1.5rem 2rem', fontFamily: 'var(--font-mono)', fontSize: '.75rem', color: 'var(--text-muted)', borderTop: expanded ? '1px solid var(--border-hairline)' : 0, marginTop: expanded ? '.4rem' : 0, paddingTop: expanded ? '1.5rem' : 0 }}>
+          <div>© 2024 Amit Netanel · built with too much coffee · <a href="#" className="mtd-link" onClick={(e) => { e.preventDefault(); onAbout(); }}>about</a></div>
+          <div style={{ marginTop: '.5rem' }}>Powered by <a className="mtd-link" href="https://beautifuljekyll.com" target="_blank" rel="noreferrer">Beautiful Jekyll</a></div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ---------- home ---------- */
+function Home({ onOpen, onAbout, onContact, onSection }) {
+  const ref = useReveal();
+  const posts = window.MTD_POSTS;
+  const [featured, ...rest] = posts;
+  return (
+    <div ref={ref}>
+      <Hero onBlog={() => document.getElementById('mtd-writing').scrollIntoView({ behavior: 'smooth' })} onAbout={onAbout} onSection={onSection} />
+      <Featured post={featured} onOpen={onOpen} />
+      <section id="mtd-writing" style={{ maxWidth: '76rem', margin: '0 auto', padding: '0 1.5rem', scrollMarginTop: '5rem' }}>
+        <SectionHead eyebrow="// archive" title="Latest writing" count={rest.length} />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(17rem, 1fr))', gap: '1.4rem' }}>
+          {rest.map((p) => <GridCard key={p.id} post={p} onOpen={onOpen} />)}
+        </div>
+      </section>
+      <div id="mtd-podcast" style={{ scrollMarginTop: '5rem' }}><PodcastSection onContact={onContact} /></div>
+      <div id="mtd-projects" style={{ scrollMarginTop: '5rem' }}><ProjectsSection onOpen={onOpen} /></div>
+      <div id="mtd-contact" style={{ scrollMarginTop: '5rem' }}><ContactCTA onContact={onContact} /></div>
+    </div>
+  );
+}
+
+/* ---------- code block with wrap toggle ---------- */
+function CodeBlock({ html }) {
+  const def = React.useContext(WrapCtx);
+  const [wrap, setWrap] = useS(def);
+  useE(() => { setWrap(def); }, [def]);
+  return (
+    <div className="mtd-reveal" style={{ position: 'relative', margin: '1.6rem 0' }}>
+      <button onClick={() => setWrap((w) => !w)} title="Toggle line wrapping"
+        style={{ position: 'absolute', top: '.5rem', right: '.5rem', zIndex: 2, cursor: 'pointer',
+          fontFamily: 'var(--font-mono)', fontSize: '.66rem', textTransform: 'uppercase', letterSpacing: '.05em',
+          color: wrap ? 'var(--accent-cyan)' : 'var(--text-muted)', background: 'var(--surface-card)',
+          border: '1px solid var(--border-hairline)', borderRadius: 'var(--radius-sm)', padding: '.25rem .5rem', whiteSpace: 'nowrap' }}>
+        {wrap ? '↩ wrap: on' : '→ wrap: off'}
+      </button>
+      <pre style={{ whiteSpace: wrap ? 'pre-wrap' : 'pre', wordBreak: wrap ? 'break-word' : 'normal',
+        overflowX: wrap ? 'visible' : 'auto', paddingTop: '2.4rem', margin: 0 }}>
+        <code className="highlight" dangerouslySetInnerHTML={{ __html: html }} />
+      </pre>
+    </div>
+  );
+}
+
+/* ---------- post body ---------- */
+function PostBody({ blocks }) {
+  return (
+    <div style={{ fontFamily: 'var(--font-body)', fontSize: '1.15rem', lineHeight: 1.7 }}>
+      {blocks.map((b, i) => {
+        if (b.type === 'p') return <p key={i} className="mtd-reveal" style={{ margin: '1.5rem 0' }} dangerouslySetInnerHTML={{ __html: b.html }} />;
+        if (b.type === 'h') return <h2 key={i} className="mtd-reveal" style={{ color: 'var(--text-heading)', fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.7rem', marginTop: '2.4rem' }}>{b.text}</h2>;
+        if (b.type === 'img') return (
+          <figure key={i} className="mtd-reveal" style={{ margin: '2rem 0', textAlign: 'center' }}>
+            <img src={b.src} alt="" style={{ maxWidth: '100%', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-hairline)', boxShadow: 'var(--elev-2)' }} />
+            {b.caption && <figcaption style={{ fontStyle: 'italic', fontSize: '.85rem', color: 'var(--text-muted)', padding: '.7rem' }}>{b.caption}</figcaption>}
+          </figure>
+        );
+        if (b.type === 'code') return <CodeBlock key={i} html={b.html} />;
+        if (b.type === 'box') return (
+          <div key={i} className="mtd-reveal"><DS.NotificationBox variant={b.variant} title={b.title}><span dangerouslySetInnerHTML={{ __html: b.html }} /></DS.NotificationBox></div>
+        );
+        return null;
+      })}
+    </div>
+  );
+}
+
+/* ---------- post view ---------- */
+function PostView({ post, onBack, onOpen }) {
+  const ref = useReveal();
+  const idx = window.MTD_POSTS.findIndex((p) => p.id === post.id);
+  const prev = window.MTD_POSTS[idx + 1];
+  const next = window.MTD_POSTS[idx - 1];
+  return (
+    <div ref={ref}>
+      <header style={{ maxWidth: '52rem', margin: '0 auto', padding: '3.5rem 1.5rem 1rem', textAlign: 'center' }}>
+        <a href="#" onClick={(e) => { e.preventDefault(); onBack(); }} className="mtd-eyebrow mtd-reveal" style={{ justifyContent: 'center', marginBottom: '1.2rem' }}>← back to all posts</a>
+        <h1 className="mtd-reveal" style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 'clamp(2rem,5vw,3.2rem)', lineHeight: 1.05, margin: '.6rem 0 0' }}>
+          <span className="mtd-gradient-text">{post.title}</span>
+        </h1>
+        {post.subtitle && <p className="mtd-reveal" style={{ fontFamily: 'var(--font-body)', fontStyle: 'italic', color: 'var(--text-meta)', fontSize: '1.2rem', margin: '.8rem 0 0' }}>{post.subtitle}</p>}
+        <p className="mtd-reveal" style={{ fontFamily: 'var(--font-mono)', fontSize: '.82rem', color: 'var(--text-muted)', marginTop: '1rem' }}>By {post.author} · {post.date}</p>
+      </header>
+      <div style={{ maxWidth: '52rem', margin: '0 auto', padding: '1rem 1.5rem 0' }}>
+        <img className="mtd-reveal" src={post.thumbnail} alt="" style={{ width: '100%', borderRadius: 'var(--radius-2xl)', border: '1px solid var(--border-hairline)', boxShadow: 'var(--glow-purple), var(--elev-2)', marginBottom: '1.5rem' }} />
+        <PostBody blocks={post.body} />
+        <div className="mtd-reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: '.5rem', alignItems: 'center', margin: '2rem 0' }}>
+          {post.tags.map((t) => <span key={t} className="mtd-pill">#{t}</span>)}
+        </div>
+        <hr className="mtd-rule" />
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', margin: '1.5rem 0 0' }}>
+          {prev ? <button onClick={() => onOpen(prev.id)} style={pagerBtn}><span style={pagerLbl}>← Older</span><span style={pagerTitle}>{prev.title}</span></button> : <span />}
+          {next ? <button onClick={() => onOpen(next.id)} style={{ ...pagerBtn, textAlign: 'right', marginLeft: 'auto' }}><span style={pagerLbl}>Newer →</span><span style={pagerTitle}>{next.title}</span></button> : <span />}
+        </div>
+      </div>
+    </div>
+  );
+}
+const pagerBtn = { background: 'transparent', border: '1px solid var(--border-hairline)', borderRadius: 'var(--radius-md)', padding: '.8rem 1rem', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '.2rem', maxWidth: '46%', color: 'inherit' };
+const pagerLbl = { fontFamily: 'var(--font-mono)', fontSize: '.7rem', color: 'var(--accent-cyan)' };
+const pagerTitle = { fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '.9rem', color: 'var(--text-body)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' };
+
+/* ---------- about ---------- */
+function About({ onBack, onContact }) {
+  const ref = useReveal();
+  return (
+    <div ref={ref} style={{ maxWidth: '50rem', margin: '0 auto', padding: '3.5rem 1.5rem 0' }}>
+      <span className="mtd-eyebrow mtd-reveal">~/about · whoami</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', margin: '1.4rem 0 2rem', flexWrap: 'wrap' }}>
+        <img className="mtd-reveal" src="../../assets/img/avatar-icon.png" alt="" width="96" height="96" style={{ borderRadius: '50%', boxShadow: 'var(--glow-purple), var(--elev-2)' }} />
+        <h1 className="mtd-reveal" style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 'clamp(2rem,5vw,3rem)', margin: 0 }}>
+          <span className="mtd-gradient-text">Amit Netanel</span>
+        </h1>
+      </div>
+      <div className="mtd-reveal" style={{ fontFamily: 'var(--font-body)', fontSize: '1.15rem', lineHeight: 1.7, color: 'var(--text-body)' }}>
+        <p style={{ margin: '0 0 1.4rem' }}>Look, this being the internet and all, I will try to be low with the bio and succinct with the flavour. Assuming you've clicked on About, you have some questions! So, here are some answers:</p>
+        <ul style={{ paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '.9rem', margin: 0 }}>
+          <li>Hi! I'm Amit, a professional game developer and software engineer from Israel.</li>
+          <li>I'm interested in challenges like tools for level design, shader programming, 3D software rendering, procedural generation, mobile game performance optimization, <a className="mtd-link" href="https://www.lexaloffle.com/pico-8.php" target="_blank" rel="noreferrer">constraint-based game programming</a>, and AI systems.</li>
+          <li>I'm programming-language / ecosystem agnostic. I've written web-scraping bots in Python, games in Unity, fullstack projects in Angular/Ruby-on-Rails, photo processing in Matlab. I've <em style={{ color: 'var(--quote)', fontStyle: 'italic' }}>seen some s$#@!</em></li>
+          <li>I currently own 7 mechanical keyboards. I wonder if my 1986 Model M qualifies; if it does then I own 8.</li>
+          <li>In my limited spare time I learn Japanese (via a wicked combination of <a className="mtd-link" href="https://www.duolingo.com/profile/abbabon" target="_blank" rel="noreferrer">Duolingo</a>, <a className="mtd-link" href="https://www.wanikani.com/users/abbabon" target="_blank" rel="noreferrer">WaniKani</a>, <a className="mtd-link" href="https://kaniwani.com/" target="_blank" rel="noreferrer">KaniWani</a>, <a className="mtd-link" href="https://ankiweb.net/shared/info/942922371" target="_blank" rel="noreferrer">Anki Flashcards of Genki I &amp;&amp; II</a> and <a className="mtd-link" href="https://www.tandem.net/" target="_blank" rel="noreferrer">Tandem</a>). しかし、私はまだ上手していません.</li>
+          <li><strong style={{ color: 'var(--accent-tertiary)' }}>Mezookan</strong> is Hebrew for 'bearded'. My strength stems from my beard.</li>
+        </ul>
+        <p style={{ margin: '1.4rem 0 0' }}>Even more questions? You are welcome to <a className="mtd-link" href="#" onClick={(e) => { e.preventDefault(); onContact(); }}>contact</a> me.</p>
+      </div>
+      <div className="mtd-reveal" style={{ marginTop: '1.8rem' }}>
+        <DS.Button variant="ghost" size="sm" onClick={onBack}>← All posts</DS.Button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- contact ---------- */
+function Contact({ onBack }) {
+  const ref = useReveal();
+  return (
+    <div ref={ref} style={{ maxWidth: '46rem', margin: '0 auto', padding: '3.5rem 1.5rem 0' }}>
+      <span className="mtd-eyebrow mtd-reveal">~/contact · say hi</span>
+      <h1 className="mtd-reveal" style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 'clamp(2rem,5vw,3rem)', margin: '1rem 0 1.4rem' }}>
+        <span className="mtd-gradient-text">Contact</span>
+      </h1>
+      <div className="mtd-reveal" style={{ fontFamily: 'var(--font-body)', fontSize: '1.15rem', lineHeight: 1.7, color: 'var(--text-body)' }}>
+        <p style={{ margin: '0 0 1.3rem' }}>There's a link to literally every possible social network I'm receiving messages on in the footer of this page. Feel free to ask questions, submit your remarks, and invite me to jam with you on your games!</p>
+        <p style={{ margin: '0 0 1.3rem' }}>The best thing you could do is <a className="mtd-link" href="https://abbabon.itch.io/" target="_blank" rel="noreferrer">play my games on itch.io</a> and give me some feedback on them!</p>
+        <p style={{ margin: 0 }}>But don't try to sell me stuff. I already have a dirty Mechanical Keyboards obsession, and no money for anything else. Unless you have a KeyCult up for grabs, perhaps?</p>
+      </div>
+      <div className="mtd-reveal">
+        <DS.NotificationBox variant="note" title="re: contact forms">
+          Contact forms remind me of the days I had to wait for my mom to get off the line so I could go back to ICQ. But I'm lazy — so here's a cute, un-harmful, completely innocent service bot instead. Boop!
+        </DS.NotificationBox>
+      </div>
+      <figure className="mtd-reveal" style={{ margin: '0', textAlign: 'center' }}>
+        <img src="../../assets/img/hal9000.jpg" alt="Hello Human" style={{ maxWidth: '100%', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-hairline)', boxShadow: 'var(--elev-2)' }} />
+        <figcaption style={{ fontStyle: 'italic', fontSize: '.85rem', color: 'var(--text-muted)', padding: '.7rem' }}>Hello, Human.</figcaption>
+      </figure>
+      <div className="mtd-reveal" style={{ marginTop: '1.5rem' }}>
+        <DS.Button variant="ghost" size="sm" onClick={onBack}>← All posts</DS.Button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- resources ---------- */
+function Resources({ onBack }) {
+  const ref = useReveal();
+  const items = [
+    { name: 'Unity Shell', desc: 'A lightweight package to run command-line tasks from inside the Unity Editor.', href: 'https://github.com/Abbabon', tag: 'package' },
+    { name: 'GitHub · @Abbabon', desc: 'Open-source Unity packages, editor tools and experiments.', href: 'https://github.com/Abbabon', tag: 'code' },
+    { name: 'itch.io · abbabon', desc: 'Playable games and game-jam entries.', href: 'https://abbabon.itch.io/', tag: 'games' },
+    { name: 'Learn Markdown', desc: 'The interactive tutorial I point everyone to.', href: 'http://www.markdowntutorial.com/', tag: 'external' },
+  ];
+  return (
+    <div ref={ref} style={{ maxWidth: '50rem', margin: '0 auto', padding: '3.5rem 1.5rem 0' }}>
+      <span className="mtd-eyebrow mtd-reveal">~/resources · assets &amp; tools</span>
+      <h1 className="mtd-reveal" style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 'clamp(2rem,5vw,3rem)', margin: '1rem 0 .6rem' }}>
+        <span className="mtd-gradient-text">Resources</span>
+      </h1>
+      <p className="mtd-reveal" style={{ fontFamily: 'var(--font-body)', fontSize: '1.1rem', color: 'var(--text-subtle)', margin: '0 0 1.8rem', maxWidth: '46ch' }}>
+        Unity assets, packages and the odd link worth keeping around.
+      </p>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '.9rem' }}>
+        {items.map((it) => (
+          <a key={it.name} href={it.href} target="_blank" rel="noreferrer" className="mtd-card mtd-reveal"
+            style={{ display: 'flex', alignItems: 'center', gap: '1rem', textDecoration: 'none', padding: '1.1rem 1.3rem' }}>
+            <span style={{ flex: 1 }}>
+              <span style={{ display: 'block', fontFamily: 'var(--font-heading)', fontWeight: 800, color: 'var(--text-heading)', fontSize: '1.1rem' }}>{it.name}</span>
+              <span style={{ display: 'block', fontFamily: 'var(--font-body)', color: 'var(--text-subtle)', fontSize: '.95rem', marginTop: '.2rem' }}>{it.desc}</span>
+            </span>
+            <span className="mtd-pill">#{it.tag}</span>
+            <span style={{ color: 'var(--link)', fontFamily: 'var(--font-heading)', fontWeight: 800 }}>↗</span>
+          </a>
+        ))}
+      </div>
+      <div className="mtd-reveal" style={{ marginTop: '1.5rem' }}>
+        <DS.Button variant="ghost" size="sm" onClick={onBack}>← All posts</DS.Button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- tags page ---------- */
+function TagsPage({ initialTag, onOpen }) {
+  const ref = useReveal();
+  const posts = window.MTD_POSTS;
+  // build {tag: [posts]} index
+  const index = {};
+  posts.forEach((p) => p.tags.forEach((t) => { (index[t] = index[t] || []).push(p); }));
+  const tags = Object.keys(index).sort((a, b) => index[b].length - index[a].length);
+  const [active, setActive] = useS(initialTag && index[initialTag] ? initialTag : tags[0]);
+  const hues = ['var(--dr-cyan)', 'var(--dr-green)', 'var(--dr-purple)', 'var(--dr-pink)', 'var(--dr-orange)', 'var(--dr-yellow)'];
+  return (
+    <div ref={ref} style={{ maxWidth: '60rem', margin: '0 auto', padding: '3.5rem 1.5rem 0' }}>
+      <span className="mtd-eyebrow mtd-reveal">~/tags · {tags.length} topics · {posts.length} posts</span>
+      <h1 className="mtd-reveal" style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 'clamp(2rem,5vw,3rem)', margin: '1rem 0 0' }}>
+        <span className="mtd-gradient-text">Tags</span>
+      </h1>
+      {/* tag cloud */}
+      <div className="mtd-reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: '.6rem', margin: '1.6rem 0 2rem' }}>
+        {tags.map((t, i) => {
+          const on = t === active;
+          return (
+            <button key={t} onClick={() => setActive(t)}
+              style={{
+                fontFamily: 'var(--font-mono)', fontSize: '.85rem', cursor: 'pointer',
+                color: on ? 'var(--text-on-accent)' : hues[i % hues.length],
+                background: on ? hues[i % hues.length] : 'transparent',
+                border: `1px solid ${hues[i % hues.length]}`,
+                borderRadius: 'var(--radius-pill)', padding: '.35rem .85rem',
+                transition: 'all .2s var(--ease-out-soft)', whiteSpace: 'nowrap',
+              }}>
+              #{t} <span style={{ opacity: .6 }}>{index[t].length}</span>
+            </button>
+          );
+        })}
+      </div>
+      <hr className="mtd-rule mtd-reveal" />
+      {/* posts for active tag */}
+      <h2 className="mtd-reveal" style={{ fontFamily: 'var(--font-mono)', fontWeight: 400, fontSize: '1rem', color: 'var(--text-muted)', margin: '1.6rem 0 1rem' }}>
+        <span style={{ color: 'var(--accent-cyan)' }}>#{active}</span> — {index[active].length} post{index[active].length > 1 ? 's' : ''}
+      </h2>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '.6rem' }}>
+        {index[active].map((p) => (
+          <button key={p.id} onClick={() => onOpen(p.id)} className="mtd-reveal"
+            style={{ display: 'flex', alignItems: 'center', gap: '1rem', textAlign: 'left', cursor: 'pointer',
+              background: 'var(--surface-card)', border: '1px solid var(--border-hairline)', borderRadius: 'var(--radius-md)',
+              padding: '.8rem 1rem', color: 'inherit', transition: 'border-color .2s, transform .2s' }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent-cyan)'; e.currentTarget.style.transform = 'translateX(4px)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-hairline)'; e.currentTarget.style.transform = 'none'; }}>
+            <img src={p.thumbnail} alt="" style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: 'var(--radius-sm)', filter: 'var(--img-grayscale)' }} />
+            <span style={{ display: 'flex', flexDirection: 'column', gap: '.2rem', minWidth: 0 }}>
+              <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, color: 'var(--text-heading)', fontSize: '1.02rem' }}>{p.title}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', color: 'var(--text-muted)' }}>{p.date}</span>
+            </span>
+            <span style={{ marginLeft: 'auto', color: 'var(--link)', fontFamily: 'var(--font-heading)', fontWeight: 800 }}>→</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---------- subscribe modal (RSS-only) ---------- */
+function SubscribeModal({ onClose }) {
+  const feed = 'https://abbabon.github.io/feed.xml';
+  const [copied, setCopied] = useS(false);
+  useE(() => {
+    const k = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', k);
+    return () => window.removeEventListener('keydown', k);
+  }, []);
+  const copy = () => {
+    try { navigator.clipboard && navigator.clipboard.writeText(feed); } catch (e) {}
+    setCopied(true); setTimeout(() => setCopied(false), 1800);
+  };
+  return (
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(20,21,28,.66)',
+      backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
+      <div onClick={(e) => e.stopPropagation()} className="mtd-glass" style={{ width: 'min(30rem, 100%)', borderRadius: 'var(--radius-2xl)',
+        boxShadow: 'var(--glow-purple), var(--elev-3)', padding: '2rem', position: 'relative' }}>
+        <button onClick={onClose} aria-label="Close" style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'transparent', border: 0, color: 'var(--text-muted)', fontSize: '1.4rem', cursor: 'pointer', lineHeight: 1 }}>×</button>
+        <span className="mtd-eyebrow">~/subscribe</span>
+        <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.6rem', margin: '.8rem 0 .4rem' }}>
+          <span className="mtd-gradient-text">Follow via RSS</span>
+        </h2>
+        <p style={{ fontFamily: 'var(--font-body)', color: 'var(--text-subtle)', fontSize: '.98rem', lineHeight: 1.55, margin: '0 0 1.3rem' }}>
+          No newsletter, no tracking — just an honest feed. Drop this URL into your reader of choice (NetNewsWire, Feedly, Reeder…).
+        </p>
+        <div style={{ display: 'flex', gap: '.6rem', flexWrap: 'wrap', alignItems: 'stretch' }}>
+          <code style={{ flex: 1, minWidth: '12rem', display: 'flex', alignItems: 'center', fontFamily: 'var(--font-mono)', fontSize: '.88rem', color: 'var(--accent-cyan)',
+            background: 'var(--surface-inset)', border: '1px solid var(--border-hairline)', borderRadius: 'var(--radius-md)', padding: '.7rem .9rem', overflowX: 'auto', whiteSpace: 'nowrap' }}>{feed}</code>
+          <DS.Button variant="primary" onClick={copy}>{copied ? 'Copied ✓' : 'Copy'}</DS.Button>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1.3rem', paddingTop: '1.1rem', borderTop: '1px solid var(--border-hairline)' }}>
+          <a href={feed} className="mtd-link" style={{ fontFamily: 'var(--font-mono)', fontSize: '.82rem', display: 'inline-flex', alignItems: 'center', gap: '.4rem' }}>
+            <i className="fas fa-rss" style={{ color: 'var(--dr-orange)' }}></i> Open feed.xml
+          </a>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.74rem', color: 'var(--text-muted)' }}>· what's RSS?</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- root ---------- */
+function ModernApp() {
+  const [view, setView] = useS({ name: 'home' });
+  const [subOpen, setSubOpen] = useS(false);
+  const [t, setTweak] = useTweaks(MTD_TWEAK_DEFAULTS);
+  const go = (v) => { setView(v); window.scrollTo({ top: 0, behavior: 'auto' }); };
+  const scrollToId = (id) => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+  const goSection = (id) => {
+    if (view.name !== 'home') { setView({ name: 'home' }); requestAnimationFrame(() => setTimeout(() => scrollToId(id), 80)); }
+    else scrollToId(id);
+  };
+  const post = view.name === 'post' ? window.MTD_POSTS.find((p) => p.id === view.id) : null;
+  // gentle parallax: expose scroll offset to the background layers
+  useE(() => {
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        document.documentElement.style.setProperty('--mtd-scroll', String(window.scrollY));
+        raf = 0;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => { window.removeEventListener('scroll', onScroll); if (raf) cancelAnimationFrame(raf); };
+  }, []);
+  const rootClass = 'mtd-modern' + (t.headline === 'solid' ? ' mtd-solid-head' : '') + (t.motion ? '' : ' mtd-no-motion');
+  const rootStyle = { '--link': t.accent, '--accent-primary': t.accent, '--glow-purple': MTD_GLOWS[t.cardGlow] || MTD_GLOWS.purple };
+  return (
+    <div className={rootClass} style={rootStyle}>
+      {t.aurora && <div className="mtd-aurora"></div>}
+      {t.drift && <DriftField />}
+      <div className="mtd-vignette"></div>
+      <Nav onHome={() => go({ name: 'home' })} onWriting={() => goSection('mtd-writing')}
+           onPodcast={() => goSection('mtd-podcast')} onProjects={() => goSection('mtd-projects')}
+           onAbout={() => go({ name: 'about' })}
+           onContact={() => go({ name: 'contact' })} onTags={() => go({ name: 'tags' })}
+           onResources={() => go({ name: 'resources' })} onSubscribe={() => setSubOpen(true)} active={view.name} />
+      <WrapCtx.Provider value={t.codeWrap}>
+        {view.name === 'home' && <Home onOpen={(id) => go({ name: 'post', id })} onAbout={() => go({ name: 'about' })} onContact={() => go({ name: 'contact' })} onSection={goSection} />}
+        {view.name === 'post' && <PostView post={post} onBack={() => go({ name: 'home' })} onOpen={(id) => go({ name: 'post', id })} />}
+        {view.name === 'about' && <About onBack={() => go({ name: 'home' })} onContact={() => go({ name: 'contact' })} />}
+        {view.name === 'contact' && <Contact onBack={() => go({ name: 'home' })} />}
+        {view.name === 'resources' && <Resources onBack={() => go({ name: 'home' })} />}
+        {view.name === 'tags' && <TagsPage initialTag={view.tag} onOpen={(id) => go({ name: 'post', id })} />}
+      </WrapCtx.Provider>
+      <Footer expanded={view.name === 'home'} onAbout={() => go({ name: 'about' })} onHome={() => go({ name: 'home' })} onContact={() => go({ name: 'contact' })} onTags={() => go({ name: 'tags' })} />
+      {subOpen && <SubscribeModal onClose={() => setSubOpen(false)} />}
+      <TweaksPanel title="Tweaks">
+        <TweakSection label="Color" />
+        <TweakColor label="Accent" value={t.accent} options={['#50fa7b', '#8be9fd', '#ff79c6', '#bd93f9']} onChange={(v) => setTweak('accent', v)} />
+        <TweakRadio label="Card glow" value={t.cardGlow} options={['purple', 'cyan', 'pink', 'green']} onChange={(v) => setTweak('cardGlow', v)} />
+        <TweakSection label="Style" />
+        <TweakRadio label="Headline" value={t.headline} options={['gradient', 'solid']} onChange={(v) => setTweak('headline', v)} />
+        <TweakToggle label="Aurora glow" value={t.aurora} onChange={(v) => setTweak('aurora', v)} />
+        <TweakToggle label="Drifting background" value={t.drift} onChange={(v) => setTweak('drift', v)} />
+        <TweakToggle label="Animations" value={t.motion} onChange={(v) => setTweak('motion', v)} />
+        <TweakSection label="Reading" />
+        <TweakToggle label="Wrap code by default" value={t.codeWrap} onChange={(v) => setTweak('codeWrap', v)} />
+      </TweaksPanel>
+    </div>
+  );
+}
+
+window.ModernApp = ModernApp;

@@ -1,0 +1,238 @@
+/* Modern UI kit — motion + treatments that aren't worth inlining.
+   Tokens come from the design system (styles.css). */
+
+.mtd-modern {
+  background: var(--surface-page);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Aurora glow field, fixed behind everything. Parallaxes gently on scroll —
+   capped at 8vh so a long page never drags it below its own top edge (it
+   starts 10% above the viewport) and leaves a dark band behind. */
+.mtd-aurora {
+  position: fixed;
+  inset: -10% -10% auto -10%;
+  height: 90vh;
+  background: var(--grad-aurora);
+  filter: blur(8px);
+  z-index: 0;
+  pointer-events: none;
+  transform: translate3d(0, min(calc(var(--mtd-scroll, 0) * 0.06px), 8vh), 0);
+  animation: aurora-drift 22s ease-in-out infinite alternate;
+}
+@keyframes aurora-drift {
+  0%   { transform: translate3d(0, min(calc(var(--mtd-scroll, 0) * 0.06px), 8vh), 0) scale(1); opacity: .9; }
+  100% { transform: translate3d(0, calc(min(min(calc(var(--mtd-scroll, 0) * 0.06px), 8vh), 8vh) - 3%), 0) scale(1.08); opacity: 1; }
+}
+
+/* ---- 'Animal Crossing' drift field — soft Dracula diamonds rising forever ---- */
+.mtd-drift {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  transform: translate3d(0, calc(var(--mtd-scroll, 0) * -0.04px), 0);
+}
+.mtd-diamond {
+  position: absolute; bottom: -8%;
+  border-radius: 3px;
+  filter: blur(.4px);
+  will-change: transform, opacity;
+  animation-name: diamond-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes diamond-rise {
+  0%   { transform: translate(0, 0) rotate(var(--rot)); opacity: 0; }
+  8%   { opacity: var(--op); }
+  50%  { transform: translate(var(--drift), -60vh) rotate(calc(var(--rot) + 100deg)); }
+  92%  { opacity: var(--op); }
+  100% { transform: translate(0, -122vh) rotate(calc(var(--rot) + 200deg)); opacity: 0; }
+}
+.mtd-no-motion .mtd-diamond { animation: none !important; opacity: var(--op); }
+
+/* subtle film grain / vignette to add depth */
+.mtd-vignette {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 0%, transparent 55%, rgba(0,0,0,.45) 100%);
+}
+
+.mtd-modern > *:not(.mtd-aurora):not(.mtd-vignette):not(.mtd-drift) { position: relative; z-index: 1; }
+
+/* ---- Gradient display type ---- */
+.mtd-gradient-text {
+  background: var(--grad-display);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: grad-pan 8s ease-in-out infinite alternate;
+}
+@keyframes grad-pan {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* ---- Mono eyebrow ---- */
+.mtd-eyebrow {
+  font-family: var(--font-mono);
+  font-size: .8125rem;
+  letter-spacing: .08em;
+  color: var(--accent-cyan);
+  text-transform: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+}
+.mtd-eyebrow::before {
+  content: "";
+  width: 1.75rem; height: 1px;
+  background: var(--grad-cyan-green);
+}
+
+/* ---- Glass chrome ---- */
+.mtd-glass {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+}
+
+/* ---- Cards ---- */
+.mtd-card {
+  background: linear-gradient(180deg, var(--surface-raised), var(--surface-card));
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--elev-1);
+  transition: transform var(--dur-fast) var(--ease-out-soft),
+              box-shadow var(--dur-fast) var(--ease-out-soft),
+              border-color var(--dur-fast) var(--ease-out-soft);
+  will-change: transform;
+}
+.mtd-card:hover {
+  transform: var(--lift);
+  box-shadow: var(--glow-purple), var(--elev-2);
+  border-color: transparent;
+}
+.mtd-card:hover .mtd-card-img { filter: grayscale(0%); transform: scale(1.05); }
+.mtd-card-img {
+  filter: var(--img-grayscale);
+  transition: filter var(--dur-normal) var(--ease-out-soft), transform var(--dur-normal) var(--ease-out-soft);
+}
+
+/* feature card glows cyan instead */
+.mtd-feature:hover { box-shadow: var(--glow-cyan), var(--elev-3); }
+
+/* ---- Scroll-triggered entrance reveal ----
+   Resting state is VISIBLE (so content is never stuck hidden). JS adds
+   .mtd-revealing for one animation cycle as the element scrolls in, then
+   removes it on a timer. */
+.mtd-reveal { opacity: 1; transform: none; }
+.mtd-reveal.mtd-revealing { animation: mtd-reveal-in .58s var(--ease-out-soft) both; }
+@keyframes mtd-reveal-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtd-aurora, .mtd-gradient-text, .mtd-diamond { animation: none; }
+  .mtd-reveal.mtd-revealing { animation: none; }
+  .mtd-card { transition: none; }
+}
+
+/* ---- Pills / meta ---- */
+.mtd-pill {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .03em;
+  color: var(--text-subtle);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-pill);
+  padding: .2rem .6rem;
+  white-space: nowrap;
+  background: rgba(255,255,255,.02);
+  transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+.mtd-pill:hover { color: var(--accent-cyan); border-color: var(--accent-cyan); }
+
+/* link underline sweep */
+.mtd-link {
+  color: var(--link);
+  text-decoration: none;
+  background-image: linear-gradient(var(--link-hover), var(--link-hover));
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: left 100%;
+  transition: background-size var(--dur-fast) var(--ease-out-soft), color var(--dur-fast);
+  padding-bottom: 2px;
+}
+.mtd-link:hover { color: var(--link-hover); background-size: 100% 2px; }
+
+/* gradient hairline divider */
+.mtd-rule {
+  height: 1px; border: 0;
+  background: var(--grad-hairline);
+  opacity: .5;
+}
+
+/* button shine on hover handled inline; key reveal of CTA row */
+.mtd-blink { animation: blink 1.2s steps(2,start) infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ---- Tweak-driven overrides ---- */
+.mtd-solid-head .mtd-gradient-text {
+  background: none;
+  -webkit-text-fill-color: var(--text-heading);
+  color: var(--text-heading);
+  animation: none;
+}
+.mtd-no-motion .mtd-reveal.mtd-revealing { animation: none !important; }
+.mtd-no-motion .mtd-aurora,
+.mtd-no-motion .mtd-gradient-text,
+.mtd-no-motion .mtd-blink { animation: none !important; }
+.mtd-no-motion .mtd-card { transition: none !important; }
+.mtd-no-motion .mtd-card:hover { transform: none !important; }
+
+/* ---- Podcast: animated waveform on the cover ---- */
+.mtd-wave { display: flex; align-items: flex-end; gap: 3px; height: 46px; }
+.mtd-wave span {
+  width: 4px; border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent-cyan), var(--accent-primary));
+  animation: mtd-bar 1.1s ease-in-out infinite alternate;
+}
+@keyframes mtd-bar { from { height: 18%; opacity: .55; } to { height: 100%; opacity: 1; } }
+.mtd-no-motion .mtd-wave span { animation: none; height: 60%; }
+
+.mtd-ep-row {
+  display: flex; align-items: center; gap: 1rem;
+  background: var(--surface-card); border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md); padding: .85rem 1rem; cursor: pointer; color: inherit; text-align: left;
+  transition: border-color var(--dur-fast), transform var(--dur-fast), background var(--dur-fast);
+}
+.mtd-ep-row:hover { border-color: var(--accent-cyan); transform: translateX(4px); background: var(--surface-hover); }
+.mtd-no-motion .mtd-ep-row { transition: none; }
+.mtd-no-motion .mtd-ep-row:hover { transform: none; }
+
+/* ---- Contact CTA band ---- */
+.mtd-cta {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
+  background:
+    radial-gradient(80% 120% at 12% 0%, rgba(189,147,249,.18), transparent 60%),
+    radial-gradient(70% 120% at 90% 100%, rgba(139,233,253,.16), transparent 60%),
+    linear-gradient(180deg, var(--surface-raised), var(--surface-card));
+  box-shadow: var(--glow-purple), var(--elev-2);
+}
+
+/* ---- Responsive collapses ---- */
+@media (max-width: 860px) {
+  .mtd-hero-grid { grid-template-columns: 1fr !important; }
+  [data-mtd-feature] { grid-template-columns: 1fr !important; }
+  [data-mtd-feature] > div:first-child { min-height: 14rem !important; }
+  .mtd-podcast-grid { grid-template-columns: 1fr !important; }
+  .mtd-projects-grid { grid-template-columns: 1fr !important; }
+  .mtd-footer-cols { grid-template-columns: 1fr 1fr !important; }
+}

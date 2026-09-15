@@ -1,0 +1,101 @@
+---
+layout: base
+---
+
+{%- comment -%}
+  Project landing page. A project is NOT a blog post — it has an image, a store
+  link, a video link and a description, and the template renders whichever of
+  those are populated. Shared by the `projects` and `consulting` collections;
+  the back-links point at whichever home section the item came from.
+{%- endcomment -%}
+
+{%- if page.collection == 'consulting' -%}
+  {%- assign back_anchor = '#mtd-consulting' -%}
+  {%- assign back_label = 'back to consultation work' -%}
+  {%- assign back_all = 'All consultation work' -%}
+  {%- assign back_all_url = '/consulting/' -%}
+{%- else -%}
+  {%- assign back_anchor = '#mtd-projects' -%}
+  {%- assign back_label = 'back to projects' -%}
+  {%- assign back_all = 'All projects' -%}
+  {%- assign back_all_url = '/projects/' -%}
+{%- endif -%}
+
+<main>
+  <article class="mtd-page mtd-project">
+    <a class="mtd-eyebrow mtd-reveal mtd-project-back" href="{{ '/' | relative_url }}{{ back_anchor }}">← {{ back_label }}</a>
+
+    <h1 class="mtd-page-title mtd-reveal"><span class="mtd-gradient-text">{{ page.title | strip_html }}</span></h1>
+
+    {%- if page.subtitle or page.org or page.category -%}
+      <p class="mtd-project-meta mtd-reveal">
+        {%- if page.subtitle -%}{{ page.subtitle | strip_html }}{%- elsif page.org -%}{{ page.org }}{%- endif -%}
+        {%- if page.category -%} · {{ page.category }}{%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- assign img = page.image | default: page.cover-img | default: page.thumbnail -%}
+    {%- if img -%}
+      <img class="mtd-project-hero mtd-reveal" src="{{ img | relative_url }}" alt="{{ page.title | strip_html }}" />
+    {%- endif -%}
+
+    {%- comment -%} Description = the page body (whatever markdown is written) {%- endcomment -%}
+    {%- assign body = content | strip -%}
+    {%- if body != "" -%}
+      <div class="mtd-page-body mtd-post-body mtd-reveal">{{ content }}</div>
+    {%- elsif page.description -%}
+      <div class="mtd-page-body mtd-post-body mtd-reveal"><p>{{ page.description }}</p></div>
+    {%- endif -%}
+
+    {%- comment -%} Video: embed YouTube/Vimeo, otherwise link out {%- endcomment -%}
+    {%- assign watch_url = page.watch_url | default: page.video_url -%}
+    {%- if watch_url and watch_url != "" -%}
+      {%- assign v = watch_url -%}
+      {%- assign vembed = "" -%}
+      {%- if v contains "youtube.com/watch?v=" -%}
+        {%- assign vid = v | split: "v=" | last | split: "&" | first -%}
+        {%- assign vembed = "https://www.youtube.com/embed/" | append: vid -%}
+      {%- elsif v contains "youtu.be/" -%}
+        {%- assign vid = v | split: "youtu.be/" | last | split: "?" | first -%}
+        {%- assign vembed = "https://www.youtube.com/embed/" | append: vid -%}
+      {%- endif -%}
+      {%- if vembed != "" -%}
+        <div class="mtd-project-video mtd-reveal">
+          <iframe src="{{ vembed }}" title="{{ page.title | strip_html }} video" loading="lazy"
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%} Action buttons — play / watch / repo, with legacy store_url fallback {%- endcomment -%}
+    {%- assign play_url = page.play_url | default: page.store_url -%}
+    {%- if play_url or watch_url or page.repo_url or page.site_url -%}
+      <div class="mtd-project-actions mtd-reveal">
+        {%- if play_url and play_url != "" -%}
+          <a class="mtd-btn mtd-btn-primary" href="{{ play_url }}" target="_blank" rel="noreferrer">
+            <i class="fas fa-play"></i> {{ page.play_label | default: page.store_label | default: "Play" }}
+          </a>
+        {%- endif -%}
+        {%- if watch_url and watch_url != "" -%}
+          <a class="mtd-btn mtd-btn-ghost" href="{{ watch_url }}" target="_blank" rel="noreferrer">
+            <i class="fab fa-youtube"></i> Watch the trailer
+          </a>
+        {%- endif -%}
+        {%- if page.repo_url and page.repo_url != "" -%}
+          <a class="mtd-btn mtd-btn-ghost" href="{{ page.repo_url }}" target="_blank" rel="noreferrer">
+            <i class="fab fa-github"></i> {{ page.repo_label | default: "View on GitHub" }}
+          </a>
+        {%- endif -%}
+        {%- if page.site_url and page.site_url != "" -%}
+          <a class="mtd-btn mtd-btn-ghost" href="{{ page.site_url }}" target="_blank" rel="noreferrer">
+            <i class="fas fa-arrow-up-right-from-square"></i> {{ page.site_label | default: "Visit the site" }}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="mtd-page-back mtd-reveal">
+      <a class="mtd-btn mtd-btn-ghost mtd-btn-sm" href="{{ back_all_url | relative_url }}">← {{ back_all }}</a>
+    </div>
+  </article>
+</main>
