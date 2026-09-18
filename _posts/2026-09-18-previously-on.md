@@ -25,7 +25,7 @@ Apparently you can.
   <video src="/previously-on/media/recaps/20260917-194549/recap-dossier.mp4"
          poster="/assets/img/posts/PreviouslyOn/poster-dossier.jpg"
          controls playsinline preload="metadata"></video>
-  <figcaption>"The Empty Cradle": thirty minutes of 007 First Light in under two minutes, in the dossier pack, narrated by an elder who has clearly seen things.</figcaption>
+  <figcaption>"The Empty Cradle": thirty minutes of 007 First Light in a little over two minutes, in the dossier pack, narrated by an elder who has clearly seen things.</figcaption>
 </figure>
 
 # The event
