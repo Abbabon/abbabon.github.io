@@ -25,6 +25,6 @@ def build(fmt,cx,cy,height):
     sh=Image.new('RGBA',p.size,(0,0,0,0)); sh.paste((25,26,33,150),(round(cx-c.width/2),round(cy-c.height/2)+10),c.getchannel('A'))
     p.alpha_composite(sh.filter(ImageFilter.GaussianBlur(14))); p.alpha_composite(c,(round(cx-c.width/2),round(cy-c.height/2))); return p
 os.makedirs(C,exist_ok=True)
-sq=build('square',512,500,760); sq.save(f'{C}/square{a.out}.png'); sq.resize((64,64),Image.LANCZOS).save(f'{C}/square-64{a.out}.png')
+sq=build('square',512,530,760); sq.save(f'{C}/square{a.out}.png'); sq.resize((64,64),Image.LANCZOS).save(f'{C}/square-64{a.out}.png')  # cy>512: wide head + tapering beard, so center the visual mass, not the bbox
 build('banner',420,256,440).save(f'{C}/banner{a.out}.png')  # left-weighted; right free for text
 print('built with:',*want)
