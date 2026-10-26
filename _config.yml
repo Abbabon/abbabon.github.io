@@ -218,6 +218,9 @@ gtag: "UA-89340869-1"
 # Fill in your Cloudflare Analytics beacon token to track your website using Cloudflare Analytics
 #cloudflare_analytics: ""
 
+# GoatCounter site code (the "abc" in abc.goatcounter.com). Only counts in production builds.
+goatcounter: "abbabon"
+
 # Google Tag Manager ID
 #gtm: ""
 
