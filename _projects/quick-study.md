@@ -2,7 +2,7 @@
 title: Quick Study
 org: Mac App Store
 category: macos · tools
-image: "/assets/img/posts/QuickStudy/quick-study-search.png"
+image: "/assets/img/posts/QuickStudy/quick-study-cover.jpg"
 link: /apps/quick-study/
 cta: Get the app
 accent: purple
