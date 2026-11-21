@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tatsu 断 · Offline kanji dictionary for iPhone, iPad, Mac and Android</title>
+<meta name="description" content="Type a word, get the kanji. Search about 10,300 kanji by English, kana or romaji. Free, no account, no network, no ads. iPhone, iPad, Mac and Android.">
+<meta name="theme-color" content="#f4efe4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0e13" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://abbabon.github.io/apps/tatsu/">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tatsu">
+<meta property="og:title" content="Tatsu 断 · Offline kanji dictionary">
+<meta property="og:description" content="Type a word, get the kanji. About 10,300 kanji, no account, no network. iPhone, iPad, Mac and Android.">
+<meta property="og:url" content="https://abbabon.github.io/apps/tatsu/">
+<meta property="og:image" content="https://abbabon.github.io/apps/tatsu/img/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tatsu: a white 断 cut by a red diagonal. Offline kanji dictionary. No account, no network.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tatsu 断 · Offline kanji dictionary">
+<meta name="twitter:description" content="Type a word, get the kanji. No account, no network.">
+<meta name="twitter:image" content="https://abbabon.github.io/apps/tatsu/img/share.jpg">
+<script>document.documentElement.classList.add("js");</script>
+<link rel="stylesheet" href="css/site.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"MobileApplication","name":"Tatsu","alternateName":"Tatsu – Offline Kanji","applicationCategory":"EducationalApplication","operatingSystem":"iOS 17+, macOS 14+, Android 8.0+","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Offline kanji dictionary. About 10,300 kanji, no account, no network.","url":"https://abbabon.github.io/apps/tatsu/"}</script>
+</head>
+<body>
+<a class="skip" href="#try">Skip to the demo</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Tatsu, top of page"><img src="img/icon-512.png" width="34" height="34" alt=""><span>Tatsu</span><small lang="ja">断</small></a>
+    <nav class="nav-links" aria-label="Page">
+      <a href="#try">Try it</a>
+      <a href="#features">Features</a>
+      <a href="#devices">Screenshots</a>
+      <a class="btn" href="#get">Get the app</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">Offline kanji dictionary</p>
+      <h1 id="h1">Type a word,<br>get the <em>kanji.</em></h1>
+      <p class="lead">Search about 10,300 kanji in English, kana or romaji. Free. No account, no network.</p>
+      <div class="badges" data-badges>
+        <a class="badge badge-apple" href="https://apps.apple.com/app/tatsu-offline-kanji/id6818216743" data-store="appstore"><img src="img/appstore.svg" width="168" height="56" alt="Download Tatsu on the App Store"></a>
+        <a class="badge badge-google" href="https://play.google.com/store/apps/details?id=com.abbabon.kanjioffline" data-store="googleplay"><img src="img/gplay.png" width="215" height="83" alt="Get Tatsu on Google Play"></a>
+      </div>
+      <p class="req">iPhone and iPad (iOS 17+), Mac (macOS 14+), Android 8.0+.</p>
+      <p class="pun"><b lang="ja">断</b> · <i>tatsu</i> · to cut off, to sever. Cut off from the network, on purpose.</p>
+    </div>
+    <div class="stage" id="stage" title="Replay the cut">
+      <div class="cut-glyph run" id="glyph" aria-hidden="true">
+        <span class="half a" lang="ja">断</span><span class="half b" lang="ja">断</span>
+        <svg viewBox="0 0 100 100" focusable="false"><defs><linearGradient id="cutg" gradientUnits="userSpaceOnUse" x1="-8" y1="108" x2="108" y2="-8"><stop offset="0" stop-color="#ff5c4d"/><stop offset="1" stop-color="#c0392b"/></linearGradient></defs>
+          <line x1="-8" y1="108" x2="108" y2="-8" pathLength="1"/><line class="hl" x1="-8" y1="108" x2="108" y2="-8" pathLength="1"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="demo-sec" id="try" aria-labelledby="h-try">
+  <div class="wrap">
+    <p class="eyebrow reveal">Try it here</p>
+    <h2 id="h-try" class="reveal">This is the real search.</h2>
+    <p class="lead reveal">The app's own search engine, running on this page over the same 10,348 kanji. Once it has loaded, it keeps working with the network off.</p>
+    <div class="status" id="status" role="status"><span class="dot"></span><span id="status-t">Loading the dictionary…</span></div>
+
+    <div class="demo" id="demo">
+      <div class="pane-list">
+        <form class="search" role="search" id="form" autocomplete="off">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="q" type="search" role="combobox" aria-expanded="true" aria-controls="list" aria-autocomplete="list" aria-label="Search kanji by English, kana, romaji or kanji" placeholder="English, kana, romaji or kanji" enterkeyhint="search" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false">
+          <button type="button" class="clear" id="clear" aria-label="Clear search">&times;</button>
+        </form>
+        <div class="chips" id="chips" role="group" aria-label="Examples">
+          <button class="chip" type="button" data-q="water">water</button>
+          <button class="chip" type="button" data-q="watr" data-h="One typo is forgiven.">watr</button>
+          <button class="chip" type="button" data-q="mountian" data-h="Swapped letters are forgiven too.">mountian</button>
+          <button class="chip" type="button" data-q="みず" lang="ja" data-h="Hiragana matches readings.">みず</button>
+          <button class="chip" type="button" data-q="ミズ" lang="ja" data-h="Katakana is normalised to hiragana.">ミズ</button>
+          <button class="chip" type="button" data-q="taberu" data-h="Romaji readings, plus near misses.">taberu</button>
+          <button class="chip" type="button" data-q="日本語" lang="ja" data-h="Paste a sentence: each kanji, in order.">日本語</button>
+        </div>
+        <p class="hint" id="hint" aria-live="polite"></p>
+        <div class="list" id="list" role="listbox" aria-label="Results" tabindex="-1"></div>
+      </div>
+      <div class="scrim" id="scrim"></div>
+      <aside class="pane-detail" id="detail" aria-label="Kanji detail"></aside>
+    </div>
+    <p class="demo-note reveal">Arrow keys move through results and Return opens one. Can't type a kanji? Add your system's handwriting keyboard and draw it: Chinese – Handwriting on iPhone, Gboard's Japanese handwriting on Android.</p>
+  </div>
+</section>
+
+<!-- WHAT IT CUTS -->
+<section id="cuts" aria-labelledby="h-cuts">
+  <div class="wrap">
+    <p class="eyebrow reveal">断 · to cut off</p>
+    <h2 id="h-cuts" class="reveal">What Tatsu cuts.</h2>
+    <ul class="cuts-list">
+      <li class="reveal"><span class="w">Account</span><p>Open it and search. There is nothing to sign in to.</p></li>
+      <li class="reveal"><span class="w">Network</span><p>The dictionary ships inside the app. The Android build has no INTERNET permission at all.</p></li>
+      <li class="reveal"><span class="w">Tracking</span><p>No analytics, no identifiers. Apple's privacy manifest declares nothing collected. Recent lookups stay on your device.</p></li>
+      <li class="reveal"><span class="w">Ads</span><p>None.</p></li>
+      <li class="reveal"><span class="w">Price</span><p>Free, with no in-app purchases. The code is MIT licensed and public.</p></li>
+    </ul>
+    <p class="fine reveal">These claims are about the apps. This page uses GoatCounter, a cookieless counter, to count visits and clicks on the store buttons.</p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features" aria-labelledby="h-feat">
+  <div class="wrap">
+    <p class="eyebrow reveal">What it does</p>
+    <h2 id="h-feat" class="reveal">One search box. Everything else follows.</h2>
+    <div class="grid">
+      <article class="card reveal"><span class="k" lang="ja" aria-hidden="true">一</span><h3>Any input</h3><p>English, hiragana, katakana, romaji, or a pasted sentence of kanji. Each kanji comes back in order.</p></article>
+      <article class="card reveal" style="--d:.06s"><span class="k" lang="ja" aria-hidden="true">誤</span><h3>Small typos are forgiven</h3><p>One edit or swapped letters still find it: <code>watr</code>, <code>mountian</code>.</p></article>
+      <article class="card reveal" style="--d:.12s"><span class="k" lang="ja" aria-hidden="true">順</span><h3>Common first</h3><p>Results are ranked by match quality, then by how common the kanji is. The one you want is usually on top.</p></article>
+      <article class="card reveal"><span class="k" lang="ja" aria-hidden="true">詳</span><h3>All the detail</h3><p>ON and KUN readings as kana, kanji with okurigana, and romaji. Meanings, name readings, stroke count, school grade, JLPT level, frequency rank. One tap to copy.</p></article>
+      <article class="card reveal" style="--d:.06s"><span class="k" lang="ja" aria-hidden="true">鍵</span><h3>Keyboard first</h3><p>On Mac, iPad and Android tablets, type anywhere to search. Up and down to move, Return to open, ⌘F or Ctrl+F to focus.</p></article>
+      <article class="card reveal" style="--d:.12s"><span class="k" lang="ja" aria-hidden="true">選</span><h3>Select, then look up</h3><p>On Android, select Japanese text in any app and choose Tatsu from the menu. Recent lookups are kept on the device.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- DEVICES -->
+<section id="devices" aria-labelledby="h-dev">
+  <div class="wrap">
+    <div class="show-head">
+      <div>
+        <p class="eyebrow reveal">On your devices</p>
+        <h2 id="h-dev" class="reveal">The same app, everywhere.</h2>
+      </div>
+      <div class="ctrls reveal">
+        <div class="seg" role="tablist" aria-label="Platform" id="plat">
+          <button role="tab" aria-selected="true" aria-controls="p-iphone" data-p="iphone">iPhone</button>
+          <button role="tab" aria-selected="false" aria-controls="p-mac" data-p="mac">Mac</button>
+          <button role="tab" aria-selected="false" aria-controls="p-android" data-p="android">Android</button>
+        </div>
+        <div class="seg" role="group" aria-label="Appearance" id="theme">
+          <button aria-pressed="false" data-t="light">Light</button>
+          <button aria-pressed="false" data-t="dark">Dark</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="shots" class="t-light">
+      <div class="panel" id="p-iphone" role="tabpanel">
+        <div class="shots scroll">
+          <figure><div class="phone th-light light"><img src="img/iphone-search-light-480.webp" srcset="img/iphone-search-light-320.webp 320w, img/iphone-search-light-480.webp 480w, img/iphone-search-light-720.webp 720w" sizes="(max-width: 600px) 74vw, 300px" width="720" height="1565" loading="lazy" alt="Tatsu on iPhone, light mode: searching for water lists the kanji 水 first."></div><div class="phone th-dark"><img src="img/iphone-search-dark-480.webp" srcset="img/iphone-search-dark-320.webp 320w, img/iphone-search-dark-480.webp 480w, img/iphone-search-dark-720.webp 720w" sizes="(max-width: 600px) 74vw, 300px" width="720" height="1565" loading="lazy" alt="Tatsu on iPhone, dark mode: searching for water lists the kanji 水 first."></div><figcaption>Search</figcaption></figure>
+          <figure><div class="phone th-light light"><img src="img/iphone-detail-light-480.webp" srcset="img/iphone-detail-light-320.webp 320w, img/iphone-detail-light-480.webp 480w, img/iphone-detail-light-720.webp 720w" sizes="(max-width: 600px) 74vw, 300px" width="720" height="1565" loading="lazy" alt="Tatsu on iPhone, light mode: detail for 水 with ON and KUN readings, names, 4 strokes, grade 1, JLPT 4, frequency 223."></div><div class="phone th-dark"><img src="img/iphone-detail-dark-480.webp" srcset="img/iphone-detail-dark-320.webp 320w, img/iphone-detail-dark-480.webp 480w, img/iphone-detail-dark-720.webp 720w" sizes="(max-width: 600px) 74vw, 300px" width="720" height="1565" loading="lazy" alt="Tatsu on iPhone, dark mode: detail for 水 with ON and KUN readings, names, 4 strokes, grade 1, JLPT 4, frequency 223."></div><figcaption>Detail</figcaption></figure>
+          <figure><div class="phone th-light light"><img src="img/iphone-recent-light-480.webp" srcset="img/iphone-recent-light-320.webp 320w, img/iphone-recent-light-480.webp 480w, img/iphone-recent-light-720.webp 720w" sizes="(max-width: 600px) 74vw, 300px" width="720" height="1565" loading="lazy" alt="Tatsu on iPhone, light mode: the Recent list of kanji you opened."></div><div class="phone th-dark"><img src="img/iphone-recent-dark-480.webp" srcset="img/iphone-recent-dark-320.webp 320w, img/iphone-recent-dark-480.webp 480w, img/iphone-recent-dark-720.webp 720w" sizes="(max-width: 600px) 74vw, 300px" width="720" height="1565" loading="lazy" alt="Tatsu on iPhone, dark mode: the Recent list of kanji you opened."></div><figcaption>Recent</figcaption></figure>
+        </div>
+        <p class="dev-note">iPad gets the same app with a split view. iOS 17 or later.</p>
+      </div>
+
+      <div class="panel" id="p-mac" role="tabpanel" hidden>
+        <div class="shots wins">
+          <figure><div class="win th-light"><img src="img/mac-search-light-1000.webp" srcset="img/mac-search-light-640.webp 640w, img/mac-search-light-1000.webp 1000w, img/mac-search-light-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 640px" width="1600" height="1000" loading="lazy" alt="Tatsu on Mac, light mode: a results sidebar for water and the detail of 水 beside it."></div><div class="win th-dark"><img src="img/mac-search-dark-1000.webp" srcset="img/mac-search-dark-640.webp 640w, img/mac-search-dark-1000.webp 1000w, img/mac-search-dark-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 640px" width="1600" height="1000" loading="lazy" alt="Tatsu on Mac, dark mode: a results sidebar for water and the detail of 水 beside it."></div><figcaption>Search and detail</figcaption></figure>
+          <figure><div class="win th-light"><img src="img/mac-recent-light-1000.webp" srcset="img/mac-recent-light-640.webp 640w, img/mac-recent-light-1000.webp 1000w, img/mac-recent-light-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 640px" width="1600" height="1000" loading="lazy" alt="Tatsu on Mac, light mode: the Recent list in the sidebar."></div><div class="win th-dark"><img src="img/mac-recent-dark-1000.webp" srcset="img/mac-recent-dark-640.webp 640w, img/mac-recent-dark-1000.webp 1000w, img/mac-recent-dark-1600.webp 1600w" sizes="(max-width: 860px) 92vw, 640px" width="1600" height="1000" loading="lazy" alt="Tatsu on Mac, dark mode: the Recent list in the sidebar."></div><figcaption>Recent</figcaption></figure>
+        </div>
+        <p class="dev-note">Type anywhere to search. macOS 14 or later.</p>
+      </div>
+
+      <div class="panel" id="p-android" role="tabpanel" hidden>
+        <div class="shots scroll">
+          <figure><div class="phone light"><img src="img/android-search-light-480.webp" srcset="img/android-search-light-320.webp 320w, img/android-search-light-480.webp 480w, img/android-search-light-600.webp 600w" sizes="(max-width: 600px) 74vw, 300px" width="600" height="1200" loading="lazy" alt="Tatsu on Android: searching for water lists the kanji 水 first."></div><figcaption>Search</figcaption></figure>
+          <figure><div class="phone light"><img src="img/android-detail-light-480.webp" srcset="img/android-detail-light-320.webp 320w, img/android-detail-light-480.webp 480w, img/android-detail-light-600.webp 600w" sizes="(max-width: 600px) 74vw, 300px" width="600" height="1200" loading="lazy" alt="Tatsu on Android: detail for 水 with ON and KUN readings."></div><figcaption>Detail</figcaption></figure>
+          <figure><div class="phone light"><img src="img/android-recent-light-480.webp" srcset="img/android-recent-light-320.webp 320w, img/android-recent-light-480.webp 480w, img/android-recent-light-600.webp 600w" sizes="(max-width: 600px) 74vw, 300px" width="600" height="1200" loading="lazy" alt="Tatsu on Android: the Recent list of kanji you opened."></div><figcaption>Recent</figcaption></figure>
+        </div>
+        <p class="dev-note">Phones, tablets and foldables, Android 8.0 or later. Screenshots shown in light mode.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" id="get" aria-labelledby="h-get">
+  <div class="wrap">
+    <div class="cut-glyph" id="glyph2" aria-hidden="true">
+      <span class="half a" lang="ja">断</span><span class="half b" lang="ja">断</span>
+      <svg viewBox="0 0 100 100" focusable="false"><line x1="-8" y1="108" x2="108" y2="-8" pathLength="1" style="stroke:#e0473a"/></svg>
+    </div>
+    <h2 id="h-get" class="reveal">Cut the network. Keep the kanji.</h2>
+    <p class="lead reveal">Free on iPhone, iPad, Mac and Android. No account, no ads.</p>
+    <div class="badges center reveal" data-badges>
+      <a class="badge badge-apple" href="https://apps.apple.com/app/tatsu-offline-kanji/id6818216743" data-store="appstore"><img src="img/appstore.svg" width="168" height="56" alt="Download Tatsu on the App Store"></a>
+      <a class="badge badge-google" href="https://play.google.com/store/apps/details?id=com.abbabon.kanjioffline" data-store="googleplay"><img src="img/gplay.png" width="215" height="83" alt="Get Tatsu on Google Play"></a>
+    </div>
+    <p class="req">iOS 17+ · macOS 14+ · Android 8.0+</p>
+    <div class="links">
+      <a href="https://github.com/Abbabon/tatsu-kanji">Source code (MIT)</a>
+      <a href="https://github.com/Abbabon/tatsu-kanji/blob/main/PRIVACY.md">Privacy policy</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<a class="sticky" id="sticky" href="https://apps.apple.com/app/tatsu-offline-kanji/id6818216743" data-store="appstore" data-sticky><span>Get Tatsu<small>Free · <span id="sticky-store">App Store</span></small></span><span class="go">Install</span></a>
+
+<footer>
+  <div class="wrap">
+    <div class="fl">
+      <a href="https://github.com/Abbabon/tatsu-kanji/blob/main/PRIVACY.md">Privacy policy</a>
+      <a href="https://github.com/Abbabon/tatsu-kanji">Source code</a>
+      <a href="https://abbabon.github.io/">Master the Disaster</a>
+    </div>
+    <p>Kanji data: <a href="https://www.edrdg.org/wiki/index.php/KANJIDIC_Project">KANJIDIC2</a> by the <a href="https://www.edrdg.org/">Electronic Dictionary Research and Development Group</a>, used under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+    <p>Apple, the Apple logo, iPhone, iPad, Mac and App Store are trademarks of Apple Inc., registered in the U.S. and other countries and regions. App Store is a service mark of Apple Inc. Google Play and the Google Play logo are trademarks of Google LLC. Android is a trademark of Google LLC.</p>
+    <p>© 2026 Amit Netanel</p>
+  </div>
+</footer>
+
+<!-- GoatCounter. Site code matches goatcounter: in the blog's _config.yml; change it if this folder moves to another domain. -->
+<script data-goatcounter="https://abbabon.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

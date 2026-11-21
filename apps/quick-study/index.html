@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quick Study — Magic card search for Mac</title>
+<meta name="description" content="Quick Study is a free, Spotlight-style Magic: The Gathering card search for your Mac. Press a hotkey, type a few letters, see the card, its text and every printing. Works offline once downloaded.">
+<meta name="theme-color" content="#14121c">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://abbabon.github.io/apps/quick-study/">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Quick Study">
+<meta property="og:title" content="Quick Study — Every Magic card. Instantly.">
+<meta property="og:description" content="A free Spotlight-style Magic: The Gathering card search for macOS. Works offline.">
+<meta property="og:url" content="https://abbabon.github.io/apps/quick-study/">
+<meta property="og:image" content="https://abbabon.github.io/apps/quick-study/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Quick Study: Every Magic card. Instantly. Card search for macOS.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quick Study — Every Magic card. Instantly.">
+<meta name="twitter:description" content="A free Spotlight-style Magic: The Gathering card search for macOS. Works offline.">
+<meta name="twitter:image" content="https://abbabon.github.io/apps/quick-study/img/og.jpg">
+<meta name="twitter:image:alt" content="Quick Study: Every Magic card. Instantly. Card search for macOS.">
+
+<link rel="preload" href="fonts/ArchivoBlack-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Inter-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#try">Skip to the search demo</a>
+
+<div class="page">
+
+  <!-- ============ HERO ============ -->
+  <header class="slab hero" id="top">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="Quick Study"><img src="img/wordmark.webp" width="600" height="119" alt="Quick Study"></a>
+      <ul class="nav-links">
+        <li><a href="#try">Try it</a></li>
+        <li><a href="#foil">Foils</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#trailer">Trailer</a></li>
+      </ul>
+      <a class="nav-cta" href="https://apps.apple.com/app/mtg-quick-study/id6792768370?mt=12" target="_blank" rel="noopener" data-gc="nav">Get it free</a>
+    </nav>
+
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="pill">Free for macOS</p>
+        <h1>Every Magic card. <span class="foiltext">Instantly.</span></h1>
+        <p class="lede">A Spotlight-style card lookup for your Mac. Press <kbd>⌥</kbd><kbd>⌘</kbd><kbd>M</kbd>, type a few letters, and the card, its text and every printing are right there.</p>
+        <div class="cta-row">
+          <a class="badge" href="https://apps.apple.com/app/mtg-quick-study/id6792768370?mt=12" target="_blank" rel="noopener" data-gc="hero">
+            <img src="img/mac-app-store-badge-white.svg" width="156" height="40" alt="Download on the Mac App Store">
+          </a>
+          <a class="ghost" href="#try">Try it in your browser <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="fine">Free. No account, no ads, no in-app purchases. Needs macOS 14 or later and an Apple Silicon Mac.</p>
+        <div class="phone-note">
+          <p><strong>On your phone?</strong> Quick Study is a Mac app. Send the link to your Mac and grab it there.</p>
+          <button type="button" class="share-btn" data-share>Send to my Mac</button>
+        </div>
+      </div>
+
+      <div class="hero-cards" aria-label="Three Magic cards you can tilt">
+        <div class="tilt hero-card hc-1" data-tilt data-sway data-foil="holo" data-card="Quick Study"></div>
+        <div class="tilt hero-card hc-2" data-tilt data-sway data-foil="galaxy" data-card="Lightning Bolt"></div>
+        <div class="tilt hero-card hc-3" data-tilt data-sway data-foil="etched" data-card="Black Lotus"></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+  <!-- ============ SEARCH DEMO ============ -->
+  <section class="slab demo" id="try" aria-labelledby="try-h">
+    <div class="sec-head">
+      <p class="kicker">Try it</p>
+      <h2 id="try-h">Type. It re-ranks on every keystroke.</h2>
+      <p class="sec-sub">A working replica of the search panel, running the app's own ranking and filter rules over about a hundred well-known cards. The real thing searches every card.</p>
+    </div>
+
+    <div class="qs" id="qs">
+      <div class="qs-bar">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="qs-input" type="text" role="combobox" aria-expanded="true" aria-controls="qs-list" aria-autocomplete="list" aria-label="Search Magic cards" placeholder="Search MTG cards…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="search" inputmode="search">
+        <button type="button" class="qs-clear" id="qs-clear" aria-label="Clear search" hidden>×</button>
+        <span class="qs-hotkey" aria-hidden="true">⌥⌘M</span>
+      </div>
+      <div class="qs-chips" role="group" aria-label="Filters. Activate one to add it to the search.">
+        <button type="button" class="chip" data-f="r:rare">r:rare</button>
+        <button type="button" class="chip" data-f="t:creature">t:creature</button>
+        <button type="button" class="chip" data-f="c:r">c:r</button>
+        <button type="button" class="chip" data-f="mv>=3">mv&gt;=3</button>
+        <button type="button" class="chip" data-f='o:"draw a card"'>o:"draw a card"</button>
+        <button type="button" class="chip" data-f="s:sos">s:sos</button>
+        <button type="button" class="chip" data-f="-t:land">-t:land</button>
+      </div>
+      <div class="qs-body">
+        <ul class="qs-list" id="qs-list" role="listbox" aria-label="Results"></ul>
+        <div class="qs-prev" id="qs-prev" aria-live="polite"></div>
+      </div>
+      <div class="qs-foot"><span id="qs-count">Loading cards…</span><span class="qs-keys" aria-hidden="true">↑↓ to navigate</span></div>
+    </div>
+    <p class="hint">Try <button type="button" class="eg">lightnig</button> <button type="button" class="eg">goblin t:cre</button> <button type="button" class="eg">c:u mv&lt;=2 -t:land</button> <button type="button" class="eg">r&gt;=mythic t:angel</button> <button type="button" class="eg">sos</button>. Spaces mean AND, a leading <code>-</code> negates.</p>
+  </section>
+
+  <!-- ============ FOILS ============ -->
+  <section class="slab foil" id="foil" aria-labelledby="foil-h">
+    <div class="foil-grid">
+      <div class="foil-copy">
+        <p class="kicker">Tilt</p>
+        <h2 id="foil-h">Hold it up to the light.</h2>
+        <p class="sec-sub">Hover the card, or drag a finger across it. The preview leans toward you and the light follows. Pick a finish: Holo, Etched, Galaxy or Surge.</p>
+        <div class="seg" role="radiogroup" aria-label="Foil style" id="foil-seg">
+          <button type="button" role="radio" aria-checked="false" data-foil="none">None</button>
+          <button type="button" role="radio" aria-checked="true" data-foil="holo">Holo</button>
+          <button type="button" role="radio" aria-checked="false" data-foil="etched">Etched</button>
+          <button type="button" role="radio" aria-checked="false" data-foil="galaxy">Galaxy</button>
+          <button type="button" role="radio" aria-checked="false" data-foil="surge">Surge</button>
+        </div>
+        <p class="fine">In the app these are real-time Metal shaders. Here they are a CSS approximation.</p>
+      </div>
+      <div class="foil-stage">
+        <div class="tilt foil-card" id="foil-card" data-tilt data-sway data-foil="holo" data-card="Quick Study" data-big></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section class="slab feat" id="features" aria-labelledby="feat-h">
+    <div class="sec-head">
+      <p class="kicker">What it does</p>
+      <h2 id="feat-h">Small app. Fast hands.</h2>
+    </div>
+    <div class="bento">
+      <article class="tile t-search">
+        <video class="clip" muted loop playsinline preload="none" poster="img/poster-typing.webp" data-src="media/typing.mp4" aria-label="Typing in Quick Study; the results update with every letter"></video>
+        <div class="tile-t"><h3>Instant fuzzy search</h3><p>Results re-rank as you type. Missing letters are forgiven: <code>lightnig</code> finds Lightning Bolt.</p></div>
+      </article>
+      <article class="tile t-filter">
+        <video class="clip" muted loop playsinline preload="none" poster="img/poster-type-rarity.webp" data-src="media/type-rarity.mp4" aria-label="Adding rarity and type filters to a search"></video>
+        <div class="tile-t"><h3>Inline filters</h3><p>Scryfall-style: <code>r:rare</code> <code>t:creature</code> <code>c:r</code> <code>mv&gt;=3</code> <code>o:"draw a card"</code> <code>s:set</code>. A leading <code>-</code> negates; spaces mean AND.</p></div>
+      </article>
+      <article class="tile t-print">
+        <video class="clip" muted loop playsinline preload="none" poster="img/poster-printings.webp" data-src="media/printings.mp4" aria-label="Hovering over each printing of a card to see its art"></video>
+        <div class="tile-t"><h3>Every printing</h3><p>Each printing of a card, with set, year and rarity. Hover one to see its art.</p></div>
+      </article>
+      <article class="tile t-sets">
+        <video class="clip" muted loop playsinline preload="none" poster="img/poster-home.webp" data-src="media/home.mp4" aria-label="The start screen with a Recently Added column and NEW and SOON set pills"></video>
+        <div class="tile-t"><h3>Sets, and what's new</h3><p>A sets sidebar, plus NEW and SOON pills on the start screen. A Recently Added column, custom lists and pins keep your own cards close.</p></div>
+      </article>
+      <article class="tile t-game">
+        <video class="clip" muted loop playsinline preload="none" poster="img/poster-guess-question.webp" data-src="media/guess-question.mp4" aria-label="The Play window showing Guess the Card and Guess the Artist"></video>
+        <div class="tile-t"><h3>Two endless games</h3><p>Guess the Card. Guess the Artist. Three lives, a best score and a streak to beat.</p></div>
+      </article>
+      <article class="tile t-private">
+        <div class="priv-ico" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M8 24c14-13 34-13 48 0M16 33c9-8 23-8 32 0M24 42c5-4 11-4 16 0" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="51" r="3.4" fill="currentColor"/><path d="M10 54 54 10" stroke="#ff7ac3" stroke-width="5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="tile-t"><h3>Offline and private</h3><p>Card data comes from Scryfall and lives on your Mac. After the card images have downloaded, it works with no connection. No accounts, no analytics: Data Not Collected.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ TRAILER ============ -->
+  <section class="slab trailer" id="trailer" aria-labelledby="tr-h">
+    <div class="sec-head">
+      <p class="kicker">45 seconds</p>
+      <h2 id="tr-h">See it move.</h2>
+    </div>
+    <div class="player" id="player">
+      <video id="trailer-video" playsinline preload="none" poster="img/poster-trailer.webp" aria-label="Quick Study trailer"></video>
+      <button type="button" class="play" id="play" aria-label="Play the trailer (about 4 MB, with sound)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+        <span>Play trailer</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="slab cta" aria-labelledby="cta-h">
+    <img class="cta-icon" src="img/apple-touch-icon.png" width="96" height="96" alt="Quick Study app icon" loading="lazy">
+    <h2 id="cta-h">Free on the Mac App Store.</h2>
+    <p class="sec-sub">Press <kbd>⌥</kbd><kbd>⌘</kbd><kbd>M</kbd> from anywhere. macOS 14 or later, Apple Silicon.</p>
+    <div class="cta-row center">
+      <a class="badge" href="https://apps.apple.com/app/mtg-quick-study/id6792768370?mt=12" target="_blank" rel="noopener" data-gc="footer">
+        <img src="img/mac-app-store-badge-white.svg" width="156" height="40" alt="Download on the Mac App Store" loading="lazy">
+      </a>
+      <button type="button" class="share-btn alt" data-share>Send to my Mac</button>
+    </div>
+  </section>
+  </main>
+
+  <footer class="foot">
+    <p class="legal">Quick Study is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC. Card data and images from Scryfall; not affiliated with or endorsed by Scryfall.</p>
+    <p class="legal">Apple, the Apple logo and Mac are trademarks of Apple Inc., registered in the U.S. and other countries. Mac App Store is a service mark of Apple Inc.</p>
+    <p class="foot-row"><a href="https://abbabon.github.io/quick-study/privacy.html">Privacy policy</a><span>© 2026 Amit Netanel</span></p>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script data-goatcounter="https://abbabon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
