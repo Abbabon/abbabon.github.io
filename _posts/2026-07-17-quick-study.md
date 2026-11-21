@@ -9,7 +9,7 @@ share-img-twitter: /assets/img/posts/QuickStudy/quick-study-search.png
 comments: true
 ---
 
-TL;DR - I built [Quick Study](https://github.com/Abbabon/quick-study), a small Spotlight-style macOS menu-bar app for looking up Magic: The Gathering cards. Global hotkey, type a name, see the card - fully offline after a single sync. Free, open source, installs with one `brew` command.
+TL;DR - I built [Quick Study](/apps/quick-study/), a small Spotlight-style macOS menu-bar app for looking up Magic: The Gathering cards. Global hotkey, type a name, see the card - fully offline after a single sync. Free on the Mac App Store as [MTG Quick Study](https://apps.apple.com/app/mtg-quick-study/id6792768370?mt=12).
 
 ---
 
@@ -49,19 +49,15 @@ Building a small, single-purpose tool for a single-person problem is still worth
 
 # Installation
 
-On an Apple Silicon Mac:
+Quick Study is free on the Mac App Store as [MTG Quick Study](https://apps.apple.com/app/mtg-quick-study/id6792768370?mt=12). It needs macOS 14 or later on an Apple Silicon Mac. There's a landing page at [/apps/quick-study/](/apps/quick-study/) too.
 
-{% highlight bash %}
-brew install --cask Abbabon/quick-study/quick-study
-{% endhighlight %}
+*Update: it used to be a Homebrew cask with the source on GitHub. The tap is retired and the `brew` command no longer works.*
 
-Grant Accessibility permission on first launch (that's what makes the global hotkey work), let it download the card database once, and you're set. Building from source is a single script away - details in the README.
-
-<p align="center"><a href="https://github.com/abbabon/quick-study"><img src="https://gh-card.dev/repos/abbabon/quick-study.svg" /></a></p>
+Let it download the card database once, and you're set.
 
 # It's not really about Magic
 
-It's MTG today, but the shape - bulk-fetch, local DB, menu-bar search - generalizes. Any reference corpus you want at your fingertips offline could live in this skeleton: another card game, a rules glossary, a different study domain entirely. [PRs are very welcome](https://github.com/Abbabon/quick-study) if you want to extend it; if you just want to use it, the install is the one-liner above.
+It's MTG today, but the shape - bulk-fetch, local DB, menu-bar search - generalizes. Any reference corpus you want at your fingertips offline could live in this skeleton: another card game, a rules glossary, a different study domain entirely. If you just want to use it, it's on the App Store.
 
 This isn't the only offline tool I've built lately, but the others can wait for another post (and we all know what my "another post" promises are worth).
 
