@@ -1,0 +1,26 @@
+---
+layout: null
+sitemap: false
+---
+# {{ site.title }}
+
+> {{ site.description }}. A blog by {{ site.author }} about game development, Unity architecture, tooling and AI-assisted development.
+
+## Posts
+{% for post in site.posts %}
+- [{{ post.title }}](https://abbabon.github.io{{ post.url }}): {{ post.date | date: "%Y-%m-%d" }}{% if post.tags.size > 0 %}, tags: {{ post.tags | join: ", " }}{% endif %}{% endfor %}
+
+## Projects
+{% assign projects = site.projects | sort: "order" %}{% for p in projects %}
+- [{{ p.title }}](https://abbabon.github.io{{ p.url }}){% if p.org %}: {{ p.org }}{% endif %}{% endfor %}
+{% if site.consulting.size > 0 %}
+## Consultation Work
+{% for c in site.consulting %}
+- [{{ c.title }}](https://abbabon.github.io{{ c.url }}){% if c.org %}: {{ c.org }}{% endif %}{% endfor %}
+{% endif %}
+## Optional
+
+- [About](https://abbabon.github.io/about/)
+- [All posts](https://abbabon.github.io/posts/)
+- [RSS feed](https://abbabon.github.io/feed.xml)
+- [Sitemap](https://abbabon.github.io/sitemap.xml)
